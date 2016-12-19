@@ -47,7 +47,6 @@
   }
 
   function getParams (str) {
-    // http://stackoverflow.com/questions/10126956/capture-value-out-of-query-string-with-regex/10126995#10126995
     var query_string = '';
     var pairs = [];
     var params = {};
