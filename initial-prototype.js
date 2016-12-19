@@ -45,14 +45,20 @@ void function (WIN,DOC) {
 
   function makeInlineFrame (url, to_replace) {
     var _iframe = DOC.createElement('iframe');
+    var _embed = DOC.createElement('div');
+    
+    _embed.style.position = 'relative';
+    _embed.style.paddingBottom = '56.2%';
     
     _iframe.src = url;
     _iframe.setAttribute('frameborder', '0');
     _iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
     _iframe.setAttribute('allowfullscreen', '');
+    
+    _embed.appendChild('_iframe');
 
     if (to_replace && to_replace.nodeType === 1) {
-      to_replace.parentNode.replaceChild(_iframe, to_replace);
+      to_replace.parentNode.replaceChild(_embed, to_replace);
     }
   }
 
