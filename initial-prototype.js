@@ -10,7 +10,7 @@ void function (WIN,DOC) {
   checkDocument();
   
   // subsequent checks
-  WIN.addEventListener('scroll', debounce(checkDocument), false);
+  WIN.addEventListener('scroll', debounce(checkDocument, 100), false);
   
   function checkDocument(){
     var nodes = [].slice.call(DOC.getElementsByTagName('a'));
