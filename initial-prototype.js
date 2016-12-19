@@ -30,6 +30,10 @@
         _url = _url.replace('http:', 'https:');
       }
 
+      if (_url.slice(-1) === '/') {
+        _url = _url.slice(0, -1);
+      }
+
       if (_url.match(/(youtube\.com\/watch\?v=\w+)/)) {
         _iframe_src = 'https://www.youtube.com/embed/' + getParams(_url).v;
 
@@ -41,6 +45,10 @@
 
       } else if (_url.match(/(vimeo\.com\/\w+)/)) {
         _iframe_src = 'player.vimeo.com/video/' + _url.match(/[^\/]+$/)[0] + '?portrait=0';
+
+      } else if (_url.match(/(facebook\.com\/\w+\/videos\/\w+)/)) {
+        _iframe_src = 'https://www.facebook.com/v2.8/plugins/video.php?href=' + win.encodeURIComponent(_url);
+
       }
 
       if (_iframe_src.length > 0) {
@@ -82,7 +90,10 @@
     var _16x9_div = doc.createElement('div');
     var _iframe = doc.createElement('iframe');
 
-    _iframe.setAttribute('style', 'position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%');
+    _16x9_div.setAttribute('style', 'position:relative;padding-bottom:56.2%;');
+    _16x9_div.appendChild(_iframe);
+
+    _iframe.setAttribute('style', 'position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;');
     _iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
     _iframe.setAttribute('frameborder', '0');
     _iframe.src = url;
@@ -90,9 +101,6 @@
     if ('allowFullscreen' in _iframe) {
       _iframe.setAttribute('allowFullscreen', 'allowFullscreen');
     }
-
-    _16x9_div.setAttribute('style','position:relative;padding-bottom:56.2%;');
-    _16x9_div.appendChild(_iframe);
 
     if (to_replace && to_replace.nodeType === 1) {
       to_replace.parentNode.replaceChild(_16x9_div, to_replace);
