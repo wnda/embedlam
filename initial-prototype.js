@@ -8,10 +8,10 @@ void function (WIN,DOC) {
 
   // initial check
   checkDocument();
-  
+
   // subsequent checks
   WIN.addEventListener('scroll', debounce(checkDocument, 100), false);
-  
+
   function checkDocument(){
     var nodes = [].slice.call(DOC.getElementsByTagName('a'));
 
@@ -46,16 +46,16 @@ void function (WIN,DOC) {
   function makeInlineFrame (url, to_replace) {
     var _iframe = DOC.createElement('iframe');
     var _embed = DOC.createElement('div');
-    
-    _embed.style.position = 'relative';
-    _embed.style.paddingBottom = '56.2%';
-    
+
+    _embed.setAttribute('style', 'position:relative;padding-bottom:56.2%');
+
     _iframe.src = url;
+    _iframe.setAttribute('style', 'position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%');
     _iframe.setAttribute('frameborder', '0');
     _iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
     _iframe.setAttribute('allowfullscreen', '');
-    
-    _embed.appendChild('_iframe');
+
+    _embed.appendChild(_iframe);
 
     if (to_replace && to_replace.nodeType === 1) {
       to_replace.parentNode.replaceChild(_embed, to_replace);
@@ -70,14 +70,14 @@ void function (WIN,DOC) {
   function debounce (f, wait) {
     var scheduled, args, context, timestamp;
     return function () {
-      context = this; 
-      args = []; 
+      context = this;
+      args = [];
       timestamp = WIN.performance.now;
-      
+
       for (var i = 0; i < arguments.length; ++i){
         args[i] = arguments[i];
       }
-      
+
       function later () {
         var last = WIN.performance.now - timestamp;
         if (last < wait) {
