@@ -1,8 +1,8 @@
-void function (WIN,DOC) {
+;(function (win, doc) {
 
-  if (!('performance' in WIN)) {
-    WIN.performance = {
-      'now': function () { return new WIN.Date().getTime() }
+  if (!('performance' in win)) {
+    win.performance = {
+      'now': function () { return new win.Date().getTime() }
     };
   }
 
@@ -10,10 +10,10 @@ void function (WIN,DOC) {
   checkDocument();
 
   // subsequent checks
-  WIN.addEventListener('scroll', debounce(checkDocument, 100), false);
+  win.addEventListener('scroll', debounce(checkDocument, 100), false);
 
   function checkDocument(){
-    var nodes = DOC.getElementsByTagName('a');
+    var nodes = doc.getElementsByTagName('a');
     var i = 0;
 
     for (; i < nodes.length; ++i) {
@@ -48,7 +48,7 @@ void function (WIN,DOC) {
 
   function makeInlineFrame (url, to_replace) {
 
-    var _16x9_div = DOC.createElement('div');
+    var _16x9_div = doc.createElement('div');
     var _iframe = '<iframe src="' + url + '" style="position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%" sandbox="allow-scripts allow-same-origin" frameborder="0"></iframe>';
 
     _16x9_div.setAttribute('style','position:relative;padding-bottom:56.2%;');
@@ -61,7 +61,7 @@ void function (WIN,DOC) {
 
   function isInViewport (el) {
     var r = el.getBoundingClientRect();
-    return r.top >= 0 && r.left >= 0 && r.top <= WIN.innerHeight;
+    return r.top >= 0 && r.left >= 0 && r.top <= win.innerHeight;
   }
 
   function debounce (f, wait) {
@@ -69,25 +69,25 @@ void function (WIN,DOC) {
     return function () {
       context = this;
       args = [];
-      timestamp = WIN.performance.now;
+      timestamp = win.performance.now;
 
       for (var i = 0; i < arguments.length; ++i){
         args[i] = arguments[i];
       }
 
       function later () {
-        var last = WIN.performance.now - timestamp;
+        var last = win.performance.now - timestamp;
         if (last < wait) {
-          scheduled = WIN.setTimeout(later, wait - last);
+          scheduled = win.setTimeout(later, wait - last);
         } else {
           scheduled = null;
           f.apply(context, args);
         }
       }
       if (!scheduled) {
-       scheduled = WIN.setTimeout(later, wait);
+       scheduled = win.setTimeout(later, wait);
       }
     }
   }
 
-}(window,window.document);
+})(window, window.document);
