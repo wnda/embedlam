@@ -15,7 +15,7 @@ void function (WIN,DOC) {
   function checkDocument(){
     var nodes = [].slice.call(DOC.getElementsByTagName('a'));
 
-    nodes.forEach( function (link) {
+    nodes.forEach(function (link) {
       var _url = '';
       var _iframe_src = '';
       var _vid_query_string = '';
@@ -32,7 +32,7 @@ void function (WIN,DOC) {
 
       if (_url.match(/(youtube\.com\/watch\?v=\w+)/)) {
         _iframe_src = 'https://www.youtube.com/embed/' + _url.match(/[^\?]+$/)[0].match(/[^=]+$/)[0];
-      } else if(_url.match(/(youtu.be\/\w+)/)) {
+      } else if (_url.match(/(youtu.be\/\w+)/)) {
         _iframe_src = 'https://www.youtube.com/embed/' + _url.match(/[^\/]+$/)[0];
       }
 
