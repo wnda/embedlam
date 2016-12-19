@@ -7,13 +7,13 @@
   }
 
   // initial check
-  checkDocument();
+  win.addEventListener('load', checkDocument, false);
 
   // subsequent checks
   win.addEventListener('scroll', debounce(checkDocument, 100), false);
 
   function checkDocument () {
-    var nodes = [].slice.call( doc.getElementsByTagName('a') );
+    var nodes = [].slice.call(doc.getElementsByTagName('a'));
 
     nodes.forEach(function (link) {
       var iframe_src = '';
@@ -23,10 +23,10 @@
         return;
       }
 
-      iframe_src = processUrl( link.href );
+      iframe_src = processUrl(link.href);
 
       if (typeof iframe_src === 'string' && iframe_src.length > 0) {
-        makeInlineFrame( iframe_src, link );
+        makeInlineFrame(iframe_src, link);
       }
     });
   }
@@ -73,7 +73,7 @@
       _iframe_src = _url + '/embed/postcard';
 
     // api.soundcloud.com/tracks/AUDIO
-    } else if (_url.match(/(api.soundcloud.com\/tracks\/\w+)/)) {
+    } else if (_url.match(/(api\.soundcloud\.com\/tracks\/\w+)/)) {
       _iframe_src = 'https://w.soundcloud.com/player/?url=' + win.encodeURIComponent(_url) + '&auto_play=false&show_artwork=true&color=0066cc';
 
     // youtube raw embed url
@@ -91,14 +91,15 @@
     var params = {};
     var i;
 
-    if (typeof str !== 'string' || !str) {
+    if(!str || typeof str !== 'string') {
       return;
     }
 
-    query_string = str.replace(/.*?\?/,'') || '';
+    query_string = str.replace(/.*?\?/, '') || '';
 
     if (query_string.length) {
       pairs = query_string.split('&');
+
       for (i in pairs) {
         var key = pairs[i].split('=')[0];
         if (!key.length) {
