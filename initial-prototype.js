@@ -13,37 +13,30 @@
   win.addEventListener('scroll', debounce(checkDocument, 100), false);
 
   function checkDocument(){
-    var nodes = doc.getElementsByTagName('a');
-    var i = 0;
-
-    for (; i < nodes.length; ++i) {
-
+    var nodes = [].slice.call(doc.getElementsByTagName('a'));
+    nodes.forEach(function (link) {
       var _url = '';
       var _iframe_src = '';
       var _vid_query_string = '';
 
-      if (typeof nodes[i].href === 'undefined' || nodes[i].href.length < 5 || !isInViewport(nodes[i])) {
+      if (typeof link.href === 'undefined' || link.href.length < 5 || !isInViewport(link)) {
         return;
       }
 
-      _url = nodes[i].href;
+      _url = link.href;
 
       if (_url.match(/http:/)) {
         _url = _url.replace('http:','https:');
       }
-
       if (_url.match(/(youtube\.com\/watch\?v=\w+)/)) {
         _iframe_src = 'https://www.youtube.com/embed/' + _url.match(/[^\?]+$/)[0].match(/[^=]+$/)[0];
       } else if (_url.match(/(youtu.be\/\w+)/)) {
         _iframe_src = 'https://www.youtube.com/embed/' + _url.match(/[^\/]+$/)[0];
       }
-
       if (_iframe_src.length > 0) {
-        makeInlineFrame(_iframe_src, nodes[i]);
+        makeInlineFrame(_iframe_src, link);
       }
-
-    }
-
+    });
   }
 
   function makeInlineFrame (url, to_replace) {
@@ -61,7 +54,7 @@
 
   function isInViewport (el) {
     var r = el.getBoundingClientRect();
-    return r.top >= 0 && r.left >= 0 && r.top <= win.innerHeight;
+    return r.top >= 0 && r.left >= 0 && r.top <= (win.innerHeight || doc.documentElement.clientHeight);
   }
 
   function debounce (f, wait) {
