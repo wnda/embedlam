@@ -13,18 +13,20 @@ void function (WIN,DOC) {
   WIN.addEventListener('scroll', debounce(checkDocument, 100), false);
 
   function checkDocument(){
-    var nodes = [].slice.call(DOC.getElementsByTagName('a'));
+    var nodes = DOC.getElementsByTagName('a');
+    var i = 0;
 
-    nodes.forEach(function (link) {
+    for (; i < nodes.length; ++i) {
+
       var _url = '';
       var _iframe_src = '';
       var _vid_query_string = '';
 
-      if (typeof link.href === 'undefined' || link.href.length < 5 || !isInViewport(link)) {
+      if (typeof nodes[i].href === 'undefined' || nodes[i].href.length < 5 || !isInViewport(nodes[i])) {
         return;
       }
 
-      _url = link.href;
+      _url = nodes[i].href;
 
       if (_url.match(/http:/)) {
         _url = _url.replace('http:','https:');
@@ -37,28 +39,23 @@ void function (WIN,DOC) {
       }
 
       if (_iframe_src.length > 0) {
-        makeInlineFrame(_iframe_src, link);
+        makeInlineFrame(_iframe_src, nodes[i]);
       }
 
-    });
+    }
+
   }
 
   function makeInlineFrame (url, to_replace) {
-    var _iframe = DOC.createElement('iframe');
-    var _embed = DOC.createElement('div');
 
-    _embed.setAttribute('style', 'position:relative;padding-bottom:56.2%');
+    var _16x9_div = DOC.createElement('div');
+    var _iframe = '<iframe src="' + url + '" style="position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%" sandbox="allow-scripts allow-same-origin" frameborder="0"></iframe>';
 
-    _iframe.src = url;
-    _iframe.setAttribute('style', 'position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%');
-    _iframe.setAttribute('frameborder', '0');
-    _iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
-    _iframe.setAttribute('allowfullscreen', '');
-
-    _embed.appendChild(_iframe);
+    _16x9_div.setAttribute('style','position:relative;padding-bottom:56.2%;');
 
     if (to_replace && to_replace.nodeType === 1) {
-      to_replace.parentNode.replaceChild(_embed, to_replace);
+      to_replace.parentNode.replaceChild(_16x9_div, to_replace);
+      _16x9_div.insertAdjacentHTML('afterBegin', _iframe);
     }
   }
 
