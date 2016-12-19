@@ -12,8 +12,9 @@
   // subsequent checks
   win.addEventListener('scroll', debounce(checkDocument, 100), false);
 
-  function checkDocument(){
-    var nodes = [].slice.call(doc.getElementsByTagName('a'));
+  function checkDocument () {
+    var nodes = [].slice.call( doc.getElementsByTagName('a') );
+
     nodes.forEach(function (link) {
       var _url = '';
       var _iframe_src = '';
@@ -26,17 +27,51 @@
       _url = link.href;
 
       if (_url.match(/http:/)) {
-        _url = _url.replace('http:','https:');
+        _url = _url.replace('http:', 'https:');
       }
+
       if (_url.match(/(youtube\.com\/watch\?v=\w+)/)) {
-        _iframe_src = 'https://www.youtube.com/embed/' + _url.match(/[^\?]+$/)[0].match(/[^=]+$/)[0];
+        _iframe_src = 'https://www.youtube.com/embed/' + getParams(_url).v;
+
+      } else if (_url.match(/(youtube.com\/embed\/\w+)/)) {
+        _iframe_src = _url;
+
       } else if (_url.match(/(youtu.be\/\w+)/)) {
         _iframe_src = 'https://www.youtube.com/embed/' + _url.match(/[^\/]+$/)[0];
       }
+
       if (_iframe_src.length > 0) {
         makeInlineFrame(_iframe_src, link);
       }
     });
+  }
+
+  function getParams (str) {
+    var query_string = '';
+    var pairs = [];
+    var params = {};
+    var i;
+
+    if(!str || typeof str !== 'string') {
+      return;
+    }
+
+    query_string = str.replace(/.*?\?/,'') || '';
+
+    if (query_string.length) {
+      pairs = query_string.split('&');
+      for (i in pairs) {
+        var key = pairs[i].split('=')[0];
+        if (!key.length) {
+          continue;
+        }
+        if (typeof params[key] === 'undefined') {
+          params[key] = [];
+        }
+        params[key].push(pairs[i].split('=')[1]);
+      }
+    }
+    return params;
   }
 
   function makeInlineFrame (url, to_replace) {
