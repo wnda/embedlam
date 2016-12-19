@@ -16,45 +16,53 @@
     var nodes = [].slice.call( doc.getElementsByTagName('a') );
 
     nodes.forEach(function (link) {
-      var _url = '';
-      var _iframe_src = '';
-      var _vid_query_string = '';
+      var iframe_src = '';
+      var vid_query_string = '';
 
       if (typeof link.href === 'undefined' || link.href.length < 5 || !isInViewport(link)) {
         return;
       }
 
-      _url = link.href;
+      iframe_src = processUrl( link.href );
 
-      if (_url.match(/http:/)) {
-        _url = _url.replace('http:', 'https:');
-      }
-
-      if (_url.slice(-1) === '/') {
-        _url = _url.slice(0, -1);
-      }
-
-      if (_url.match(/(youtube\.com\/watch\?v=\w+)/)) {
-        _iframe_src = 'https://www.youtube.com/embed/' + getParams(_url).v;
-
-      } else if (_url.match(/(youtube\.com\/embed\/\w+)/)) {
-        _iframe_src = _url;
-
-      } else if (_url.match(/(youtu\.be\/\w+)/)) {
-        _iframe_src = 'https://www.youtube.com/embed/' + _url.match(/[^\/]+$/)[0];
-
-      } else if (_url.match(/(vimeo\.com\/\w+)/)) {
-        _iframe_src = 'player.vimeo.com/video/' + _url.match(/[^\/]+$/)[0] + '?portrait=0';
-
-      } else if (_url.match(/(facebook\.com\/\w+\/videos\/\w+)/)) {
-        _iframe_src = 'https://www.facebook.com/v2.8/plugins/video.php?href=' + win.encodeURIComponent(_url);
-
-      }
-
-      if (_iframe_src.length > 0) {
-        makeInlineFrame(_iframe_src, link);
+      if (iframe_src.length > 0) {
+        makeInlineFrame( iframe_src, link );
       }
     });
+  }
+
+  function processUrl (_url) {
+    var _iframe_src = '';
+
+    if (_url.match(/http:/)) {
+      _url = _url.replace('http:', 'https:');
+    }
+
+    if (_url.slice(-1) === '/') {
+      _url = _url.slice(0, -1);
+    }
+
+    if (_url.match(/(youtube\.com\/watch\?v=\w+)/)) {
+      _iframe_src = 'https://www.youtube.com/embed/' + getParams(_url).v;
+
+    } else if (_url.match(/(youtu\.be\/\w+)/)) {
+      _iframe_src = 'https://www.youtube.com/embed/' + _url.match(/[^\/]+$/)[0];
+
+    } else if (_url.match(/(vimeo\.com\/\w+)/)) {
+      _iframe_src = 'player.vimeo.com/video/' + _url.match(/[^\/]+$/)[0] + '?portrait=0';
+
+    } else if (_url.match(/(facebook\.com\/\w+\/videos\/\w+)/)) {
+      _iframe_src = 'https://www.facebook.com/v2.8/plugins/video.php?href=' + win.encodeURIComponent(_url);
+
+    } else if (_url.match(/(youtube\.com\/embed\/\w+)/)) {
+      _iframe_src = _url;
+
+    } else {
+      _iframe_src = _url;
+
+    }
+
+    return _iframe_src;
   }
 
   function getParams (str) {
