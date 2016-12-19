@@ -7,7 +7,7 @@
   }
 
   // initial check
-  win.addEventListener('load', checkDocument, false);
+  checkDocument();
 
   // subsequent checks
   win.addEventListener('scroll', debounce(checkDocument, 100), false);
