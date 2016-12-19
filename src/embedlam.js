@@ -91,7 +91,7 @@
     var params = {};
     var i;
 
-    if (!str || typeof str !== 'string') {
+    if (typeof str !== 'string' || !str) {
       return;
     }
 
@@ -121,7 +121,6 @@
 
     _16x9_div.setAttribute('style', 'position:relative;padding-bottom:56.2%;overflow:hidden;');
     _16x9_div.appendChild(_iframe);
-
     _iframe.setAttribute('style', 'position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;overflow:hidden;');
     _iframe.setAttribute('allowtransparency', 'true');
     _iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
