@@ -1,4 +1,4 @@
-void function(WIN,DOC){
+void function (WIN,DOC) {
 
   if (!('performance' in WIN)) {
     WIN.performance = {
@@ -6,12 +6,16 @@ void function(WIN,DOC){
     };
   }
 
-  WIN.addEventListener('scroll', debounce(checkPosts), false);
-
-  function checkPosts(){
+  // initial check
+  checkDocument();
+  
+  // subsequent checks
+  WIN.addEventListener('scroll', debounce(checkDocument), false);
+  
+  function checkDocument(){
     var nodes = [].slice.call(DOC.getElementsByTagName('a'));
 
-    nodes.forEach(function(link){
+    nodes.forEach( function (link) {
       var _url = '';
       var _iframe_src = '';
       var _vid_query_string = '';
@@ -41,10 +45,12 @@ void function(WIN,DOC){
 
   function makeInlineFrame (url, to_replace) {
     var _iframe = DOC.createElement('iframe');
+    
     _iframe.src = url;
     _iframe.setAttribute('frameborder', '0');
     _iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
     _iframe.setAttribute('allowfullscreen', '');
+
     if (to_replace && to_replace.nodeType === 1) {
       to_replace.parentNode.replaceChild(_iframe, to_replace);
     }
@@ -55,23 +61,27 @@ void function(WIN,DOC){
     return r.top >= 0 && r.left >= 0 && r.top <= WIN.innerHeight;
   }
 
-  function debounce(f, wait){
+  function debounce (f, wait) {
     var scheduled, args, context, timestamp;
-    return function(){
-      context = this; args = []; timestamp = WIN.performance.now;
+    return function () {
+      context = this; 
+      args = []; 
+      timestamp = WIN.performance.now;
+      
       for (var i = 0; i < arguments.length; ++i){
         args[i] = arguments[i];
       }
-      function later(){
+      
+      function later () {
         var last = WIN.performance.now - timestamp;
-        if(last < wait){
+        if (last < wait) {
           scheduled = WIN.setTimeout(later, wait - last);
         } else {
           scheduled = null;
           f.apply(context, args);
         }
       }
-      if(!scheduled){
+      if (!scheduled) {
        scheduled = WIN.setTimeout(later, wait);
       }
     }
