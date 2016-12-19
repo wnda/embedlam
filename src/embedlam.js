@@ -91,7 +91,7 @@
     var params = {};
     var i;
 
-    if(!str || typeof str !== 'string') {
+    if (typeof str !== 'string' || !str) {
       return;
     }
 
