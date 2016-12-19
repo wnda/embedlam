@@ -7,7 +7,7 @@
   }
 
   // initial check
-  checkDocument();
+  win.addEventListener('load', checkDocument, false);
 
   // subsequent checks
   win.addEventListener('scroll', debounce(checkDocument, 100), false);
@@ -25,7 +25,7 @@
 
       iframe_src = processUrl( link.href );
 
-      if (iframe_src.length > 0) {
+      if (typeof iframe_src === 'string' && iframe_src.length > 0) {
         makeInlineFrame( iframe_src, link );
       }
     });
@@ -34,30 +34,50 @@
   function processUrl (_url) {
     var _iframe_src = '';
 
+    // rewrite urls to use https
     if (_url.match(/http:/)) {
       _url = _url.replace('http:', 'https:');
     }
 
+    // chop off trailing slash
     if (_url.slice(-1) === '/') {
       _url = _url.slice(0, -1);
     }
 
+    // youtube.com/watch?v=VIDEO
     if (_url.match(/(youtube\.com\/watch\?v=\w+)/)) {
       _iframe_src = 'https://www.youtube.com/embed/' + getParams(_url).v;
 
+    // youtu.be/VIDEO
     } else if (_url.match(/(youtu\.be\/\w+)/)) {
       _iframe_src = 'https://www.youtube.com/embed/' + _url.match(/[^\/]+$/)[0];
 
+    // vimeo.com/VIDEO
     } else if (_url.match(/(vimeo\.com\/\w+)/)) {
-      _iframe_src = 'player.vimeo.com/video/' + _url.match(/[^\/]+$/)[0] + '?portrait=0';
+      _iframe_src = 'https://player.vimeo.com/video/' + _url.match(/[^\/]+$/)[0] + '?portrait=0';
 
+    // facebook.com/USER/videos/VIDEO
     } else if (_url.match(/(facebook\.com\/\w+\/videos\/\w+)/)) {
       _iframe_src = 'https://www.facebook.com/v2.8/plugins/video.php?href=' + win.encodeURIComponent(_url);
 
-    } else if (_url.match(/(youtube\.com\/embed\/\w+)/)) {
-      _iframe_src = _url;
+    // twitch.tv/USER/v/VIDEO
+    } else if (_url.match(/(twitch\.tv\/\w+\/v\/\w+)/)) {
+      _iframe_src = 'https://player.twitch.tv/?video=v' + _url.match(/[^\/]+$/)[0];
 
-    } else {
+    // twitch.tv/USER
+    } else if (_url.match(/(twitch\.tv\/\w+)/)) {
+      _iframe_src = 'https://player.twitch.tv/?channel=' + _url.match(/[^\/]+$/)[0];
+
+    // vine.co/v/VIDEO
+    } else if (_url.match(/(vine\.co\/v\/\w+)/)) {
+      _iframe_src = _url + '/embed/postcard';
+
+    // api.soundcloud.com/tracks/AUDIO
+    } else if (_url.match(/(api.soundcloud.com\/tracks\/\w+)/)) {
+      _iframe_src = 'https://w.soundcloud.com/player/?url=' + win.encodeURIComponent(_url) + '&auto_play=false&show_artwork=true&color=0066cc';
+
+    // youtube raw embed url
+    } else if (_url.match(/(youtube\.com\/embed\/\w+)/)) {
       _iframe_src = _url;
 
     }
@@ -98,12 +118,14 @@
     var _16x9_div = doc.createElement('div');
     var _iframe = doc.createElement('iframe');
 
-    _16x9_div.setAttribute('style', 'position:relative;padding-bottom:56.2%;');
+    _16x9_div.setAttribute('style', 'position:relative;padding-bottom:56.2%;overflow:hidden;');
     _16x9_div.appendChild(_iframe);
 
-    _iframe.setAttribute('style', 'position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;');
+    _iframe.setAttribute('style', 'position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;overflow:hidden;');
+    _iframe.setAttribute('allowtransparency', 'true');
     _iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
-    _iframe.setAttribute('frameborder', '0');
+    _iframe.setAttribute('frameborder', 'no');
+    _iframe.setAttribute('scrolling', 'no');
     _iframe.src = url;
 
     if ('allowFullscreen' in _iframe) {
