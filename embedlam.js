@@ -154,6 +154,7 @@
         if ('fetch' in win || 'XMLHttpRequest' in win || 'XDomainRequest' in win) {
           _params = getParams(a).z[0].match(/([^video]+$)/)[0].split('_');
           _link.href = '#';
+          _link.className = 'fetching';
           embedVK(_params, _link);
         }
         break;
@@ -162,6 +163,7 @@
         if ('fetch' in win || 'XMLHttpRequest' in win || 'XDomainRequest' in win) {
           _params = _url.match(/([^\/]+$)/)[0].match(/([^video]+$)/)[0].split('_');
           _link.href = '#';
+          _link.className = 'fetching';
           embedVK(_params, _link);
         }
         break;
