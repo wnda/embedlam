@@ -23,7 +23,7 @@
         return;
       }
 
-      iframe_src = processUrl(link.href);
+      iframe_src = processUrl(link);
 
       if (typeof iframe_src === 'string' && iframe_src.length > 0) {
         makeInlineFrame(iframe_src, link);
@@ -31,7 +31,8 @@
     });
   }
 
-  function processUrl (_url) {
+  function processUrl (_link) {
+    var _url = _link.href;
     var _iframe_src;
     var _params;
     var _hash;
@@ -42,18 +43,11 @@
     // chop off trailing slash
     _url = _url.slice(-1) === '/' ? _url.slice(0, -1) : _url;
 
-    /*
-      dailymotion
-      animoto
-      soundcloud
-      youtube playlist
-      mixcloud
-      rdio
-      spotify
-      soundcloud playlist
-      flickr
-    */
     switch (true) {
+      case !!(_url.match(/(youtube\.com\/embed\/\w+)/)):
+        _iframe_src = _url;
+        break;
+
       case !!(_url.match(/(youtube\.com\/watch\?v=\w+)/)):
         _iframe_src = 'https://www.youtube.com/embed/' + getParams(_url).v;
         break;
@@ -62,16 +56,16 @@
         _iframe_src = 'https://www.youtube.com/embed/' + _url.match(/([^\/]+$)/)[0];
         break;
 
-      case !!(_url.match(/(youtube\.com\/embed\/\w+)/)):
-        _iframe_src = _url;
-        break;
-
       case !!(_url.match(/(youtube\.com\/v\/\w+)/)):
-        _iframe_src = _url.match(/([^\/]+$)/)[0];
+        _iframe_src = 'https://www.youtube.com/embed/' + _url.match(/([^\/]+$)/)[0];
         break;
 
       case !!(_url.match(/(youtube\.com\/playlist\?list=\w+)/)):
         _iframe_src = 'https://www.youtube.com/embed/videoseries?list=' + getParams(_url).list;
+        break;
+
+      case !!(_url.match(/(player\.vimeo\.com\/video\/\w+)/)):
+        _iframe_src = _url;
         break;
 
       case !!(_url.match(/(vimeo\.com\/\w+)/)):
@@ -90,15 +84,23 @@
         _iframe_src = 'https://player.twitch.tv/?channel=' + _url.match(/([^\/]+$)/)[0];
         break;
 
-      case !!(_url.match(/(dailymotion\.com\/video\/\w+)/)):
-        _iframe_src = 'https://www.dailymotion.com/embed/video/' + _url.match(/([^\/]+$)/)[0].split('_')[0];
-        break;
-
       case !!(_url.match(/(dailymotion\.com\/embed\/video\/\w+)/)):
         _iframe_src = _url;
         break;
 
+      case !!(_url.match(/(dailymotion\.com\/video\/\w+)/)):
+        _iframe_src = 'https://www.dailymotion.com/embed/video/' + _url.match(/([^\/]+$)/)[0].split('_')[0];
+        break;
+
       case !!(_url.match(/(bandcamp\.com\/EmbeddedPlayer\/\w+)/)):
+        _iframe_src = _url;
+        break;
+
+      case !!(_url.match(/(open\.spotify\.com\/embed\?\w+)/)):
+        _iframe_src = _url;
+        break;
+
+      case !!(_url.match(/(embed\.spotify\.com\/\?\w+)/)):
         _iframe_src = _url;
         break;
 
@@ -110,14 +112,6 @@
         _iframe_src = 'https://embed.spotify.com/?uri=spotify:track:' + _url.match(/([^\/]+$)/)[0];
         break;
 
-      case !!(_url.match(/(open\.spotify\.com\/embed\?\w+)/)):
-        _iframe_src = _url;
-        break;
-
-      case !!(_url.match(/(embed\.spotify\.com\/\?\w+)/)):
-        _iframe_src = _url;
-        break;
-
       case !!(_url.match(/(vine\.co\/v\/\w+)/)):
         _iframe_src = _url + '/embed/postcard';
         break;
@@ -126,11 +120,11 @@
         _iframe_src = 'https://w.soundcloud.com/player/?url=' + win.encodeURIComponent(_url) + '&auto_play=false&show_artwork=true&color=0066cc';
         break;
 
-      case !!(url.match(/(imgur\.com\/\/a\/\w+\/embed\?)/)):
+      case !!(_url.match(/(imgur\.com\/\/a\/\w+\/embed\?)/)):
         _iframe_src = _url;
         break;
 
-      case !!(url.match(/(imgur\.com\/\w+\/embed\?)/)):
+      case !!(_url.match(/(imgur\.com\/\w+\/embed\?)/)):
         _iframe_src = _url;
         break;
 
@@ -142,23 +136,25 @@
         _iframe_src = _url + '/embed?pub=true&analytics=false';
         break;
 
-      case !!(url.match(/(imgur\.com\/\w+)/)):
-        _iframe_src = _url + '/embed?analytics=false';
+      case !!(_url.match(/(gfycat\.com\/ifr\/\w+)/)):
+        _iframe_src = _url;
         break;
 
-/*
       case !!(_url.match(/(vk\.com\/video\?\w+)/)):
-        _params = getParams(a).z[0].match(/[^video]+$/)[0].split('_');
-        _hash = getVKHash(_params);
-        _iframe_src = 'http://vk.com/video_ext.php?oid=' + _params[0] + '&id=' + _params[1] + '&hash=' + _hash + '&hd=1';
+        if ('fetch' in win || 'XMLHttpRequest' in win || 'XDomainRequest' in win) {
+          _params = getParams(a).z[0].match(/[^video]+$/)[0].split('_');
+          _link.href = '#';
+          embedVK(_params, _link);
+        }
         break;
 
       case !!(_url.match(/(vk\.com\/video-\w+)/)):
-        _params = _url.match(/[^\/]+$/)[0].split('_');
-        _hash = getVKHash(_params);
-        _iframe_src = 'http://vk.com/video_ext.php?oid=' + _params[0] + '&id=' + _params[1] + '&hash=' + _hash + '&hd=1';
+        if ('fetch' in win || 'XMLHttpRequest' in win || 'XDomainRequest' in win) {
+          _params = _url.match(/[^\/]+$/)[0].match(/[^video]+$/)[0].split('_');
+          _link.href = '#';
+          embedVK(_params, _link);
+        }
         break;
-*/
 
       default:
         _iframe_src = '';
@@ -195,18 +191,74 @@
     return params;
   }
 
-/*
-  function getVKHash (_params) {
-    var _vk_url = 'https://vk.com/video' + _params[0] + '_' + _params[1];
-    return win.fetch('https://crossorigin.me/' + _vk_url)
-      .then(function(resp){
-        return resp.text()
-          .then(function(resptxt){
-            return resptxt.match(/hash2[^0-9a-f]*([0-9a-f]*)/)[1]
-          })
+
+  function embedVK (_params, _link) {
+    var _proxy = 'https://cors-anywhere.herokuapp.com/';
+    var _vk_url = _proxy + 'https://vk.com/video' + _params[0] + '_' + _params[1];
+    var _xhr = new XMLHttpRequest();
+    var _xdr;
+
+    if ('fetch' in win) {
+
+      win.fetch(_vk_url, {
+        'mode': 'cors'
+      }).then(function (resp) {
+        return resp.text().then(function (resptxt) {
+          var _hash = resptxt.match(/hash2[^0-9a-f]*([0-9a-f]*)/)[1];
+          var _vk_embed = 'https://vk.com/video_ext.php?oid=' + _params[0] + '&id=' + _params[1] + '&hash=' + _hash  + '&hd=1';
+          return makeInlineFrame(_vk_embed, _link);
+        }).catch(function (e) {
+          _link.href = _vk_url;
+          _link.insertAdjacentHTML('beforeEnd','<span> [Attempt to embed failed]</span>');
+        });
+      }).catch(function (e) {
+        _link.href = _vk_url;
+        _link.insertAdjacentHTML('beforeEnd','<span> [Attempt to embed failed]</span>');
       });
+
+    } else if ('XMLHttpRequest' in win && 'withCredentials' in _xhr) {
+
+      _xhr.open('GET', _vk_url, true);
+      _xhr.responseType = 'text';
+
+      _xhr.onreadystatechange = function () {
+        if (_xhr.readyState === 4 && _xhr.status >= 200 && _xhr.status < 300) {
+          var _hash = _xhr.responseText.match(/hash2[^0-9a-f]*([0-9a-f]*)/)[1];
+          var _vk_embed = 'https://vk.com/video_ext.php?oid=' + _params[0] + '&id=' + _params[1] + '&hash=' + _hash  + '&hd=1';
+          return makeInlineFrame(_vk_embed, _link);
+        }
+      };
+
+      _xhr.onerror = _xhr.ontimeout = _xhr.onabort = function () {
+        _link.href = _vk_url;
+        _link.insertAdjacentHTML('beforeEnd','<span> [Attempt to embed failed]</span>');
+      };
+
+      _xhr.send(null);
+
+    } else {
+
+      _xdr = new XDomainRequest();
+      _xdr.open('GET', _vk_url);
+
+      _xdr.onload = function () {
+        var _hash = _xdr.responseText.match(/hash2[^0-9a-f]*([0-9a-f]*)/)[1];
+        var _vk_embed = 'https://vk.com/video_ext.php?oid=' + _params[0] + '&id=' + _params[1] + '&hash=' + _hash  + '&hd=1';
+        return makeInlineFrame(_vk_embed, _link);
+      };
+
+      _xdr.onerror = _xdr.ontimeout = function () {
+        _link.href = _vk_url;
+        _link.insertAdjacentHTML('beforeEnd','<span> [Attempt to embed failed]</span>');
+      };
+
+      win.setTimeout(function () {
+        _xdr.send();
+      }, 0);
+
+    }
   }
-*/
+
 
   function makeInlineFrame (url, to_replace) {
     // create a div with 16:9 aspect ratio (responsive) and iframe positioned absolute within
@@ -217,7 +269,7 @@
     _16x9_div.appendChild(_iframe);
     _iframe.setAttribute('style', 'position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;overflow:hidden;');
     _iframe.setAttribute('allowtransparency', 'true');
-    _iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
+    //_iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
     _iframe.setAttribute('frameborder', 'no');
     _iframe.setAttribute('scrolling', 'no');
     _iframe.src = url;
