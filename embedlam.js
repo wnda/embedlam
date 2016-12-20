@@ -26,16 +26,16 @@
       iframe_src = processUrl(link);
 
       if (typeof iframe_src === 'string' && iframe_src.length > 0) {
-        makeInlineFrame(iframe_src, link);
+        makeInlineFrame(iframe_src, link, true);
       }
     });
   }
 
   function processUrl (_link) {
     var _url = _link.href;
+    var _by_dot = _url.split('.');
     var _iframe_src;
     var _params;
-    var _hash;
 
     // rewrite urls to use https
     _url = _url.match(/http:/) ? _url.replace('http:', 'https:') : _url;
@@ -44,6 +44,16 @@
     _url = _url.slice(-1) === '/' ? _url.slice(0, -1) : _url;
 
     switch (true) {
+
+      case !!(_url.match(/(\.mp4|\.webm)/)):
+        if ('HTMLVideoElement' in win) {
+          _len = _by_dot.length;
+          if (_by_dot[_len - 1] === 'mp4' || _by_dot[_len - 1] === 'webm') {
+            makeVideo(_url, _link);
+          }
+        }
+        break;
+
       case !!(_url.match(/(youtube\.com\/embed\/\w+)/)):
         _iframe_src = _url;
         break;
@@ -142,7 +152,7 @@
 
       case !!(_url.match(/(vk\.com\/video\?\w+)/)):
         if ('fetch' in win || 'XMLHttpRequest' in win || 'XDomainRequest' in win) {
-          _params = getParams(a).z[0].match(/[^video]+$/)[0].split('_');
+          _params = getParams(a).z[0].match(/([^video]+$)/)[0].split('_');
           _link.href = '#';
           embedVK(_params, _link);
         }
@@ -150,7 +160,7 @@
 
       case !!(_url.match(/(vk\.com\/video-\w+)/)):
         if ('fetch' in win || 'XMLHttpRequest' in win || 'XDomainRequest' in win) {
-          _params = _url.match(/[^\/]+$/)[0].match(/[^video]+$/)[0].split('_');
+          _params = _url.match(/([^\/]+$)/)[0].match(/([^video]+$)/)[0].split('_');
           _link.href = '#';
           embedVK(_params, _link);
         }
@@ -206,14 +216,14 @@
         return resp.text().then(function (resptxt) {
           var _hash = resptxt.match(/hash2[^0-9a-f]*([0-9a-f]*)/)[1];
           var _vk_embed = 'https://vk.com/video_ext.php?oid=' + _params[0] + '&id=' + _params[1] + '&hash=' + _hash  + '&hd=1';
-          return makeInlineFrame(_vk_embed, _link);
+          return makeInlineFrame(_vk_embed, _link, false);
         }).catch(function (e) {
           _link.href = _vk_url;
-          _link.insertAdjacentHTML('beforeEnd','<span> [Attempt to embed failed]</span>');
+          _link.insertAdjacentHTML('beforeEnd', '<span> [Attempt to embed failed]</span>');
         });
       }).catch(function (e) {
         _link.href = _vk_url;
-        _link.insertAdjacentHTML('beforeEnd','<span> [Attempt to embed failed]</span>');
+        _link.insertAdjacentHTML('beforeEnd', '<span> [Attempt to embed failed]</span>');
       });
 
     } else if ('XMLHttpRequest' in win && 'withCredentials' in _xhr) {
@@ -225,13 +235,13 @@
         if (_xhr.readyState === 4 && _xhr.status >= 200 && _xhr.status < 300) {
           var _hash = _xhr.responseText.match(/hash2[^0-9a-f]*([0-9a-f]*)/)[1];
           var _vk_embed = 'https://vk.com/video_ext.php?oid=' + _params[0] + '&id=' + _params[1] + '&hash=' + _hash  + '&hd=1';
-          return makeInlineFrame(_vk_embed, _link);
+          return makeInlineFrame(_vk_embed, _link, false);
         }
       };
 
       _xhr.onerror = _xhr.ontimeout = _xhr.onabort = function () {
         _link.href = _vk_url;
-        _link.insertAdjacentHTML('beforeEnd','<span> [Attempt to embed failed]</span>');
+        _link.insertAdjacentHTML('beforeEnd', '<span> [Attempt to embed failed]</span>');
       };
 
       _xhr.send(null);
@@ -244,12 +254,12 @@
       _xdr.onload = function () {
         var _hash = _xdr.responseText.match(/hash2[^0-9a-f]*([0-9a-f]*)/)[1];
         var _vk_embed = 'https://vk.com/video_ext.php?oid=' + _params[0] + '&id=' + _params[1] + '&hash=' + _hash  + '&hd=1';
-        return makeInlineFrame(_vk_embed, _link);
+        return makeInlineFrame(_vk_embed, _link, false);
       };
 
       _xdr.onerror = _xdr.ontimeout = function () {
         _link.href = _vk_url;
-        _link.insertAdjacentHTML('beforeEnd','<span> [Attempt to embed failed]</span>');
+        _link.insertAdjacentHTML('beforeEnd', '<span> [Attempt to embed failed]</span>');
       };
 
       win.setTimeout(function () {
@@ -259,8 +269,26 @@
     }
   }
 
+  function makeVideo (url, to_replace) {
+    var _16x9_div = doc.createElement('div');
+    var _video = doc.createElement('video');
 
-  function makeInlineFrame (url, to_replace) {
+    _16x9_div.setAttribute('style', 'position:relative;padding-bottom:56.2%;overflow:hidden;');
+    _16x9_div.appendChild(_video);
+    _video.setAttribute('style', 'position:absolute;top:0;left:auto;right:auto;bottom:0;margin:0 auto;width:auto;height:100%;overflow:hidden;');
+    _video.setAttribute('controls', 'controls');
+    _video.setAttribute('muted', 'muted');
+    _video.setAttribute('crossorigin', 'anonymous');
+    _video.setAttribute('webkitplaysinline', 'webkitplaysinline');
+    _video.setAttribute('playsinline', 'playsinline');
+    _video.setAttribute('src', url);
+
+    if (to_replace && to_replace.nodeType === 1) {
+      to_replace.parentNode.replaceChild(_16x9_div, to_replace);
+    }
+  }
+
+  function makeInlineFrame (url, to_replace, sandbox) {
     // create a div with 16:9 aspect ratio (responsive) and iframe positioned absolute within
     var _16x9_div = doc.createElement('div');
     var _iframe = doc.createElement('iframe');
@@ -269,10 +297,13 @@
     _16x9_div.appendChild(_iframe);
     _iframe.setAttribute('style', 'position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;overflow:hidden;');
     _iframe.setAttribute('allowtransparency', 'true');
-    //_iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
     _iframe.setAttribute('frameborder', 'no');
     _iframe.setAttribute('scrolling', 'no');
     _iframe.src = url;
+
+    if (!!sandbox) {
+      _iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
+    }
 
     if ('allowFullscreen' in _iframe) {
       _iframe.setAttribute('allowFullscreen', 'allowFullscreen');
