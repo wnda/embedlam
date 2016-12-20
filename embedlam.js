@@ -59,15 +59,23 @@
         break;
 
       case !!(_url.match(/(youtu\.be\/\w+)/)):
-        _iframe_src = 'https://www.youtube.com/embed/' + _url.match(/[^\/]+$/)[0];
+        _iframe_src = 'https://www.youtube.com/embed/' + _url.match(/([^\/]+$)/)[0];
+        break;
+
+      case !!(_url.match(/(youtube\.com\/embed\/\w+)/)):
+        _iframe_src = _url;
+        break;
+
+      case !!(_url.match(/(youtube\.com\/v\/\w+)/)):
+        _iframe_src = _url.match(/([^\/]+$)/)[0];
         break;
 
       case !!(_url.match(/(youtube\.com\/playlist\?list=\w+)/)):
-        _iframe_src = 'https://www.youtube.com/embed/videoseries?list=' + getParems(_url).list;
+        _iframe_src = 'https://www.youtube.com/embed/videoseries?list=' + getParams(_url).list;
         break;
 
       case !!(_url.match(/(vimeo\.com\/\w+)/)):
-        _iframe_src = 'https://player.vimeo.com/video/' + _url.match(/[^\/]+$/)[0] + '?portrait=0';
+        _iframe_src = 'https://player.vimeo.com/video/' + _url.match(/([^\/]+$)/)[0] + '?portrait=0';
         break;
 
       case !!(_url.match(/(facebook\.com\/\w+\/videos\/\w+)/)):
@@ -75,19 +83,69 @@
         break;
 
       case !!(_url.match(/(twitch\.tv\/\w+\/v\/\w+)/)):
-        _iframe_src = 'https://player.twitch.tv/?video=v' + _url.match(/[^\/]+$/)[0];
+        _iframe_src = 'https://player.twitch.tv/?video=v' + _url.match(/([^\/]+$)/)[0];
         break;
 
       case !!(_url.match(/(twitch\.tv\/\w+)/)):
-        _iframe_src = 'https://player.twitch.tv/?channel=' + _url.match(/[^\/]+$/)[0];
+        _iframe_src = 'https://player.twitch.tv/?channel=' + _url.match(/([^\/]+$)/)[0];
         break;
 
-      case !!(url.match(/(dailymotion\.com\/video\/\w+)/)):
+      case !!(_url.match(/(dailymotion\.com\/video\/\w+)/)):
         _iframe_src = 'https://www.dailymotion.com/embed/video/' + _url.match(/([^\/]+$)/)[0].split('_')[0];
         break;
-      case !!(url.match(/(dailymotion\.com\/embed\/video\/\w+)/)):
+
+      case !!(_url.match(/(dailymotion\.com\/embed\/video\/\w+)/)):
         _iframe_src = _url;
         break;
+
+      case !!(_url.match(/(bandcamp\.com\/EmbeddedPlayer\/\w+)/)):
+        _iframe_src = _url;
+        break;
+
+      case !!(_url.match(/(spotify\.com\/user\/\w+\/playlist\/\w+)/)):
+        _iframe_src = 'https://embed.spotify.com/?uri=spotify:user:' + (_url.split('/')[0] !== 'https:' ? _url.split('/')[2] : _url.split('/')[4]) + '/playlist/' + _url.match(/([^\/]+$)/)[0];
+        break;
+
+      case !!(_url.match(/(spotify\.com\/track\/\w+)/)):
+        _iframe_src = 'https://embed.spotify.com/?uri=spotify:track:' + _url.match(/([^\/]+$)/)[0];
+        break;
+
+      case !!(_url.match(/(open\.spotify\.com\/embed\?\w+)/)):
+        _iframe_src = _url;
+        break;
+
+      case !!(_url.match(/(embed\.spotify\.com\/\?\w+)/)):
+        _iframe_src = _url;
+        break;
+
+      case !!(_url.match(/(vine\.co\/v\/\w+)/)):
+        _iframe_src = _url + '/embed/postcard';
+        break;
+
+      case !!(_url.match(/(api\.soundcloud\.com\/tracks\/\w+)/)):
+        _iframe_src = 'https://w.soundcloud.com/player/?url=' + win.encodeURIComponent(_url) + '&auto_play=false&show_artwork=true&color=0066cc';
+        break;
+
+      case !!(url.match(/(imgur\.com\/\/a\/\w+\/embed\?)/)):
+        _iframe_src = _url;
+        break;
+
+      case !!(url.match(/(imgur\.com\/\w+\/embed\?)/)):
+        _iframe_src = _url;
+        break;
+
+      case !!(_url.match(/(imgur\.com\/gallery\/\w+)/)):
+        _iframe_src = 'https://imgur.com/a/' + _url.match(/([^\/]+$)/)[0] + '/embed?pub=true&analytics=false'
+        break;
+
+      case !!(_url.match(/(imgur\.com\/a\/\w+)/)):
+        _iframe_src = _url + '/embed?pub=true&analytics=false';
+        break;
+
+      case !!(url.match(/(imgur\.com\/\w+)/)):
+        _iframe_src = _url + '/embed?analytics=false';
+        break;
+
 /*
       case !!(_url.match(/(vk\.com\/video\?\w+)/)):
         _params = getParams(a).z[0].match(/[^video]+$/)[0].split('_');
@@ -101,17 +159,6 @@
         _iframe_src = 'http://vk.com/video_ext.php?oid=' + _params[0] + '&id=' + _params[1] + '&hash=' + _hash + '&hd=1';
         break;
 */
-      case !!(_url.match(/(vine\.co\/v\/\w+)/)):
-        _iframe_src = _url + '/embed/postcard';
-        break;
-
-      case !!(_url.match(/(api\.soundcloud\.com\/tracks\/\w+)/)):
-        _iframe_src = 'https://w.soundcloud.com/player/?url=' + win.encodeURIComponent(_url) + '&auto_play=false&show_artwork=true&color=0066cc';
-        break;
-
-      case !!(_url.match(/(youtube\.com\/embed\/\w+)/)):
-        _iframe_src = _url;
-        break;
 
       default:
         _iframe_src = '';
