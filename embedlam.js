@@ -1,5 +1,7 @@
 ;(function (win, doc) {
 
+  'use strict';
+
   if ( !('performance' in win) ) {
     win.performance = {
       'now': function () { return new win.Date().getTime() }
