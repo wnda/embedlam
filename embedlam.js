@@ -275,7 +275,7 @@
     var _16x9_div = doc.createElement('div');
     var _video = doc.createElement('video');
 
-    _16x9_div.setAttribute('style', 'position:relative;padding-bottom:56.2%;overflow:hidden;');
+    _16x9_div.setAttribute('style', 'position:relative;padding-bottom:56.2%;overflow:hidden;background-color:#444;');
     _16x9_div.appendChild(_video);
     _video.setAttribute('style', 'position:absolute;top:0;left:auto;right:auto;bottom:0;margin:0 auto;width:auto;height:100%;overflow:hidden;');
     _video.setAttribute('controls', 'controls');
@@ -295,7 +295,7 @@
     var _16x9_div = doc.createElement('div');
     var _iframe = doc.createElement('iframe');
 
-    _16x9_div.setAttribute('style', 'position:relative;padding-bottom:56.2%;overflow:hidden;');
+    _16x9_div.setAttribute('style', 'position:relative;padding-bottom:56.2%;overflow:hidden;background-color:#444;');
     _16x9_div.appendChild(_iframe);
     _iframe.setAttribute('style', 'position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;overflow:hidden;');
     _iframe.setAttribute('allowtransparency', 'true');
