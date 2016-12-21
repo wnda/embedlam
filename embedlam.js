@@ -21,9 +21,10 @@
     // this way, we don't need to rely on [].forEach's closure, and we can
     // use the much faster standard for loop.
     var iframe_src = '';
+    var len = anchors.length;
     var i = 0;
 
-    for (; i < anchors.length; ++i) {
+    for (; i < len; ++i) {
 
       if (typeof anchors[i].href === 'undefined' || anchors[i].href.length < 5 || !isInViewport(anchors[i])) {
         // skip links that have no href, are hashlinks, or are not visible
@@ -286,7 +287,7 @@
     // and include the hash as a parameter in the embed URL.
     var _proxy = 'https://cors-anywhere.herokuapp.com/';
     var _vk_url = _proxy + 'https://vk.com/video' + _params[0] + '_' + _params[1];
-    var _xhr = 'XMLHttpRequest' in win ? new XMLHttpRequest() : {};
+    var _xhr = 'XMLHttpRequest' in win ? new win.XMLHttpRequest() : {};
     var _xdr;
 
     if ('fetch' in win) {
@@ -333,7 +334,7 @@
       // NB: absolute no clue whether XDR would actually work for this
       // or whether string.match works in IE8-9
 
-      _xdr = new XDomainRequest();
+      _xdr = new win.XDomainRequest();
       _xdr.open('GET', _vk_url);
 
       _xdr.onload = function () {
