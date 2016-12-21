@@ -26,7 +26,7 @@
 
     for (; i < len; ++i) {
 
-      if (typeof anchors[i].href === 'undefined' || anchors[i].href.length < 5 || !isInViewport(anchors[i])) {
+      if (!('href' in anchors[i]) || !anchors[i].href || anchors[i].href.length < 5 || !isInViewport(anchors[i])) {
         // skip links that have no href, are hashlinks, or are not visible
         // we could later expose an API to only select anchors with a data-attribute like 'data-embed-me=true'
         continue;
