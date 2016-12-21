@@ -384,7 +384,7 @@
 
     _16x9_div.setAttribute('style', 'position:relative;padding-bottom:56.2%;overflow:hidden;background-color:#444;');
     _16x9_div.appendChild(_video);
-    _video.setAttribute('style', 'position:absolute;top:0;left:auto;right:auto;bottom:0;margin:0 auto;width:auto;height:100%;overflow:hidden;');
+    _video.setAttribute('style', 'position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;overflow:hidden;');
     _video.setAttribute('controls', 'controls');
     _video.setAttribute('muted', 'muted');
     _video.setAttribute('webkitplaysinline', 'webkitplaysinline');
@@ -403,7 +403,7 @@
 
     _4x1_div.setAttribute('style', 'position:relative;padding-bottom:22%;overflow:hidden;background-color:#444;');
     _4x1_div.appendChild(_audio);
-    _audio.setAttribute('style', 'position:absolute;top:0;left:auto;right:auto;bottom:0;margin:0 auto;width:auto;height:100%;overflow:hidden;');
+    _audio.setAttribute('style', 'position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;overflow:hidden;');
     _audio.setAttribute('controls', 'controls');
     _audio.setAttribute('muted', 'muted');
     _audio.insertAdjacentHTML('afterBegin', '<source src="' + url + '" type="audio/' + type + '"></source>');
