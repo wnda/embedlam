@@ -12,7 +12,7 @@
   checkDocument();
 
   // subsequent checks
-  win.addEventListener('scroll', debounce(checkDocument, 100), false);
+  win.addEventListener('scroll', debounce(checkDocument, 500), false);
 
   function checkDocument () {
     var nodes = [].slice.call(doc.getElementsByTagName('a'));
@@ -47,7 +47,7 @@
 
     switch (true) {
 
-      case !!(_url.match(/(\.mp4|\.webm)/)):
+      case !!(_url.match(/\.mp4|\.webm/)):
         if ('HTMLVideoElement' in win) {
           _len = _by_dot.length;
           if (_by_dot[_len - 1] === 'mp4' || _by_dot[_len - 1] === 'webm') {
@@ -56,114 +56,118 @@
         }
         break;
 
-      case !!(_url.match(/(youtube\.com\/embed\/\w+)/)):
+      case !!(_url.match(/youtube\.com\/embed\/\w+/)):
         _iframe_src = _url;
         break;
 
-      case !!(_url.match(/(youtube\.com\/watch\?v=\w+)/)):
+      case !!(_url.match(/youtube\.com\/watch\?v=\w+/)):
         _iframe_src = 'https://www.youtube.com/embed/' + getParams(_url).v;
         break;
 
-      case !!(_url.match(/(youtu\.be\/\w+)/)):
-        _iframe_src = 'https://www.youtube.com/embed/' + _url.match(/([^\/]+$)/)[0];
+      case !!(_url.match(/youtu\.be\/\w+/)):
+        _iframe_src = 'https://www.youtube.com/embed/' + _url.match(/[^\/]+$/)[0];
         break;
 
-      case !!(_url.match(/(youtube\.com\/v\/\w+)/)):
-        _iframe_src = 'https://www.youtube.com/embed/' + _url.match(/([^\/]+$)/)[0];
+      case !!(_url.match(/youtube\.com\/v\/\w+/)):
+        _iframe_src = 'https://www.youtube.com/embed/' + _url.match(/[^\/]+$/)[0];
         break;
 
-      case !!(_url.match(/(youtube\.com\/playlist\?list=\w+)/)):
+      case !!(_url.match(/youtube\.com\/playlist\?list=\w+/)):
         _iframe_src = 'https://www.youtube.com/embed/videoseries?list=' + getParams(_url).list;
         break;
 
-      case !!(_url.match(/(player\.vimeo\.com\/video\/\w+)/)):
+      case !!(_url.match(/player\.vimeo\.com\/video\/\w+/)):
         _iframe_src = _url;
         break;
 
-      case !!(_url.match(/(vimeo\.com\/\w+)/)):
-        _iframe_src = 'https://player.vimeo.com/video/' + _url.match(/([^\/]+$)/)[0] + '?portrait=0';
+      case !!(_url.match(/vimeo\.com\/\w+/)):
+        _iframe_src = 'https://player.vimeo.com/video/' + _url.match(/[^\/]+$/)[0] + '?portrait=0';
         break;
 
-      case !!(_url.match(/(facebook\.com\/\w+\/videos\/\w+)/)):
+      case !!(_url.match(/facebook\.com\/\w+\/videos\/\w+/)):
         _iframe_src = 'https://www.facebook.com/v2.8/plugins/video.php?href=' + win.encodeURIComponent(_url);
         break;
 
-      case !!(_url.match(/(twitch\.tv\/\w+\/v\/\w+)/)):
-        _iframe_src = 'https://player.twitch.tv/?video=v' + _url.match(/([^\/]+$)/)[0];
+      case !!(_url.match(/twitch\.tv\/\w+\/v\/\w+/)):
+        _iframe_src = 'https://player.twitch.tv/?video=v' + _url.match(/[^\/]+$/)[0];
         break;
 
-      case !!(_url.match(/(twitch\.tv\/\w+)/)):
-        _iframe_src = 'https://player.twitch.tv/?channel=' + _url.match(/([^\/]+$)/)[0];
+      case !!(_url.match(/twitch\.tv\/\w+/)):
+        _iframe_src = 'https://player.twitch.tv/?channel=' + _url.match(/[^\/]+$/)[0];
         break;
 
-      case !!(_url.match(/(dailymotion\.com\/embed\/video\/\w+)/)):
+      case !!(_url.match(/dailymotion\.com\/embed\/video\/\w+/)):
         _iframe_src = _url;
         break;
 
-      case !!(_url.match(/(dailymotion\.com\/video\/\w+)/)):
-        _iframe_src = 'https://www.dailymotion.com/embed/video/' + _url.match(/([^\/]+$)/)[0].split('_')[0];
+      case !!(_url.match(/dailymotion\.com\/video\/\w+/)):
+        _iframe_src = 'https://www.dailymotion.com/embed/video/' + _url.match(/[^\/]+$/)[0].split('_')[0];
         break;
 
-      case !!(_url.match(/(bandcamp\.com\/EmbeddedPlayer\/\w+)/)):
+      case !!(_url.match(/bandcamp\.com\/EmbeddedPlayer\/\w+/)):
         _iframe_src = _url;
         break;
 
-      case !!(_url.match(/(open\.spotify\.com\/embed\?\w+)/)):
+      case !!(_url.match(/open\.spotify\.com\/embed\?\w+/)):
         _iframe_src = _url;
         break;
 
-      case !!(_url.match(/(embed\.spotify\.com\/\?\w+)/)):
+      case !!(_url.match(/embed\.spotify\.com\/\?\w+/)):
         _iframe_src = _url;
         break;
 
-      case !!(_url.match(/(spotify\.com\/user\/\w+\/playlist\/\w+)/)):
-        _iframe_src = 'https://embed.spotify.com/?uri=spotify:user:' + (_url.split('/')[0] !== 'https:' ? _url.split('/')[2] : _url.split('/')[4]) + '/playlist/' + _url.match(/([^\/]+$)/)[0];
+      case !!(_url.match(/spotify\.com\/user\/\w+\/playlist\/\w+/)):
+        _iframe_src = 'https://embed.spotify.com/?uri=spotify:user:' + (_url.split('/')[0] !== 'https:' ? _url.split('/')[2] : _url.split('/')[4]) + '/playlist/' + _url.match(/[^\/]+$/)[0];
         break;
 
-      case !!(_url.match(/(spotify\.com\/track\/\w+)/)):
-        _iframe_src = 'https://embed.spotify.com/?uri=spotify:track:' + _url.match(/([^\/]+$)/)[0];
+      case !!(_url.match(/spotify\.com\/track\/\w+/)):
+        _iframe_src = 'https://embed.spotify.com/?uri=spotify:track:' + _url.match(/[^\/]+$/)[0];
         break;
 
-      case !!(_url.match(/(vine\.co\/v\/\w+)/)):
+      case !!(_url.match(/vine\.co\/v\/\w+/)):
         _iframe_src = _url + '/embed/postcard';
         break;
 
-      case !!(_url.match(/(api\.soundcloud\.com\/tracks\/\w+)/)):
+      case !!(_url.match(/api\.soundcloud\.com\/tracks\/\w+/)):
         _iframe_src = 'https://w.soundcloud.com/player/?url=' + win.encodeURIComponent(_url) + '&auto_play=false&show_artwork=true&color=0066cc';
         break;
 
-      case !!(_url.match(/(imgur\.com\/\/a\/\w+\/embed\?)/)):
+      case !!(_url.match(/imgur\.com\/\/a\/\w+\/embed\?/)):
         _iframe_src = _url;
         break;
 
-      case !!(_url.match(/(imgur\.com\/\w+\/embed\?)/)):
+      case !!(_url.match(/imgur\.com\/\w+\/embed\?/)):
         _iframe_src = _url;
         break;
 
-      case !!(_url.match(/(imgur\.com\/gallery\/\w+)/)):
-        _iframe_src = 'https://imgur.com/a/' + _url.match(/([^\/]+$)/)[0] + '/embed?pub=true&analytics=false'
+      case !!(_url.match(/imgur\.com\/gallery\/\w+/)):
+        _iframe_src = 'https://imgur.com/a/' + _url.match(/[^\/]+$/)[0] + '/embed?pub=true&analytics=false'
         break;
 
-      case !!(_url.match(/(imgur\.com\/a\/\w+)/)):
+      case !!(_url.match(/imgur\.com\/a\/\w+/)):
         _iframe_src = _url + '/embed?pub=true&analytics=false';
         break;
 
-      case !!(_url.match(/(gfycat\.com\/ifr\/\w+)/)):
+      case !!(_url.match(/gfycat\.com\/ifr\/\w+/)):
         _iframe_src = _url;
         break;
 
-      case !!(_url.match(/(vk\.com\/video\?\w+)/)):
+      case !!(_url.match(/gfycat\.com\/([A-Z][a-z]*)([A-Z][a-z]*)([A-Z][a-z]*)/)):
+        _iframe_src = 'https://gfycat.com/ifr/' + _url.match(/[^\/]+$/)[0];
+        break;
+
+      case !!(_url.match(/vk\.com\/video\?\w+/)):
         if ('fetch' in win || 'XMLHttpRequest' in win || 'XDomainRequest' in win) {
-          _params = getParams(a).z[0].match(/([^video]+$)/)[0].split('_');
+          _params = getParams(a).z[0].match(/[^video]+$/)[0].split('_');
           _link.href = '#';
           _link.className = 'fetching';
           embedVK(_params, _link);
         }
         break;
 
-      case !!(_url.match(/(vk\.com\/video-\w+)/)):
+      case !!(_url.match(/vk\.com\/video-\w+/)):
         if ('fetch' in win || 'XMLHttpRequest' in win || 'XDomainRequest' in win) {
-          _params = _url.match(/([^\/]+$)/)[0].match(/([^video]+$)/)[0].split('_');
+          _params = _url.match(/[^\/]+$/)[0].match(/[^video]+$/)[0].split('_');
           _link.href = '#';
           _link.className = 'fetching';
           embedVK(_params, _link);
