@@ -45,8 +45,9 @@
 
     var _url = _link.href;         // cache href contents
     var _by_dot = _url.split('.'); // cache url divided by periods
-    var _iframe_src;               // initialise the variable we will eventually return
+    var _len;                      // initialise length of array of _by_dot
     var _params;                   // initialise an array for URL parameters
+    var _iframe_src;               // initialise the variable we will eventually return
 
     // rewrite urls to use https
     _url = _url.match(/http:/) ? _url.replace('http:', 'https:') : _url;
