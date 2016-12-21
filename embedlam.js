@@ -2,6 +2,8 @@
 
   'use strict';
 
+  var anchors = doc.getElementsByTagName('a');
+
   if (!('performance' in win)) {
     win.performance = {
       'now': function () { return new win.Date().getTime(); }
@@ -18,7 +20,6 @@
     // var is function scoped; initialise a variable outside of the for loop
     // this way, we don't need to rely on [].forEach's closure, and we can
     // use the much faster standard for loop.
-    var anchors = doc.getElementsByTagName('a');
     var len = anchors.length;
     var i = 0;
     var iframe_src = '';
