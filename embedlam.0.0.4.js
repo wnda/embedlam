@@ -17,32 +17,26 @@
   win.addEventListener('scroll', debounce(checkDocument, 500), false);
 
   function checkDocument () {
-    // var is function scoped; initialise a variable outside of the for loop
-    // this way, we don't need to rely on [].forEach's closure, and we can
-    // use the much faster standard for loop.
-    var len = anchors.length;
-    var i = 0;
-    var iframe_src = '';
 
-    for (; i < len; ++i) {
+    [].slice.call(anchors).forEach(function(link){
 
-      if (!anchors[i].href || anchors[i].href.length < 5 || !isInViewport(anchors[i])) {
+      var iframe_src = '';
+
+      if (typeof link === 'undefined' || typeof link.href === 'undefined' || !link.href || link.href.length < 5 || !isInViewport(link)) {
         // skip links that have no href, are hashlinks, or are not visible
         // we could later expose an API to only select anchors with a data-attribute like 'data-embed-me=true'
-        continue;
+        return;
       }
 
       // send the anchor's href contents to the embed URL encoder
-      iframe_src = processUrl(anchors[i]);
+      iframe_src = processUrl(link);
 
       if (typeof iframe_src === 'string' && iframe_src.length > 0) {
         // send the processed embed URL to the iframe factory
-        makeInlineFrame(iframe_src, anchors[i], true);
-
-        // reset variable
-        iframe_src = '';
+        makeInlineFrame(iframe_src, link, true);
       }
-    }
+
+    });
   }
 
   function processUrl (_link) {
