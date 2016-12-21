@@ -2,9 +2,11 @@
 
   'use strict';
 
+  var anchors = doc.getElementsByTagName('a');
+
   if (!('performance' in win)) {
     win.performance = {
-      'now': function () { return new win.Date().getTime() }
+      'now': function () { return new win.Date().getTime(); }
     };
   }
 
@@ -15,22 +17,20 @@
   win.addEventListener('scroll', debounce(checkDocument, 500), false);
 
   function checkDocument () {
-    var nodes = [].slice.call(doc.getElementsByTagName('a'));
+    var iframe_src = '';
+    for (var i = 0; i < anchors.length; ++i) {
 
-    nodes.forEach(function (link) {
-      var iframe_src = '';
-      var vid_query_string = '';
-
-      if (typeof link.href === 'undefined' || link.href.length < 5 || !isInViewport(link)) {
-        return;
+      if (typeof anchors[i].href === 'undefined' || anchors[i].href.length < 5 || !isInViewport(anchors[i])) {
+        continue;
       }
 
-      iframe_src = processUrl(link);
+      iframe_src = processUrl(anchors[i]);
 
       if (typeof iframe_src === 'string' && iframe_src.length > 0) {
-        makeInlineFrame(iframe_src, link, true);
+        makeInlineFrame(iframe_src, anchors[i], true);
+        iframe_src = '';
       }
-    });
+    }
   }
 
   function processUrl (_link) {
@@ -141,7 +141,7 @@
         break;
 
       case !!(_url.match(/imgur\.com\/gallery\/\w+/)):
-        _iframe_src = 'https://imgur.com/a/' + _url.match(/[^\/]+$/)[0] + '/embed?pub=true&analytics=false'
+        _iframe_src = 'https://imgur.com/a/' + _url.match(/[^\/]+$/)[0] + '/embed?pub=true&analytics=false';
         break;
 
       case !!(_url.match(/imgur\.com\/a\/\w+/)):
@@ -154,6 +154,10 @@
 
       case !!(_url.match(/gfycat\.com\/([A-Z][a-z]*)([A-Z][a-z]*)([A-Z][a-z]*)/)):
         _iframe_src = 'https://gfycat.com/ifr/' + _url.match(/[^\/]+$/)[0];
+        break;
+
+      case !!(_url.match(/google\..*@[^A-Za-z]+,/)):
+        makeStaticMap(_url, _link);
         break;
 
       case !!(_url.match(/vk\.com\/video\?\w+/)):
@@ -322,6 +326,38 @@
     }
   }
 
+  function makeStaticMap (url, to_replace) {
+    var _16x9_div = doc.createElement('div');
+    var _img = doc.createElement('img');
+    var _latlang = url.match(/@([^A-Za-z]+,)/)[0].slice(0,-1).replace('@', '');
+    _16x9_div.setAttribute('style', 'position:relative;padding-bottom:56.2%;overflow:hidden;background-color:#444;cursor:pointer;');
+
+    if (to_replace && to_replace.nodeType === 1) {
+      to_replace.parentNode.replaceChild(_16x9_div, to_replace);
+    }
+
+    if ('transform' in _img.style) {
+      _img.setAttribute('style', 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;');
+    } else {
+      _img.setAttribute('style', 'width:100%;height:auto;');
+    }
+
+    _img.alt = 'Google Map';
+    _img.src = 'https://maps.googleapis.com/maps/api/staticmap?center=' +
+               _latlang +
+               '&size=' + _16x9_div.clientWidth + 'x' + _16x9_div.clientHeight +
+               '&sensor=false&maptype=roadmap&zoom=' +
+               url.match(/,\d\dz/)[0].replace(',', '').replace('z', '') +
+               '&markers=' + _latlang +
+               '&key=AIzaSyAf7V-aqUb-Guull54mvfrH61hFUbNPqvM';
+
+    _16x9_div.appendChild(_img);
+    _16x9_div.addEventListener('click', function(){
+      win.open(url);
+    }, false);
+
+  }
+
   function isInViewport (el) {
     var r = el.getBoundingClientRect();
     return (r.top >= 0 && r.left >= 0 && r.top <= (win.innerHeight || doc.documentElement.clientHeight));
@@ -351,7 +387,7 @@
           f.apply(context, args);
         }
       }
-    }
+    };
   }
 
 })(window, window.document);
