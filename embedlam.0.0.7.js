@@ -387,7 +387,6 @@
     _video.setAttribute('style', 'position:absolute;top:0;left:auto;right:auto;bottom:0;margin:0 auto;width:auto;height:100%;overflow:hidden;');
     _video.setAttribute('controls', 'controls');
     _video.setAttribute('muted', 'muted');
-    _video.setAttribute('crossorigin', 'anonymous');
     _video.setAttribute('webkitplaysinline', 'webkitplaysinline');
     _video.setAttribute('playsinline', 'playsinline');
     _video.insertAdjacentHTML('afterBegin', '<source src="' + url + '" type="video/' + type + '"></source>');
@@ -407,7 +406,6 @@
     _audio.setAttribute('style', 'position:absolute;top:0;left:auto;right:auto;bottom:0;margin:0 auto;width:auto;height:100%;overflow:hidden;');
     _audio.setAttribute('controls', 'controls');
     _audio.setAttribute('muted', 'muted');
-    _audio.setAttribute('crossorigin', 'anonymous');
     _audio.insertAdjacentHTML('afterBegin', '<source src="' + url + '" type="audio/' + type + '"></source>');
 
     if (to_replace && to_replace.nodeType === 1) {
