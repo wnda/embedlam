@@ -65,7 +65,7 @@
           // may as well embed raw video where/when possible
           _len = _by_dot.length;
           if (_by_dot[_len - 1] === 'mp4' || _by_dot[_len - 1] === 'webm') {
-            makeVideo(_url, _link);
+            makeVideo(_url, _link, _by_dot[_len - 1]);
             // _iframe_src is not modified, and returned as empty string, checkDocument's for loop continues
           }
         }
@@ -76,7 +76,7 @@
           // same goes for audio files
           _len = _by_dot.length;
           if (_by_dot[_len - 1] === 'mp3' || _by_dot[_len - 1] === 'm4a' || _by_dot[_len - 1] === 'wav') {
-            makeAudio(_url, _link);
+            makeAudio(_url, _link, _by_dot[_len - 1]);
           }
         }
         break;
@@ -377,7 +377,7 @@
     }
   }
 
-  function makeVideo (url, to_replace) {
+  function makeVideo (url, to_replace, type) {
     // for the odd occasion where someone posts a link to a raw video
     var _16x9_div = doc.createElement('div');
     var _video = doc.createElement('video');
@@ -390,14 +390,14 @@
     _video.setAttribute('crossorigin', 'anonymous');
     _video.setAttribute('webkitplaysinline', 'webkitplaysinline');
     _video.setAttribute('playsinline', 'playsinline');
-    _video.setAttribute('src', url);
+    _video.insertAdjacentHTML('afterBegin', '<source src="' + url + '" type="video/' + type + '"></source>');
 
     if (to_replace && to_replace.nodeType === 1) {
       to_replace.parentNode.replaceChild(_16x9_div, to_replace);
     }
   }
 
-  function makeAudio(url, to_replace) {
+  function makeAudio(url, to_replace, type) {
     // for the even rarer occasion that someone should post raw audio
     var _4x1_div = doc.createElement('div');
     var _audio = doc.createElement('audio');
@@ -408,6 +408,7 @@
     _audio.setAttribute('controls', 'controls');
     _audio.setAttribute('muted', 'muted');
     _audio.setAttribute('crossorigin', 'anonymous');
+    _audio.insertAdjacentHTML('afterBegin', '<source src="' + url + '" type="audio/' + type + '"></source>');
 
     if (to_replace && to_replace.nodeType === 1) {
       to_replace.parentNode.replaceChild(_4x1_div, to_replace);
