@@ -2,8 +2,6 @@
 
   'use strict';
 
-  var anchors = doc.getElementsByTagName('a');
-
   if (!('performance' in win)) {
     win.performance = {
       'now': function () { return new win.Date().getTime(); }
@@ -20,13 +18,14 @@
     // var is function scoped; initialise a variable outside of the for loop
     // this way, we don't need to rely on [].forEach's closure, and we can
     // use the much faster standard for loop.
-    var iframe_src = '';
+    var anchors = doc.getElementsByTagName('a');
     var len = anchors.length;
     var i = 0;
+    var iframe_src = '';
 
     for (; i < len; ++i) {
 
-      if (!('href' in anchors[i]) || !anchors[i].href || anchors[i].href.length < 5 || !isInViewport(anchors[i])) {
+      if (!anchors[i].href || anchors[i].href.length < 5 || !isInViewport(anchors[i])) {
         // skip links that have no href, are hashlinks, or are not visible
         // we could later expose an API to only select anchors with a data-attribute like 'data-embed-me=true'
         continue;
