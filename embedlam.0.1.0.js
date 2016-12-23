@@ -14,6 +14,8 @@
   checkDocument();
 
   // subsequent checks
+  win.addEventListener('DOMContentLoaded', checkDocument, false);
+  win.addEventListener('load', checkDocument, false);
   win.addEventListener('scroll', debounce(checkDocument, 500), false);
 
   function checkDocument () {
