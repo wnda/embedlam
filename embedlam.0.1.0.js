@@ -2,7 +2,13 @@
 
   'use strict';
 
+  // prep variable
   var anchors;
+
+  // polyfill [].forEach
+  if (!Array.prototype.forEach) {
+    Array.prototype.forEach = forEach;
+  }
 
   // polyfill window.performance for debouncer
   if (!('performance' in win)) {
@@ -349,12 +355,10 @@
           var _hash = resptxt.match(/hash2[^0-9a-f]*([0-9a-f]*)/)[1];
           var _vk_embed = 'https://vk.com/video_ext.php?oid=' + _params[0] + '&id=' + _params[1] + '&hash=' + _hash  + '&hd=1';
           return makeInlineFrame(_vk_embed, _link, false);
-
         }).catch(function (e) {
           _link.href = _vk_url;
           _link.insertAdjacentHTML('beforeEnd', '<span> [Attempt to embed failed]</span>');
         });
-
       }).catch(function (e) {
         _link.href = _vk_url;
         _link.insertAdjacentHTML('beforeEnd', '<span> [Attempt to embed failed]</span>');
@@ -556,6 +560,7 @@
                _16x9_div.clientHeight + '&sensor=false&maptype=roadmap&zoom=' +
                url.match(/,\d\dz/)[0].replace(',', '').replace('z', '') +
                '&markers=' + _latlang + '&key=AIzaSyAf7V-aqUb-Guull54mvfrH61hFUbNPqvM';
+
     _img.alt = 'Google Map';
     _img.title = 'Google Map: ' + _latlang;
     _img.setAttribute('data-url', win.encodeURIComponent(url));
@@ -604,15 +609,36 @@
     };
   }
 
+  function forEach(callback, thisArg) {
+    var T, k, O, len, kValue;
+    if (this === null) {
+      throw new TypeError(' this is null or not defined');
+    }
+    O = Object(this);
+    len = O.length >>> 0;
+    if (typeof callback !== "function") {
+      throw new TypeError(callback + ' is not a function');
+    }
+    if (arguments.length > 1) {
+      T = thisArg;
+    }
+    k = 0;
+    while (k < len) {
+      if (k in O) {
+        kValue = O[k];
+        callback.call(T, kValue, k, O);
+      }
+      k++;
+    }
+  }
+
   function addEvent (w, x, y) {
     // typical, crap polyfill for addEventListener
     switch (true) {
       case ('addEventListener' in win):
         return w.addEventListener(x, y, false);
-
       case ('attachEvent' in win):
         return w.attachEvent(x, y);
-
       default:
         w['on' + x] = y;
     }
@@ -625,13 +651,11 @@
     if (typeof e !== 'object' || !e) {
       return;
     }
-
     evt = (e.currentTarget || this);
 
     if (!('getAttribute' in evt)) {
       return;
     }
-
     return win.open(win.decodeURIComponent(evt.getAttribute('data-url')));
   }
 
