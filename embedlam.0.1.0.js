@@ -2,21 +2,24 @@
 
   'use strict';
 
-  var anchors = doc.getElementsByTagName('a');
+  var anchors;
 
   if (!('performance' in win)) {
     win.performance = {
-      'now': function () { return new win.Date().getTime(); }
+      'now': function () { return new win.Date().getTime() }
     };
   }
+
+  // assign all HTMLAnchors to the list to process
+  anchors = doc.getElementsByTagName('a');
 
   // initial check
   checkDocument();
 
   // subsequent checks
-  win.addEventListener('DOMContentLoaded', checkDocument, false);
-  win.addEventListener('load', checkDocument, false);
-  win.addEventListener('scroll', debounce(checkDocument, 500), false);
+  addEvent(win, 'DOMContentLoaded', checkDocument);
+  addEvent(win, 'load', checkDocument);
+  addEvent(win, 'scroll', debounce(checkDocument, 500));
 
   function checkDocument (e) {
 
@@ -444,9 +447,7 @@
     to_replace.parentNode.replaceChild(_16x9_div, to_replace);
 
     // add click handler to imitate link
-    _16x9_div.addEventListener('click', function() {
-      win.open(url);
-    }, false);
+    addEvent(_16x9_div, 'click', fakeLink);
   }
 
   function makeVideo (url, to_replace, type) {
@@ -540,9 +541,7 @@
     // it's a static map, so it should be possible to provide a clickable link to an interactive map
     // if we create a standard anchor element, it will be grabbed by getElementsByTagName
     // we can safely say javascript is enabled, so attach an event listener to the 16:9 div instead
-    _16x9_div.addEventListener('click', function() {
-      win.open(url);
-    }, false);
+    addEvent(_16x9_div, 'click', fakeLink);
   }
 
   function isInViewport (el) {
@@ -581,4 +580,22 @@
       }
     };
   }
+
+  function addEvent (w, x, y) {
+    switch (true) {
+      case ('addEventListener' in win):
+        w.addEventListener(x, y, false);
+        break;
+      case ('attachEvent' in win):
+        w.attachEvent(x, y);
+        break;
+      default:
+        w['on' + x] = y;
+    }
+  }
+
+  function fakeLink () {
+    return win.open(url);
+  }
+
 })(window, window.document);
