@@ -45,7 +45,6 @@
         // send the processed embed URL to the iframe factory
         makeInlineFrame(iframe_src, link, true);
       }
-
     });
   }
 
@@ -415,7 +414,7 @@
     to_replace.parentNode.replaceChild(_16x9_div, to_replace);
   }
 
-  function makeImage(url, to_replace) {
+  function makeImage (url, to_replace) {
     // create a div with 16:9 aspect ratio (responsive) and img positioned absolutely within
     var _16x9_div;
     var _img;
@@ -427,15 +426,15 @@
     _16x9_div = doc.createElement('div');
     _img = doc.createElement('img');
 
-    _16x9_div.setAttribute('style', 'position:relative;padding-bottom:56.2%;overflow:hidden;background-color:#444;');
+    _16x9_div.setAttribute('style', 'position:relative;padding-bottom:56.2%;overflow:hidden;background-color:#444;cursor:pointer;');
     _16x9_div.appendChild(_img);
 
     if ('transform' in _img.style) {
-      _img.setAttribute('style', 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;');
+      _img.setAttribute('style', 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;cursor:pointer;');
     } else if ('webkitTransform' in _img.style) {
-      _img.setAttribute('style', 'position:absolute;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;');
+      _img.setAttribute('style', 'position:absolute;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;cursor:pointer;');
     } else {
-      _img.setAttribute('style', 'width:100%;height:auto;');
+      _img.setAttribute('style', 'width:auto;height:100%;margin:0 auto;cursor:pointer;');
     }
 
     _img.src = url;
@@ -443,6 +442,8 @@
     _img.title = to_replace.textContent ? to_replace.textContent : url;
 
     to_replace.parentNode.replaceChild(_16x9_div, to_replace);
+
+    // add click handler to imitate link
     _16x9_div.addEventListener('click', function() {
       win.open(url);
     }, false);
@@ -472,7 +473,7 @@
     to_replace.parentNode.replaceChild(_16x9_div, to_replace);
   }
 
-  function makeAudio(url, to_replace, type) {
+  function makeAudio (url, to_replace, type) {
     // for the even rarer occasion that someone should post raw audio
     var _4x1_div;
     var _audio;
@@ -514,11 +515,11 @@
     _16x9_div.appendChild(_img);
 
     if ('transform' in _img.style) {
-      _img.setAttribute('style', 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;');
+      _img.setAttribute('style', 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;cursor:pointer;');
     } else if ('webkitTransform' in _img.style) {
-      _img.setAttribute('style', 'position:absolute;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;');
+      _img.setAttribute('style', 'position:absolute;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;cursor:pointer;');
     } else {
-      _img.setAttribute('style', 'width:100%;height:auto;');
+      _img.setAttribute('style', 'width:auto;height:100%;margin:0 auto;cursor:pointer;');
     }
 
     // build the static maps URL. sticking to an aspect ratio
@@ -542,7 +543,6 @@
     _16x9_div.addEventListener('click', function() {
       win.open(url);
     }, false);
-
   }
 
   function isInViewport (el) {
@@ -581,5 +581,4 @@
       }
     };
   }
-
 })(window, window.document);
