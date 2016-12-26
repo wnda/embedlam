@@ -44,7 +44,6 @@
   function processUrl (_link) {
     // Here, we want to analyze the href contents and pair it off with
     // a suitable embed URL, extracting parameters using regexp
-
     var _url = _link.href;         // cache href contents
     var _by_dot = _url.split('.'); // cache url divided by periods
     var _len;                      // initialise length of array of _by_dot
@@ -63,6 +62,25 @@
     switch (true) {
 
       // we need to force a boolean expression ('!!') to match to switch(true)
+      case !!(_url.match(/\.jpg|\.jpeg|\.png|\.apng|\.gif|\.webp|\.bmp|\.ico|\.tiff|\.svg/i)):
+        // embed images if not in img tag already
+        _len = _by_dot.length;
+        switch (_by_dot[_len - 1].toLowerCase()) {
+          case 'jpg':
+          case 'jpeg':
+          case 'png':
+          case 'apng':
+          case 'gif':
+          case 'webp':
+          case 'bmp':
+          case 'ico':
+          case 'tiff':
+          case 'svg':
+            makeImage(_url, _link);
+            break;
+        }
+        break;
+
       case !!(_url.match(/\.mp4|\.webm/)):
         if ('HTMLVideoElement' in win) {
           // may as well embed raw video where/when possible
@@ -256,7 +274,9 @@
     var params = {};
     var i;
 
-    if (typeof str !== 'string' || !str) return;
+    if (typeof str !== 'string' || !str) {
+      return;
+    }
 
     query_string = str.replace(/.*?\?/, '') || '';
 
@@ -293,7 +313,6 @@
       // because why not?
       win.fetch(_vk_url, {'mode': 'cors'}).then(function (resp) {
         return resp.text().then(function (resptxt) {
-
           var _hash = resptxt.match(/hash2[^0-9a-f]*([0-9a-f]*)/)[1];
           var _vk_embed = 'https://vk.com/video_ext.php?oid=' + _params[0] + '&id=' + _params[1] + '&hash=' + _hash  + '&hd=1';
           return makeInlineFrame(_vk_embed, _link, false);
@@ -336,7 +355,7 @@
       // or whether string.match works in IE8-9
 
       _xdr = new win.XDomainRequest();
-      _xdr.open('GET', _vk_url);
+      _xdr.open('GET', _vk_url, true);
 
       _xdr.onload = function () {
         var _hash = _xdr.responseText.match(/hash2[^0-9a-f]*([0-9a-f]*)/)[1];
@@ -358,10 +377,16 @@
   }
 
   function makeInlineFrame (url, to_replace, sandbox) {
-    // create a div with 16:9 aspect ratio (responsive) and iframe positioned absolute within
-    var _16x9_div = doc.createElement('div');
-    var _iframe = doc.createElement('iframe');
+    // create a div with 16:9 aspect ratio (responsive) and iframe positioned absolutely within
+    var _16x9_div;
+    var _iframe;
 
+    if (typeof to_replace !== 'object' || !to_replace || to_replace.nodeType !== 1) {
+      return;
+    }
+
+    _16x9_div = doc.createElement('div');
+    _iframe = doc.createElement('iframe');
     _16x9_div.setAttribute('style', 'position:relative;padding-bottom:56.2%;overflow:hidden;background-color:#444;');
     _16x9_div.appendChild(_iframe);
     _iframe.setAttribute('style', 'position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;overflow:hidden;');
@@ -378,15 +403,53 @@
       _iframe.setAttribute('allowFullscreen', 'allowFullscreen');
     }
 
-    if (to_replace && to_replace.nodeType === 1) {
-      to_replace.parentNode.replaceChild(_16x9_div, to_replace);
+    to_replace.parentNode.replaceChild(_16x9_div, to_replace);
+  }
+
+  function makeImage(url, to_replace) {
+    // create a div with 16:9 aspect ratio (responsive) and img positioned absolutely within
+    var _16x9_div;
+    var _img;
+
+    if (typeof to_replace !== 'object' || !to_replace || to_replace.nodeType !== 1) {
+      return;
     }
+
+    _16x9_div = doc.createElement('div');
+    _img = doc.createElement('img');
+
+    _16x9_div.setAttribute('style', 'position:relative;padding-bottom:56.2%;overflow:hidden;background-color:#444;');
+    _16x9_div.appendChild(_img);
+
+    if ('transform' in _img.style) {
+      _img.setAttribute('style', 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;');
+    } else if ('webkitTransform' in _img.style) {
+      _img.setAttribute('style', 'position:absolute;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;');
+    } else {
+      _img.setAttribute('style', 'width:100%;height:auto;');
+    }
+
+    _img.src = url;
+    _img.alt = to_replace.textContent ? to_replace.textContent : 'Image';
+    _img.title = to_replace.textContent ? to_replace.textContent : 'Image';
+
+    to_replace.parentNode.replaceChild(_16x9_div, to_replace);
+    _16x9_div.addEventListener('click', function() {
+      win.open(url);
+    }, false);
   }
 
   function makeVideo (url, to_replace, type) {
     // for the odd occasion where someone posts a link to a raw video
-    var _16x9_div = doc.createElement('div');
-    var _video = doc.createElement('video');
+    var _16x9_div;
+    var _video;
+
+    if (typeof to_replace !== 'object' || !to_replace || to_replace.nodeType !== 1) {
+      return;
+    }
+
+    _16x9_div = doc.createElement('div');
+    _video = doc.createElement('video');
 
     _16x9_div.setAttribute('style', 'position:relative;padding-bottom:56.2%;overflow:hidden;background-color:#444;');
     _16x9_div.appendChild(_video);
@@ -397,15 +460,20 @@
     _video.setAttribute('playsinline', 'playsinline');
     _video.insertAdjacentHTML('afterBegin', '<source src="' + url + '" type="video/' + type + '"></source>');
 
-    if (to_replace && to_replace.nodeType === 1) {
-      to_replace.parentNode.replaceChild(_16x9_div, to_replace);
-    }
+    to_replace.parentNode.replaceChild(_16x9_div, to_replace);
   }
 
   function makeAudio(url, to_replace, type) {
     // for the even rarer occasion that someone should post raw audio
-    var _4x1_div = doc.createElement('div');
-    var _audio = doc.createElement('audio');
+    var _4x1_div;
+    var _audio;
+
+    if (typeof to_replace !== 'object' || !to_replace || to_replace.nodeType !== 1) {
+      return;
+    }
+
+    _4x1_div = doc.createElement('div');
+    _audio = doc.createElement('audio');
 
     _4x1_div.setAttribute('style', 'position:relative;padding-bottom:22%;overflow:hidden;background-color:#444;');
     _4x1_div.appendChild(_audio);
@@ -414,23 +482,27 @@
     _audio.setAttribute('muted', 'muted');
     _audio.insertAdjacentHTML('afterBegin', '<source src="' + url + '" type="audio/' + type + '"></source>');
 
-    if (to_replace && to_replace.nodeType === 1) {
-      to_replace.parentNode.replaceChild(_4x1_div, to_replace);
-    }
+    to_replace.parentNode.replaceChild(_4x1_div, to_replace);
   }
 
   function makeStaticMap (url, to_replace) {
     // direct google maps URLs are not trival to predict/decode, but will typically include latitude and longitude
     // which, fortuitously, is the only requirement for displaying a suitable static maps API substitute
-    var _16x9_div = doc.createElement('div');
-    var _img = doc.createElement('img');
     // latlang is trivial to extract by means of regex, as is the zoom level
-    var _latlang = url.match(/@([^A-Za-z]+,)/)[0].slice(0,-1).replace('@', '');
-    _16x9_div.setAttribute('style', 'position:relative;padding-bottom:56.2%;overflow:hidden;background-color:#444;cursor:pointer;');
+    var _16x9_div;
+    var _img;
+    var _latlang;
 
-    if (to_replace && to_replace.nodeType === 1) {
-      to_replace.parentNode.replaceChild(_16x9_div, to_replace);
+    if (typeof to_replace !== 'object' || !to_replace || to_replace.nodeType !== 1) {
+      return;
     }
+
+    _16x9_div = doc.createElement('div');
+    _img = doc.createElement('img');
+    _latlang = url.match(/@([^A-Za-z]+,)/)[0].slice(0,-1).replace('@', '');
+
+    _16x9_div.setAttribute('style', 'position:relative;padding-bottom:56.2%;overflow:hidden;background-color:#444;cursor:pointer;');
+    _16x9_div.appendChild(_img);
 
     if ('transform' in _img.style) {
       _img.setAttribute('style', 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;');
@@ -450,9 +522,10 @@
                url.match(/,\d\dz/)[0].replace(',', '').replace('z', '') +
                '&markers=' + _latlang +
                '&key=AIzaSyAf7V-aqUb-Guull54mvfrH61hFUbNPqvM';
-
     _img.alt = 'Google Map';
-    _16x9_div.appendChild(_img);
+    _img.title = 'Google Map';
+
+    to_replace.parentNode.replaceChild(_16x9_div, to_replace);
 
     // it's a static map, so it should be possible to provide a clickable link to an interactive map
     // if we create a standard anchor element, it will be grabbed by getElementsByTagName
