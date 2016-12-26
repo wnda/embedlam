@@ -15,7 +15,7 @@ I do not have a solution for the direction the web has taken. But I do have some
 The trick is that it only does the embedding process while the embedded content is visible within the viewport. And debouncing takes care of the problem of the scroll event's expense.
 
 ## No, really, why?
-embedly sticks its ugly logo on content, charges money at some point down the line, and in general is probably a bit too heavy/featureful (not a word) for my liking.  
+embedly sticks its ugly logo on content, charges money at some point down the line, and in general is too heavy for my liking, since it dumps underscore.js and its widget script on the unsuspecting user. It also doesn't detect if the thing to embed is in the viewport.  
 
 ## What's the catch? 
 No catch! Unless you're a developer and you want to extend this lib. You're not going to like my code. I like `switch` statements and I write pretty terse code that could not be classified as team-friendly. Open source software is two things for me: an outlet for my non-team coding, and my opportunity to experiment with ideas. *Caveat emptor*.
