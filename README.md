@@ -34,7 +34,7 @@ When that public method is exposed, the script will no longer execute itself, bu
     <script async defer src="/path/to/embedlam.js"></script>
     <script>
       embedlam.init({
-        "selector": "a[data-embed]"
+        "selector": "a[data-embed]" // -> document.querySelectorAll('a[data-embed]')
       });
     </script>
     
