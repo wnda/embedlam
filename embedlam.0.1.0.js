@@ -443,11 +443,12 @@
     _img.src = url;
     _img.alt = to_replace.textContent ? to_replace.textContent : url;
     _img.title = to_replace.textContent ? to_replace.textContent : url;
+    _img.setAttribute('data-url', win.encodeURIComponent(url));
 
     to_replace.parentNode.replaceChild(_16x9_div, to_replace);
 
     // add click handler to imitate link
-    addEvent(_16x9_div, 'click', fakeLink);
+    addEvent(_img, 'click', fakeLink);
   }
 
   function makeVideo (url, to_replace, type) {
@@ -534,14 +535,15 @@
                '&markers=' + _latlang +
                '&key=AIzaSyAf7V-aqUb-Guull54mvfrH61hFUbNPqvM';
     _img.alt = 'Google Map';
-    _img.title = 'Google Map';
+    _img.title = 'Google Map: ' + _latlang;
+    _img.setAttribute('data-url', win.encodeURIComponent(url));
 
     to_replace.parentNode.replaceChild(_16x9_div, to_replace);
 
     // it's a static map, so it should be possible to provide a clickable link to an interactive map
     // if we create a standard anchor element, it will be grabbed by getElementsByTagName
     // we can safely say javascript is enabled, so attach an event listener to the 16:9 div instead
-    addEvent(_16x9_div, 'click', fakeLink);
+    addEvent(_img, 'click', fakeLink);
   }
 
   function isInViewport (el) {
@@ -584,18 +586,16 @@
   function addEvent (w, x, y) {
     switch (true) {
       case ('addEventListener' in win):
-        w.addEventListener(x, y, false);
-        break;
+        return w.addEventListener(x, y, false);
       case ('attachEvent' in win):
-        w.attachEvent(x, y);
-        break;
+        return w.attachEvent(x, y);
       default:
         w['on' + x] = y;
     }
   }
 
-  function fakeLink () {
-    return win.open(url);
+  function fakeLink (e) {
+    return win.open(win.decodeURIcomponent((e.target||this).getAttribute('data-url')));
   }
 
 })(window, window.document);
