@@ -555,8 +555,7 @@
                _latlang + '&size=' + _16x9_div.clientWidth + 'x' +
                _16x9_div.clientHeight + '&sensor=false&maptype=roadmap&zoom=' +
                url.match(/,\d\dz/)[0].replace(',', '').replace('z', '') +
-               '&markers=' + _latlang +
-               '&key=AIzaSyAf7V-aqUb-Guull54mvfrH61hFUbNPqvM';
+               '&markers=' + _latlang + '&key=AIzaSyAf7V-aqUb-Guull54mvfrH61hFUbNPqvM';
     _img.alt = 'Google Map';
     _img.title = 'Google Map: ' + _latlang;
     _img.setAttribute('data-url', win.encodeURIComponent(url));
