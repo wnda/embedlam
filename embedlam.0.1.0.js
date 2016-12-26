@@ -4,9 +4,10 @@
 
   var anchors;
 
+  // polyfill window.performance for debouncer
   if (!('performance' in win)) {
     win.performance = {
-      'now': function () { return new win.Date().getTime() }
+      'now': function () { return new win.Date().getTime(); }
     };
   }
 
@@ -16,7 +17,7 @@
   // initial check
   checkDocument();
 
-  // subsequent checks
+  // add event listeners for subsequent checks
   addEvent(win, 'DOMContentLoaded', checkDocument);
   addEvent(win, 'load', checkDocument);
   addEvent(win, 'scroll', debounce(checkDocument, 500));
@@ -584,6 +585,7 @@
   }
 
   function addEvent (w, x, y) {
+    // typical, crap polyfill for addEventListener
     switch (true) {
       case ('addEventListener' in win):
         return w.addEventListener(x, y, false);
@@ -595,7 +597,8 @@
   }
 
   function fakeLink (e) {
-    return win.open(win.decodeURIcomponent((e.target||this).getAttribute('data-url')));
+    // for simulating clickable links without creating links
+    return win.open( win.decodeURIComponent( (e.currentTarget||this).getAttribute('data-url') ) );
   }
 
 })(window, window.document);
