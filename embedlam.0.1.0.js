@@ -56,7 +56,7 @@
     // Here, we want to analyze the href contents and pair it off with
     // a suitable embed URL, extracting parameters using regexp
     var _url = _link.href;         // cache href contents
-    var _by_dot = _url.split('.'); // cache url divided by periods
+    var _by_dot;                   // cache url divided by periods
     var _len;                      // initialise length of array of _by_dot
     var _params;                   // initialise an array for URL parameters
     var _iframe_src;               // initialise the variable we will eventually return
@@ -68,15 +68,39 @@
     // chop off trailing slash
     _url = _url.slice(-1) === '/' ? _url.slice(0, -1) : _url;
 
+    // split URL by periods -> Array, store length of array
+    _by_dot = _url.split('.');
+    _len = _by_dot.length;
+
     // if-elseif is very verbose with this many conditions,
     // so we'll use a fairly obscure but entirely valid switch-case instead
+    // and we should force a boolean expression (with '!!') to match to switch(true)
     switch (true) {
 
-      // we need to force a boolean expression ('!!') to match to switch(true)
+      // probably harmful; certainly no desire for it to be downloaded directly from a site
+      case !!(_url.match(/\.386|\.bat|\.cmd|\.dll|\.exe|\.msi|\.sh/i)):
+        switch (_by_dot[_len - 1].toLowerCase()) {
+          case '386':
+          case 'bat':
+          case 'cmd':
+          case 'dll':
+          case 'exe':
+          case 'msi':
+          case 'sh':
+            _link.parentNode.removeChild(_link);
+            win.console.warn('Link to potentially harmful file removed: ' + _url);
+            break;
+        }
+        break;
+
+      // if the download attribute has been specified, send it to download maker
+      case !!(_link.getAttribute('download')):
+        makeDownload(_url, _link);
+        break;
+
       // match image types supported in modern browsers
       case !!(_url.match(/\.jpg|\.jpeg|\.png|\.apng|\.gif|\.webp|\.bmp|\.ico|\.tiff|\.svg/i)):
         // embed images if not in img tag already
-        _len = _by_dot.length;
         switch (_by_dot[_len - 1].toLowerCase()) {
           case 'jpg':
           case 'jpeg':
@@ -94,22 +118,27 @@
         break;
 
       case !!(_url.match(/\.mp4|\.webm/)):
+        // may as well embed raw video where/when possible
         if ('HTMLVideoElement' in win) {
-          // may as well embed raw video where/when possible
-          _len = _by_dot.length;
-          if (_by_dot[_len - 1] === 'mp4' || _by_dot[_len - 1] === 'webm') {
-            makeVideo(_url, _link, _by_dot[_len - 1]);
-            // _iframe_src is not modified, and returned as empty string, checkDocument's for loop continues
+          switch (_by_dot[_len - 1].toLowerCase()) {
+            case 'mp4':
+            case 'webm':
+              makeVideo(_url, _link, _by_dot[_len - 1]);
+              break;
           }
+          // _iframe_src is not modified, and returned as empty string, checkDocument's for loop continues
         }
         break;
 
       case !!(_url.match(/\.mp3|\.m4a|\.wav/)):
+        // same goes for audio files
         if ('HTMLAudioElement' in win) {
-          // same goes for audio files
-          _len = _by_dot.length;
-          if (_by_dot[_len - 1] === 'mp3' || _by_dot[_len - 1] === 'm4a' || _by_dot[_len - 1] === 'wav') {
-            makeAudio(_url, _link, _by_dot[_len - 1]);
+          switch (_by_dot[_len - 1].toLowerCase()) {
+            case 'mp3':
+            case 'm4a':
+            case 'wav':
+              makeAudio(_url, _link, _by_dot[_len - 1]);
+              break;
           }
         }
         break;
@@ -416,6 +445,27 @@
     }
 
     to_replace.parentNode.replaceChild(_16x9_div, to_replace);
+  }
+
+  function makeDownload(url, to_replace) {
+    var _4x1_div;
+    var _dl;
+
+    if (typeof to_replace !== 'object' || !to_replace || to_replace.nodeType !== 1) {
+      return;
+    }
+
+    _4x1_div = doc.createElement('div');
+    _dl = doc.createElement('div');
+    _4x1_div.setAttribute('style', 'position:relative;padding-bottom:22%;overflow:hidden;background-color:#444;cursor:pointer;');
+    _4x1_div.appendChild(_dl);
+    _4x1_div.setAttribute('style', 'position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;overflow:hidden;');
+    _dl.setAttribute('data-url', win.encodeURIComponent(url));
+
+    to_replace.parentNode.replaceChild(_4x1_div, to_replace);
+
+    // add click handler to imitate link
+    addEvent(_dl, 'click', fakeLink);
   }
 
   function makeImage (url, to_replace) {
