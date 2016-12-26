@@ -122,7 +122,7 @@
         }
         break;
 
-      case !!(_url.match(/\.mp4|\.webm/) && 'HTMLVideoElement' in win):
+      case !!(_url.match(/\.mp4|\.webm/i) && 'HTMLVideoElement' in win):
         // may as well embed raw video where/when possible
         switch (_by_dot[_len - 1].toLowerCase()) {
           case 'mp4':
@@ -133,7 +133,7 @@
         // _iframe_src is not modified, and returned as empty string, checkDocument's for loop continues
         break;
 
-      case !!(_url.match(/\.mp3|\.m4a|\.wav/) && 'HTMLAudioElement' in win):
+      case !!(_url.match(/\.mp3|\.m4a|\.wav/i) && 'HTMLAudioElement' in win):
         // same goes for audio files
         switch (_by_dot[_len - 1].toLowerCase()) {
           case 'mp3':
