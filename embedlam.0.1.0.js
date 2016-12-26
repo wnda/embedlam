@@ -18,7 +18,6 @@
   checkDocument();
 
   // add event listeners for subsequent checks
-  addEvent(win, 'DOMContentLoaded', checkDocument);
   addEvent(win, 'load', checkDocument);
   addEvent(win, 'scroll', debounce(checkDocument, 500));
 
