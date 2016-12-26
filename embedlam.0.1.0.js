@@ -213,6 +213,10 @@
       case !!(_url.match(/gfycat\.com\/([A-Z][a-z]*)([A-Z][a-z]*)([A-Z][a-z]*)/)):
         _iframe_src = 'https://gfycat.com/ifr/' + _url.match(/[^\/]+$/)[0];
         break;
+        
+      case !!(_url.match(/hulu\.com\/embed\.html\?\w+=\w+/)):
+        _iframe_src = _url;
+        break;
 
       // google maps url, pass to static map factory
       case !!(_url.match(/google\..*@[^A-Za-z]+,/)):
