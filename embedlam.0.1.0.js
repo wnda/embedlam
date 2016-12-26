@@ -470,8 +470,10 @@
 
     if ('transform' in _img.style) {
       _img.setAttribute('style', 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;cursor:pointer;');
+
     } else if ('webkitTransform' in _img.style) {
       _img.setAttribute('style', 'position:absolute;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;cursor:pointer;');
+
     } else {
       _img.setAttribute('style', 'width:auto;height:100%;margin:0 auto;cursor:pointer;');
     }
@@ -546,8 +548,10 @@
 
     if ('transform' in _img.style) {
       _img.setAttribute('style', 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;cursor:pointer;');
+
     } else if ('webkitTransform' in _img.style) {
       _img.setAttribute('style', 'position:absolute;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;cursor:pointer;');
+
     } else {
       _img.setAttribute('style', 'width:auto;height:100%;margin:0 auto;cursor:pointer;');
     }
