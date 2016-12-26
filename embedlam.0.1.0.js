@@ -364,7 +364,6 @@
       // obviously most browsers will support this method
       _xhr.open('GET', _vk_url, true);
       _xhr.responseType = 'text';
-
       _xhr.onreadystatechange = function () {
         if (_xhr.readyState === 4 && _xhr.status >= 200 && _xhr.status < 300) {
           var _hash = _xhr.responseText.match(/hash2[^0-9a-f]*([0-9a-f]*)/)[1];
@@ -372,12 +371,11 @@
           return makeInlineFrame(_vk_embed, _link, false);
         }
       };
-
       _xhr.onerror = _xhr.ontimeout = _xhr.onabort = function () {
         _link.href = _vk_url;
         _link.insertAdjacentHTML('beforeEnd', '<span> [Attempt to embed failed]</span>');
       };
-
+      // wrapping send in setTimeout apparently fixes an IE bug...
       win.setTimeout(function () {
         _xhr.send(null);
       }, 0);
@@ -386,22 +384,18 @@
       // IE8, IE9 support
       // NB: absolute no clue whether XDR would actually work for this
       // or whether string.match works in IE8-9
-
       _xdr = new win.XDomainRequest();
       _xdr.open('GET', _vk_url, true);
-
       _xdr.onload = function () {
         var _hash = _xdr.responseText.match(/hash2[^0-9a-f]*([0-9a-f]*)/)[1];
         var _vk_embed = 'https://vk.com/video_ext.php?oid=' + _params[0] + '&id=' + _params[1] + '&hash=' + _hash  + '&hd=1';
         return makeInlineFrame(_vk_embed, _link, false);
       };
-
       _xdr.onerror = _xdr.ontimeout = function () {
         _link.href = _vk_url;
         _link.insertAdjacentHTML('beforeEnd', '<span> [Attempt to embed failed]</span>');
       };
-
-      // wrapping send in setTimeout apparently fixes an IE bug... lol
+      // wrapping send in setTimeout apparently fixes an IE bug...
       win.setTimeout(function () {
         _xdr.send();
       }, 0);
@@ -558,9 +552,8 @@
     // enables us to use clientWidth/Height to get an appropriate size
     // for the static map image
     _img.src = 'https://maps.googleapis.com/maps/api/staticmap?center=' +
-               _latlang +
-               '&size=' + _16x9_div.clientWidth + 'x' + _16x9_div.clientHeight +
-               '&sensor=false&maptype=roadmap&zoom=' +
+               _latlang + '&size=' + _16x9_div.clientWidth + 'x' +
+               _16x9_div.clientHeight + '&sensor=false&maptype=roadmap&zoom=' +
                url.match(/,\d\dz/)[0].replace(',', '').replace('z', '') +
                '&markers=' + _latlang +
                '&key=AIzaSyAf7V-aqUb-Guull54mvfrH61hFUbNPqvM';
