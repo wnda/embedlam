@@ -6,7 +6,7 @@
   var anchors;
 
   // polyfill [].forEach
-  if (!Array.prototype.forEach) {
+  if (!('forEach' in Array.prototype)) {
     Array.prototype.forEach = forEach;
   }
 
