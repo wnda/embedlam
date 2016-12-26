@@ -616,12 +616,12 @@
   function forEach(callback, thisArg) {
     var T, k, O, len, kValue;
     if (this === null) {
-      throw new TypeError(' this is null or not defined');
+      throw new win.TypeError(' this is null or not defined');
     }
-    O = Object(this);
+    O = win.Object(this);
     len = O.length >>> 0;
     if (typeof callback !== "function") {
-      throw new TypeError(callback + ' is not a function');
+      throw new win.TypeError(callback + ' is not a function');
     }
     if (arguments.length > 1) {
       T = thisArg;
