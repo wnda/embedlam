@@ -643,7 +643,19 @@
 
   function fakeLink (e) {
     // for simulating clickable links without creating links
-    return win.open( win.decodeURIComponent( (e.currentTarget||this).getAttribute('data-url') ) );
+    var evt;
+
+    if (typeof e !== 'object' || !e) {
+      return;
+    }
+
+    evt = (e.currentTarget || this);
+
+    if (!('getAttribute' in evt)) {
+      return;
+    }
+
+    return win.open(win.decodeURIComponent(evt.getAttribute('data-url')));
   }
 
 })(window, window.document);
