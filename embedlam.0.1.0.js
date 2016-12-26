@@ -18,9 +18,17 @@
   win.addEventListener('load', checkDocument, false);
   win.addEventListener('scroll', debounce(checkDocument, 500), false);
 
-  function checkDocument () {
+  function checkDocument (e) {
 
-    [].slice.call(anchors).forEach(function(link){
+    // remove event handlers for DOMContentLoaded/load events, which fire once
+    if (typeof e === 'object' && !!e && 'type' in e && !!e.type) {
+      if (e.type === 'load' || e.type === 'DOMContentLoaded') {
+        win.removeEventListener(e.type, checkDocument, false);
+      }
+    }
+
+    // convert HTMLCollection to Array to enable [].forEach
+    [].slice.call(anchors).forEach(function (link) {
 
       var iframe_src = '';
 
