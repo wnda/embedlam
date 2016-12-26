@@ -39,3 +39,5 @@ When that public method is exposed, the script will no longer execute itself, bu
     </script>
     
 Still pretty straightforward.
+
+But for now, just the script include.
