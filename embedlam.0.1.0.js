@@ -54,7 +54,7 @@
   function processUrl (_link) {
     // Here, we want to analyze the href contents and pair it off with
     // a suitable embed URL, extracting parameters using regexp
-    var _supports_cors = ('fetch' in win || 'XMLHttpRequest' in win || 'XDomainRequest' in win); // need CORS for VK
+    var _supports_cors = ('fetch' in win || 'XDomainRequest' in win || 'XMLHttpRequest' in win); // need CORS for VK
     var _url = _link.href; // cache href contents
     var _by_dot;           // cache url divided by periods
     var _len;              // initialise length of array of _by_dot
