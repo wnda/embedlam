@@ -213,7 +213,8 @@
       case !!(_url.match(/gfycat\.com\/([A-Z][a-z]*)([A-Z][a-z]*)([A-Z][a-z]*)/)):
         _iframe_src = 'https://gfycat.com/ifr/' + _url.match(/[^\/]+$/)[0];
         break;
-        
+
+      // hulu embed url (unlikely but still)
       case !!(_url.match(/hulu\.com\/embed\.html\?\w+=\w+/)):
         _iframe_src = _url;
         break;
@@ -328,7 +329,9 @@
         _link.insertAdjacentHTML('beforeEnd', '<span> [Attempt to embed failed]</span>');
       };
 
-      _xhr.send(null);
+      win.setTimeout(function () {
+        _xhr.send(null);
+      }, 0);
 
     } else if ('XDomainRequest' in win) {
       // IE8, IE9 support
