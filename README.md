@@ -1,11 +1,10 @@
 # embedlam
 
+## What?
+There were once lazyloaders, and they were lovely for loading images before they were visible. Now there's a lazy-embedder.
+
 ## Why?
-There were once lazyloaders, and they were lovely for loading images before they were visible.
-
-Then one day, someone thought it would be clever to automatically embed Youtube videos in forum threads.
-
-And everybody on 2G/3G wept, for they would forever be waiting for the embedding process to complete for the entire thread.
+Then one day, someone thought it would be clever to automatically embed Youtube videos in forum threads. And everybody on 2G/3G wept, for they would forever be waiting for the embedding process to complete for the entire thread.
 
 Some clever people came up with the idea of showing only so many threads at a time, but this is only really a good idea for threads with thousands of posts. otherwise you're firing ajax requests every time you scroll, which is just plain crap. Seriously, try using Discourse on 2G/3G. You'll get frustrated very quickly compared to browsing a forum running punbb/fluxbb.
 
@@ -13,11 +12,10 @@ Sure, Discourse scales better, it's designed to do that, but it's still about as
 
 I do not have a solution for the direction the web has taken. But I do have something which can take the pain out of embedding. embedlam is designed to automatically embed links which are known to be compatible with iframes, and will optimistically attempt to embed video/audio files. It even blocks potentially harmful files, because it would be irresponsible not to.
 
-The trick is that it only does the embedding process while the embedded content is visible within the viewport.
+The trick is that it only does the embedding process while the embedded content is visible within the viewport. And debouncing takes care of the problem of the scroll event's expense.
 
-And debouncing takes care of the problem of the scroll event's expense.
-
-What's the catch? First off, if you're a developer, you're not going to like my code. I like `switch` statements and I write pretty terse code that could not be classified as team-friendly. Open source software is two things for me: an outlet for my non-team coding, and my opportunity to experiment with ideas. *Caveat emptor*.
+## What's the catch? 
+No catch! Unless you're a developer and you want to extend this lib. You're not going to like my code. I like `switch` statements and I write pretty terse code that could not be classified as team-friendly. Open source software is two things for me: an outlet for my non-team coding, and my opportunity to experiment with ideas. *Caveat emptor*.
 
 ## No, really, why?
 embedly sticks its ugly logo on content, charges money at some point down the line, and in general is probably a bit too heavy/featureful (not a word) for my liking.  
