@@ -116,29 +116,25 @@
         }
         break;
 
-      case !!(_url.match(/\.mp4|\.webm/)):
+      case !!(_url.match(/\.mp4|\.webm/) && 'HTMLVideoElement' in win):
         // may as well embed raw video where/when possible
-        if ('HTMLVideoElement' in win) {
-          switch (_by_dot[_len - 1].toLowerCase()) {
-            case 'mp4':
-            case 'webm':
-              makeVideo(_url, _link, _by_dot[_len - 1]);
-              break;
-          }
-          // _iframe_src is not modified, and returned as empty string, checkDocument's for loop continues
+        switch (_by_dot[_len - 1].toLowerCase()) {
+          case 'mp4':
+          case 'webm':
+            makeVideo(_url, _link, _by_dot[_len - 1]);
+            break;
         }
+        // _iframe_src is not modified, and returned as empty string, checkDocument's for loop continues
         break;
 
-      case !!(_url.match(/\.mp3|\.m4a|\.wav/)):
+      case !!(_url.match(/\.mp3|\.m4a|\.wav/) && 'HTMLAudioElement' in win):
         // same goes for audio files
-        if ('HTMLAudioElement' in win) {
-          switch (_by_dot[_len - 1].toLowerCase()) {
-            case 'mp3':
-            case 'm4a':
-            case 'wav':
-              makeAudio(_url, _link, _by_dot[_len - 1]);
-              break;
-          }
+        switch (_by_dot[_len - 1].toLowerCase()) {
+          case 'mp3':
+          case 'm4a':
+          case 'wav':
+            makeAudio(_url, _link, _by_dot[_len - 1]);
+            break;
         }
         break;
 
