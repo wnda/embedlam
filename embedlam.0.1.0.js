@@ -25,7 +25,7 @@
 
     // remove event handlers for DOMContentLoaded/load events, which fire once
     if (typeof e === 'object' && !!e && 'type' in e && !!e.type) {
-      if (e.type === 'load' || e.type === 'DOMContentLoaded') {
+      if (e.type === 'load') {
         win.removeEventListener(e.type, checkDocument, false);
       }
     }
