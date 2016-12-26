@@ -1,4 +1,6 @@
 # embedlam
+
+## Why?
 There were once lazyloaders, and they were lovely for loading images before they were visible.
 
 Then one day, someone thought it would be clever to automatically embed Youtube videos in forum threads.
@@ -16,6 +18,9 @@ The trick is that it only does the embedding process while the embedded content 
 And debouncing takes care of the problem of the scroll event's expense.
 
 What's the catch? First off, if you're a developer, you're not going to like my code. I like `switch` statements and I write pretty terse code that could not be classified as team-friendly. Open source software is two things for me: an outlet for my non-team coding, and my opportunity to experiment with ideas. *Caveat emptor*.
+
+## No, really, why?
+embedly sticks its ugly logo on content, charges money at some point down the line, and in general is probably a bit too heavy/featureful (not a word) for my liking.  
 
 ## Using embedlam
 Usage is pretty straightforward: include the script. That's it. 
