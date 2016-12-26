@@ -456,7 +456,6 @@
     _4x1_div.appendChild(_dl);
     _4x1_div.setAttribute('style', 'position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;overflow:hidden;');
     _dl.setAttribute('data-url', win.encodeURIComponent(url));
-
     to_replace.parentNode.replaceChild(_4x1_div, to_replace);
 
     // add click handler to imitate link
@@ -474,7 +473,6 @@
 
     _16x9_div = doc.createElement('div');
     _img = doc.createElement('img');
-
     _16x9_div.setAttribute('style', 'position:relative;padding-bottom:56.2%;overflow:hidden;background-color:#444;cursor:pointer;');
     _16x9_div.appendChild(_img);
 
@@ -490,7 +488,6 @@
     _img.alt = to_replace.textContent ? to_replace.textContent : url;
     _img.title = to_replace.textContent ? to_replace.textContent : url;
     _img.setAttribute('data-url', win.encodeURIComponent(url));
-
     to_replace.parentNode.replaceChild(_16x9_div, to_replace);
 
     // add click handler to imitate link
@@ -508,7 +505,6 @@
 
     _16x9_div = doc.createElement('div');
     _video = doc.createElement('video');
-
     _16x9_div.setAttribute('style', 'position:relative;padding-bottom:56.2%;overflow:hidden;background-color:#444;');
     _16x9_div.appendChild(_video);
     _video.setAttribute('style', 'position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;overflow:hidden;');
@@ -517,7 +513,6 @@
     _video.setAttribute('webkitplaysinline', 'webkitplaysinline');
     _video.setAttribute('playsinline', 'playsinline');
     _video.insertAdjacentHTML('afterBegin', '<source src="' + url + '" type="video/' + type + '"></source>');
-
     to_replace.parentNode.replaceChild(_16x9_div, to_replace);
   }
 
@@ -532,14 +527,12 @@
 
     _4x1_div = doc.createElement('div');
     _audio = doc.createElement('audio');
-
     _4x1_div.setAttribute('style', 'position:relative;padding-bottom:22%;overflow:hidden;background-color:#444;');
     _4x1_div.appendChild(_audio);
     _audio.setAttribute('style', 'position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;overflow:hidden;');
     _audio.setAttribute('controls', 'controls');
     _audio.setAttribute('muted', 'muted');
     _audio.insertAdjacentHTML('afterBegin', '<source src="' + url + '" type="audio/' + type + '"></source>');
-
     to_replace.parentNode.replaceChild(_4x1_div, to_replace);
   }
 
@@ -558,7 +551,6 @@
     _16x9_div = doc.createElement('div');
     _img = doc.createElement('img');
     _latlang = url.match(/@([^A-Za-z]+,)/)[0].slice(0,-1).replace('@', '');
-
     _16x9_div.setAttribute('style', 'position:relative;padding-bottom:56.2%;overflow:hidden;background-color:#444;cursor:pointer;');
     _16x9_div.appendChild(_img);
 
@@ -583,7 +575,6 @@
     _img.alt = 'Google Map';
     _img.title = 'Google Map: ' + _latlang;
     _img.setAttribute('data-url', win.encodeURIComponent(url));
-
     to_replace.parentNode.replaceChild(_16x9_div, to_replace);
 
     // it's a static map, so it should be possible to provide a clickable link to an interactive map
@@ -634,8 +625,10 @@
     switch (true) {
       case ('addEventListener' in win):
         return w.addEventListener(x, y, false);
+
       case ('attachEvent' in win):
         return w.attachEvent(x, y);
+
       default:
         w['on' + x] = y;
     }
