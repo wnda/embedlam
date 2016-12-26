@@ -6,8 +6,8 @@
   var anchors;
 
   // polyfill [].forEach
-  if (!('forEach' in Array.prototype)) {
-    Array.prototype.forEach = forEach;
+  if (!('forEach' in win.Array.prototype)) {
+    win.Array.prototype.forEach = forEach;
   }
 
   // polyfill window.performance for debouncer
