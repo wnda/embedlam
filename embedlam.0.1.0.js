@@ -20,7 +20,7 @@
 
   function checkDocument () {
 
-    [].slice.call(anchors).forEach(function(link){
+    [].slice.call(anchors).forEach(function (link) {
 
       var iframe_src = '';
 
