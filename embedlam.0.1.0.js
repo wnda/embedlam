@@ -20,7 +20,7 @@
 
   function checkDocument () {
 
-    [].slice.call(anchors).forEach(function (link) {
+    [].slice.call(anchors).forEach(function(link){
 
       var iframe_src = '';
 
@@ -50,6 +50,7 @@
     var _len;                      // initialise length of array of _by_dot
     var _params;                   // initialise an array for URL parameters
     var _iframe_src;               // initialise the variable we will eventually return
+    var _supports_cors = ('fetch' in win || 'XMLHttpRequest' in win || 'XDomainRequest' in win); // need CORS for VK
 
     // rewrite urls to use https
     _url = _url.match(/http:/) ? _url.replace('http:', 'https:') : _url;
@@ -225,23 +226,19 @@
         break;
 
       // vk search results link with video selected, pass to embedVK function
-      case !!(_url.match(/vk\.com\/video\?\w+/)):
-        if ('fetch' in win || 'XMLHttpRequest' in win || 'XDomainRequest' in win) {
-          _params = getParams(a).z[0].match(/[^video]+$/)[0].split('_');
-          _link.href = '#';
-          _link.className = 'fetching';
-          embedVK(_params, _link);
-        }
+      case !!(_url.match(/vk\.com\/video\?\w+/) && !!_supports_cors):
+        _params = getParams(a).z[0].match(/[^video]+$/)[0].split('_');
+        _link.href = '#';
+        _link.className = 'fetching';
+        embedVK(_params, _link);
         break;
 
       // vk direct video link, pass to embedVK function
-      case !!(_url.match(/vk\.com\/video-\w+/)):
-        if ('fetch' in win || 'XMLHttpRequest' in win || 'XDomainRequest' in win) {
-          _params = _url.match(/[^\/]+$/)[0].match(/[^video]+$/)[0].split('_');
-          _link.href = '#';
-          _link.className = 'fetching';
-          embedVK(_params, _link);
-        }
+      case !!(_url.match(/vk\.com\/video-\w+/) && !!_supports_cors):
+        _params = _url.match(/[^\/]+$/)[0].match(/[^video]+$/)[0].split('_');
+        _link.href = '#';
+        _link.className = 'fetching';
+        embedVK(_params, _link);
         break;
 
       // if no case matched, or if the only matches needed to be passed along,
