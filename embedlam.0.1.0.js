@@ -54,12 +54,12 @@
   function processUrl (_link) {
     // Here, we want to analyze the href contents and pair it off with
     // a suitable embed URL, extracting parameters using regexp
-    var _url = _link.href;         // cache href contents
-    var _by_dot;                   // cache url divided by periods
-    var _len;                      // initialise length of array of _by_dot
-    var _params;                   // initialise an array for URL parameters
-    var _iframe_src;               // initialise the variable we will eventually return
     var _supports_cors = ('fetch' in win || 'XMLHttpRequest' in win || 'XDomainRequest' in win); // need CORS for VK
+    var _url = _link.href; // cache href contents
+    var _by_dot;           // cache url divided by periods
+    var _len;              // initialise length of array of _by_dot
+    var _params;           // initialise an array for URL parameters
+    var _iframe_src;       // initialise the variable we will eventually return
 
     // rewrite urls to use https
     _url = _url.match(/http:/) ? _url.replace('http:', 'https:') : _url;
@@ -67,7 +67,7 @@
     // chop off trailing slash
     _url = _url.slice(-1) === '/' ? _url.slice(0, -1) : _url;
 
-    // split URL by periods -> Array, store length of array
+    // split URL by periods to Array and store length of array
     _by_dot = _url.split('.');
     _len = _by_dot.length;
 
@@ -318,7 +318,6 @@
 
     if (query_string.length) {
       pairs = query_string.split('&');
-
       for (i in pairs) {
         var key = pairs[i].split('=')[0];
         if (!key.length) {
@@ -330,10 +329,8 @@
         params[key].push(pairs[i].split('=')[1]);
       }
     }
-
     return params;
   }
-
 
   function embedVK (_params, _link) {
     // VK is a special case, as its embed URLs require a hash to be computed from their videos' webpages
@@ -408,7 +405,6 @@
       win.setTimeout(function () {
         _xdr.send();
       }, 0);
-
     }
   }
 
@@ -457,8 +453,6 @@
     _4x1_div.setAttribute('style', 'position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;overflow:hidden;');
     _dl.setAttribute('data-url', win.encodeURIComponent(url));
     to_replace.parentNode.replaceChild(_4x1_div, to_replace);
-
-    // add click handler to imitate link
     addEvent(_dl, 'click', fakeLink);
   }
 
@@ -489,8 +483,6 @@
     _img.title = to_replace.textContent ? to_replace.textContent : url;
     _img.setAttribute('data-url', win.encodeURIComponent(url));
     to_replace.parentNode.replaceChild(_16x9_div, to_replace);
-
-    // add click handler to imitate link
     addEvent(_img, 'click', fakeLink);
   }
 
