@@ -62,6 +62,7 @@
     switch (true) {
 
       // we need to force a boolean expression ('!!') to match to switch(true)
+      // match image types supported in modern browsers
       case !!(_url.match(/\.jpg|\.jpeg|\.png|\.apng|\.gif|\.webp|\.bmp|\.ico|\.tiff|\.svg/i)):
         // embed images if not in img tag already
         _len = _by_dot.length;
@@ -430,8 +431,8 @@
     }
 
     _img.src = url;
-    _img.alt = to_replace.textContent ? to_replace.textContent : 'Image';
-    _img.title = to_replace.textContent ? to_replace.textContent : 'Image';
+    _img.alt = to_replace.textContent ? to_replace.textContent : url;
+    _img.title = to_replace.textContent ? to_replace.textContent : url;
 
     to_replace.parentNode.replaceChild(_16x9_div, to_replace);
     _16x9_div.addEventListener('click', function() {
