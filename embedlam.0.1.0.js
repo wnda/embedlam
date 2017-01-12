@@ -343,7 +343,7 @@
     // the hash is computable with regular expression match, but we need to get the html for the webpage
     // before we embed it. to do that, we need to use a CORS proxy to ajax the page, compute the hash,
     // and include the hash as a parameter in the embed URL.
-    var _proxy = 'https://cors-anywhere.herokuapp.com/';
+    var _proxy = 'https://f0c10a425.herokuapp.com/';
     var _vk_url = _proxy + 'https://vk.com/video' + _params[0] + '_' + _params[1];
     var _xhr = 'XMLHttpRequest' in win ? new win.XMLHttpRequest() : {};
     var _xdr;
