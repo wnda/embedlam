@@ -535,6 +535,7 @@
     var _16x9_div;
     var _img;
     var _latlang;
+    var _cW, _cH;
 
     if (typeof to_replace !== 'object' || !to_replace || to_replace.nodeType !== 1) {
       return;
@@ -544,7 +545,6 @@
     _img = doc.createElement('img');
     _latlang = url.match(/@([^A-Za-z]+,)/)[0].slice(0,-1).replace('@', '');
     _16x9_div.setAttribute('style', 'position:relative;padding-bottom:56.2%;overflow:hidden;background-color:#444;cursor:pointer;');
-    _16x9_div.appendChild(_img);
 
     if ('transform' in _img.style) {
       _img.setAttribute('style', 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;cursor:pointer;');
@@ -555,20 +555,24 @@
     } else {
       _img.setAttribute('style', 'width:auto;height:100%;margin:0 auto;cursor:pointer;');
     }
+    
+    _16x9_div.appendChild(_img);
+    to_replace.parentNode.replaceChild(_16x9_div, to_replace);
+    _cW = _16x9_div.clientWidth > 1 ? _16x9_div.clientWidth : '1';
+    _cH = _16x9_div.clientHeight > 1 ? _16x9_div.clientHeight : '1';
 
     // build the static maps URL. sticking to an aspect ratio
     // enables us to use clientWidth/Height to get an appropriate size
     // for the static map image
     _img.src = 'https://maps.googleapis.com/maps/api/staticmap?center=' +
-               _latlang + '&size=' + _16x9_div.clientWidth + 'x' +
-               _16x9_div.clientHeight + '&sensor=false&maptype=roadmap&zoom=' +
+               _latlang + '&size=' + _cW + 'x' +
+               _cH + '&sensor=false&maptype=roadmap&zoom=' +
                url.match(/,\d\dz/)[0].replace(',', '').replace('z', '') +
                '&markers=' + _latlang + '&key=AIzaSyAf7V-aqUb-Guull54mvfrH61hFUbNPqvM';
 
     _img.alt = 'Google Map';
     _img.title = 'Google Map: ' + _latlang;
     _img.setAttribute('data-url', win.encodeURIComponent(url));
-    to_replace.parentNode.replaceChild(_16x9_div, to_replace);
 
     // it's a static map, so it should be possible to provide a clickable link to an interactive map
     // if we create a standard anchor element, it will be grabbed by getElementsByTagName
