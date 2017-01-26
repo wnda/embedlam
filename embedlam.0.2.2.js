@@ -259,14 +259,14 @@
 
       case !!(_url.match(/vk\.com\/video\?\w+/) && !!_supports_cors):
         _params = getParams(a).z[0].match(/[^video]+$/)[0].split('_');
-        _link.href = '#';
+        _link.setAttribute('href', '#');
         _link.className = 'fetching';
         embedVK(_params, _link);
         break;
 
       case !!(_url.match(/vk\.com\/video-\w+/) && !!_supports_cors):
         _params = _url.match(/[^\/]+$/)[0].match(/[^video]+$/)[0].split('_');
-        _link.href = '#';
+        _link.setAttribute('href', '#');
         _link.className = 'fetching';
         embedVK(_params, _link);
         break;
