@@ -2,7 +2,7 @@
 ;(function (win, doc) {
 
   'use strict';
-  
+
   var _anchors, _config, _checker;
 
   if (!('performance' in win)) {
@@ -21,8 +21,8 @@
   };
 
   function init (config) {
-    (doc.head || doc.getElementsByTagName('head')[0]).insertAdjacentHTML('beforeend',win.decodeURIComponent('%3Cstyle%3E%5Bdata-mbdlm-4by1%5D%7Bposition%3Arelative%3Bpadding-bottom%3A22%25%3Boverflow%3Ahidden%3Bbackground-color%3A%23444%3B%7D%5Bdata-mbdlm-16by9%5D%7Bdisplay%3Ablock%3B-webkit-box-sizing%3Aborder-box%3Bbox-sizing%3Aborder-box%3Bposition%3Arelative%3Bpadding-bottom%3A56.2%25%3Boverflow%3Ahidden%3Bbackground-color%3A%23444%3B%7D%5Bdata-mbdlm-16by9%5D%3Abefore%2C%5Bdata-mbdlm-4by1%5D%3Abefore%7Bcontent%3A%22%22%3B-webkit-box-sizing%3Aborder-box%3Bbox-sizing%3Aborder-box%3Bdisplay%3Ablock%3Bposition%3Aabsolute%3Btop%3A0%3Bleft%3A0%3Bright%3A0%3Bbottom%3A0%3Bwidth%3A100%25%3Bheight%3A100%25%3Bbackground%3Argba(0%2C0%2C0%2C.8)%7D%5Bdata-mbdlm-16by9%5D%3Aafter%2C%5Bdata-mbdlm-4by1%5D%3Aafter%7Bcontent%3A%22%22%3Bdisplay%3Anone%3B-webkit-box-sizing%3Aborder-box%3Bbox-sizing%3Aborder-box%3Bbackground-clip%3Apadding-box%3Bposition%3Aabsolute%3Btop%3A50%25%3Bleft%3A50%25%3Bmargin%3A-48px%200%200%20-48px%3Bopacity%3A1%3Bborder%3A48px%20solid%20transparent%3Bborder-top-color%3A%23fefefe%3Bwidth%3A48px%3Bheight%3A48px%3Bborder-radius%3A48px%3B-webkit-transform%3Arotate(0)%3Btransform%3Arotate(0)%3B%7D%5Bdata-mbdlm-16by9%5D%3Abefore%2C%5Bdata-mbdlm-4by1%5D%3Abefore%2C%5Bdata-mbdlm-16by9%5D%3Aafter%2C%5Bdata-mbdlm-4by1%5D%3Aafter%7Bz-index%3A9999%3B-webkit-pointer-events%3Anone%3Bpointer-events%3Anone%3Bcontain%3Astrict%3Bisolation%3Aisolate%3B%7D%5Bdata-mbdlm-16by9%5D%3Abefore%2C%5Bdata-mbdlm-4by1%5D%3Abefore%7Bopacity%3A0%3Bvisibility%3Bhidden%3Btransition-property%3Aopacity%2Cvisibility%3Btransition-timing-function%3Acubic-bezier(.4%2C0%2C.2%2C1)%3Btransition-duration%3A200ms%3B%7D%5Bdata-mbdlm-16by9%5D%5Bdata-mbdlm-fetching%5D%3Aafter%2C%5Bdata-mbdlm-4by1%5D%5Bdata-mbdlm-fetching%5D%3Aafter%7Bdisplay%3Ablock%3B-webkit-animation%3Aspinner%201.5s%20linear%20infinite%3Banimation%3Aspinner%201.5s%20linear%20infinite%3B%7D%5Bdata-mbdlm-16by9%5D%5Bdata-mbdlm-fetching%5D%3Abefore%2C%5Bdata-mbdlm-4by1%5D%5Bdata-mbdlm-fetching%5D%3Abefore%7Bopacity%3A1%3Bvisibility%3Avisible%3B%7D%5Bdata-mbdlm-fill%5D%7Bposition%3Aabsolute%3Btop%3A0%3Bleft%3A0%3Bright%3A0%3Bbottom%3A0%3Bwidth%3A100%25%3Bheight%3A100%25%3Boverflow%3Ahidden%3B%7D%5Bdata-mbdlm-img%5D%7Bposition%3Aabsolute%3Btop%3A50%25%3Bleft%3A50%25%3B-webkit-transform%3Atranslate(-50%25%2C-50%25)%3Btransform%3Atranslate(-50%25%2C-50%25)%3Bmin-width%3A100%25%3Bmin-height%3A100%25%3Bwidth%3Aauto%3Bheight%3Aauto%3Bcursor%3Apointer%3B%7D%40-webkit-keyframes%20spinner%7B100%25%7B-webkit-transform%3Arotate(360deg)%7D%7D%40keyframes%20spinner%7B100%25%7Btransform%3Arotate(360deg)%7D%7D%3C%2Fstyle%3E'));
-    _anchors = getAnchors(doc.getElementsByTagName('a'));
+    (doc.head || doc.getElementsByTagName('head')[0]).insertAdjacentHTML('beforeend',win.decodeURIComponent('%3Cstyle%3E%5Bdata-mbdlm-4by1%5D%7Bposition%3Arelative%3Bpadding-bottom%3A22%25%3Boverflow%3Ahidden%3Bbackground-color%3A%23444%3B%7D%5Bdata-mbdlm-16by9%5D%7Bdisplay%3Ablock%3B-webkit-box-sizing%3Aborder-box%3Bbox-sizing%3Aborder-box%3Bposition%3Arelative%3Bpadding-bottom%3A56.2%25%3Boverflow%3Ahidden%3Bbackground-color%3A%23444%3B%7D%5Bdata-mbdlm-16by9%5D%3Abefore%2C%5Bdata-mbdlm-4by1%5D%3Abefore%7Bcontent%3A%22%22%3B-webkit-box-sizing%3Aborder-box%3Bbox-sizing%3Aborder-box%3Bdisplay%3Ablock%3Bposition%3Aabsolute%3Btop%3A0%3Bleft%3A0%3Bright%3A0%3Bbottom%3A0%3Bwidth%3A100%25%3Bheight%3A100%25%3Bbackground%3Argba(0%2C0%2C0%2C.8)%7D%5Bdata-mbdlm-16by9%5D%3Aafter%2C%5Bdata-mbdlm-4by1%5D%3Aafter%7Bcontent%3A%22%22%3Bdisplay%3Anone%3B-webkit-box-sizing%3Aborder-box%3Bbox-sizing%3Aborder-box%3Bbackground-clip%3Apadding-box%3Bposition%3Aabsolute%3Btop%3A50%25%3Bleft%3A50%25%3Bmargin%3A-48px%200%200%20-48px%3Bopacity%3A1%3Bborder%3A48px%20solid%20transparent%3Bborder-top-color%3A%23fefefe%3Bwidth%3A48px%3Bheight%3A48px%3Bborder-radius%3A48px%3B-webkit-transform%3Arotate(0)%3Btransform%3Arotate(0)%3B%7D%5Bdata-mbdlm-16by9%5D%3Abefore%2C%5Bdata-mbdlm-4by1%5D%3Abefore%2C%5Bdata-mbdlm-16by9%5D%3Aafter%2C%5Bdata-mbdlm-4by1%5D%3Aafter%7Bz-index%3A9999%3B-webkit-pointer-events%3Anone%3Bpointer-events%3Anone%3Bcontain%3Astrict%3Bisolation%3Aisolate%3B%7D%5Bdata-mbdlm-16by9%5D%3Abefore%2C%5Bdata-mbdlm-4by1%5D%3Abefore%7Bopacity%3A0%3Bvisibility%3Bhidden%3Btransition-property%3Aopacity%2Cvisibility%3Btransition-timing-function%3Acubic-bezier(.4%2C0%2C.2%2C1)%3Btransition-duration%3A200ms%3B%7D%5Bdata-mbdlm-16by9%5D%5Bdata-mbdlm-fetching%5D%3Aafter%2C%5Bdata-mbdlm-4by1%5D%5Bdata-mbdlm-fetching%5D%3Aafter%7Bdisplay%3Ablock%3B-webkit-animation%3Aspinner%201s%20cubic-bezier(.4%2C0%2C.2%2C1)%20infinite%3Banimation%3Aspinner%201s%20cubic-bezier(.4%2C0%2C.2%2C1)%20infinite%3B%7D%5Bdata-mbdlm-16by9%5D%5Bdata-mbdlm-fetching%5D%3Abefore%2C%5Bdata-mbdlm-4by1%5D%5Bdata-mbdlm-fetching%5D%3Abefore%7Bopacity%3A1%3Bvisibility%3Avisible%3B%7D%5Bdata-mbdlm-fill%5D%7Bposition%3Aabsolute%3Btop%3A0%3Bleft%3A0%3Bright%3A0%3Bbottom%3A0%3Bwidth%3A100%25%3Bheight%3A100%25%3Boverflow%3Ahidden%3B%7D%5Bdata-mbdlm-img%5D%7Bposition%3Aabsolute%3Btop%3A50%25%3Bleft%3A50%25%3B-webkit-transform%3Atranslate(-50%25%2C-50%25)%3Btransform%3Atranslate(-50%25%2C-50%25)%3Bmin-width%3A100%25%3Bmin-height%3A100%25%3Bwidth%3Aauto%3Bheight%3Aauto%3Bcursor%3Apointer%3B%7D%40-webkit-keyframes%20spinner%7B100%25%7B-webkit-transform%3Arotate(360deg)%7D%7D%40keyframes%20spinner%7B100%25%7Btransform%3Arotate(360deg)%7D%7D%3C%2Fstyle%3E'));
+    _anchors = doc.getElementsByTagName('a');
     _config = typeof config !== 'undefined' ? config : null;
     _checker = checkDOM();
     addEvent(doc, 'readystatechange', _checker);
@@ -31,52 +31,49 @@
 
   function checkDOM () {
     return debounce(function (e) {
-      var iframe_src = '';
+      var _iframe_src = '';
       var f = 0;
       var g = 0;
-      var etp;
+      var _ev = null;
+
+      if (!!_config && 'querySelectorAll' in doc) {
+        _anchors = ('container' in _config && !!_config.container ? doc.querySelector(_config.container) : doc).querySelectorAll('selector' in _config && !!_config.selector ? _config.selector : 'a');
+      }
+      f = _anchors.length;
+      g = 0;
+      _ev = (e || win.event);
 
       if (doc.readyState === 'loading') {
         return;
       }
-      
-      if (!!_config && 'querySelectorAll' in doc) {
-        _anchors = getAnchors(
-          ('container' in _config && !!_config.container ? doc.querySelector(_config.container) : doc)
-            .querySelectorAll('selector' in _config && !!_config.selector ? _config.selector : 'a')
-        );
-      }
 
-      f = _anchors.length;
-      g = 0;
-
-      if (typeof e === 'object' && !!e && 'type' in e && !!e.type) {
-        etp = e.type.toLowerCase();
-        if ((etp === 'readystatechange' || etp === 'onreadystatechange')) {
+      if (typeof _ev !== 'undefined' && !!_ev.type) {
+        if (_ev.type !== 'scroll' && _ev.type !== 'onscroll' && (doc.readyState === 'interactive' || doc.readyState === 'complete')) {
           removeEvent(doc, 'readystatechange', _checker);
-        } else if ((etp === 'scroll' || etp === 'onscroll') && f < 1) {
+        }
+        if ((_ev.type === 'scroll' || _ev.type === 'onscroll') && f < 1) {
           removeEvent(win, 'scroll', _checker);
           return;
         }
       }
 
       for (; g < f; ++g) {
-        iframe_src = '';
+        _iframe_src = '';
 
-        if (!isInViewport(_anchors[g])) {
+        if (typeof _anchors[g] === 'undefined' || !_anchors[g].getAttribute('href') || _anchors[g].getAttribute('href').length < 5 || !isInViewport(_anchors[g])) {
           continue;
         }
 
-        iframe_src = processUrl(_anchors[g]);
+        _iframe_src = processURL(_anchors[g]);
 
-        if (typeof iframe_src === 'string' && iframe_src.length > 0) {
-          makeInlineFrame(iframe_src, _anchors[g], true);
+        if (typeof _iframe_src === 'string' && _iframe_src.length > 0) {
+          makeInlineFrame(_iframe_src, _anchors[g], true);
         }
       }
     }, 500);
   }
 
-  function processUrl (_link) {
+  function processURL (_link) {
     var _supports_cors = ('fetch' in win || 'XDomainRequest' in win || 'XMLHttpRequest' in win);
     var _url = _link.href || _link.getAttribute('href');
     var _by_dot;
@@ -308,56 +305,43 @@
   function embedVK (_params, _link) {
     var _proxy = 'https://f0c10a425.herokuapp.com/';
     var _vk_url = _proxy + 'https://vk.com/video' + _params[0] + '_' + _params[1];
-    var _xhr = 'XMLHttpRequest' in win ? new win.XMLHttpRequest() : {};
-    var _xdr;
+    var _xhr = 'XDomainRequest' in win ?
+      new win.XDomainRequest() : 'XMLHttpRequest' in win ?
+        new win.XMLHttpRequest() : {};
 
     if ('fetch' in win) {
-      win.fetch(_vk_url, {'mode': 'cors'}).then(function (resp) {
-        return resp.text().then(function (resptxt) {
-          var _hash = resptxt.match(/hash2[^0-9a-f]*([0-9a-f]*)/)[1];
-          var _vk_embed = 'https://vk.com/video_ext.php?oid=' + _params[0] + '&id=' + _params[1] + '&hash=' + _hash  + '&hd=1';
-          return makeInlineFrame(_vk_embed, _link, false);
-        }).catch(function (e) {
-          _link.href = _vk_url;
-          _link.insertAdjacentHTML('beforeEnd', '<span> [Attempt to embed failed]</span>');
-        });
+      win.fetch(_vk_url, {'method': 'GET', 'mode': 'cors'}).then(function (resp) {
+        if (!!resp.ok) {
+          return resp.text().then(function (resptxt) {
+            return makeInlineFrame(getVKHash(resptxt, _params), _link, false);
+          }).catch(function (e) {
+            _link.insertAdjacentHTML('beforeend', '<span> [Attempt to embed failed: ' + _vk_url + ']</span>');
+          });
+        }
       }).catch(function (e) {
-        _link.href = _vk_url;
-        _link.insertAdjacentHTML('beforeEnd', '<span> [Attempt to embed failed]</span>');
+        _link.insertAdjacentHTML('beforeend', '<span> [Attempt to embed failed: ' + _vk_url + ']</span>');
       });
 
-    } else if ('XMLHttpRequest' in win && 'withCredentials' in _xhr) {
+    } else {
       _xhr.open('GET', _vk_url, true);
       _xhr.responseType = 'text';
-      _xhr.onreadystatechange = function () {
-        if (_xhr.readyState === 4 && _xhr.status >= 200 && _xhr.status < 300) {
-          var _hash = _xhr.responseText.match(/hash2[^0-9a-f]*([0-9a-f]*)/)[1];
-          var _vk_embed = 'https://vk.com/video_ext.php?oid=' + _params[0] + '&id=' + _params[1] + '&hash=' + _hash  + '&hd=1';
-          return makeInlineFrame(_vk_embed, _link, false);
+      addEvent(_xhr, 'readystatechange', function (e) {
+        var _evt = (e.target || this);
+        if (_evt.readyState === 4 && _evt.status > 199 && _evt.status < 300) {
+          return makeInlineFrame(getVKHash(_evt.responseText, _params), _link, false);
         }
-      };
-      _xhr.onerror = _xhr.ontimeout = _xhr.onabort = function () {
-        _link.insertAdjacentHTML('beforeEnd', '<span> [Attempt to embed failed: ' + _vk_url + ']</span>');
-      };
+      });
+      addEvent(_xhr, 'error', function () {
+        _link.insertAdjacentHTML('beforeend', '<span> [Attempt to embed failed: ' + _vk_url + ']</span>');
+      });
       win.setTimeout(function () {
         _xhr.send(null);
       }, 0);
-
-    } else if ('XDomainRequest' in win) {
-      _xdr = new win.XDomainRequest();
-      _xdr.open('GET', _vk_url, true);
-      _xdr.onload = function () {
-        var _hash = _xdr.responseText.match(/hash2[^0-9a-f]*([0-9a-f]*)/)[1];
-        var _vk_embed = 'https://vk.com/video_ext.php?oid=' + _params[0] + '&id=' + _params[1] + '&hash=' + _hash  + '&hd=1';
-        return makeInlineFrame(_vk_embed, _link, false);
-      };
-      _xdr.onerror = _xdr.ontimeout = function () {
-        _link.insertAdjacentHTML('beforeEnd', '<span> [Attempt to embed failed ' + _vk_url + ']</span>');
-      };
-      win.setTimeout(function () {
-        _xdr.send();
-      }, 0);
     }
+  }
+
+  function getVKHash(markup, params) {
+    return 'https://vk.com/video_ext.php?oid=' + params[0] + '&id=' + params[1] + '&hash=' + (markup.match(/hash2[^0-9a-f]*([0-9a-f]*)/)[1])  + '&hd=1';
   }
 
   function makeInlineFrame (url, to_replace, sandbox) {
@@ -429,7 +413,7 @@
     _img.src = url;
     _img.alt = to_replace.textContent ? to_replace.textContent : url;
     _img.title = to_replace.textContent ? to_replace.textContent : url;
-    _img.setAttribute('data-url', win.encodeURIComponent(url));
+    _img.setAttribute('data-mbdlm-url', win.encodeURIComponent(url));
     addEvent(_img, 'click', fakeLink);
   }
 
@@ -521,9 +505,16 @@
   }
 
   function fetchFinished (e) {
-    var evt = (e.target||this);
-    removeEvent(evt, 'load', fetchFinished);
-    evt.parentNode.removeAttribute('data-mbdlm-fetching');
+    var _ev = (e || win.event || null);
+    var _evt;
+    if (typeof _ev === 'undefined' || !_ev) {
+      return;
+    }
+    _evt = (_ev.currentTarget || _ev.srcElement || null);
+    if (!!_evt) {
+      removeEvent(_evt, 'load', fetchFinished);
+      _evt.parentNode.removeAttribute('data-mbdlm-fetching');
+    }
   }
 
   function isInViewport (el) {
@@ -554,50 +545,38 @@
       }
     };
   }
-  
-  function getAnchors (elements) {
-    var i = elements.length; 
-    var j = 0; 
-    var arr = [];
-    for (; j < i; ++j) {
-      if (elements[j].tagName.toLowerCase() !== 'a') {
-        continue;
-      }
-      if (!!elements[j].getAttribute('href') && elements[j].getAttribute('href').length > 5) {
-        arr[j] = elements[j];
-      }
-    }
-    return arr;
-  }
 
-  function addEvent (w, x, y) {
+  function addEvent (target, type, handler) {
     switch (true) {
       case ('addEventListener' in win):
-        return w.addEventListener(x, y, false);
+        return target.addEventListener(type, handler, false);
       case ('attachEvent' in win):
-        return w.attachEvent(x, y);
+        return target.attachEvent(type, handler);
       default:
-        w['on' + x] = y;
+        target['on' + type] = handler;
     }
   }
 
-  function removeEvent (w, x, y) {
+  function removeEvent (target, type, handler) {
     switch (true) {
       case ('removeEventListener' in win):
-        return w.removeEventListener(x, y, false);
+        return target.removeEventListener(type, handler, false);
       case ('detachEvent' in win):
-        return w.detachEvent(x, y);
+        return target.detachEvent(type, handler);
       default:
-        w['on' + x] = null;
+        target['on' + type] = null;
     }
   }
 
   function fakeLink (e) {
-    var evt = (e.currentTarget || this);
-    if (!('getAttribute' in evt)) {
+    var _ev = (e || win.event || null);
+    var _evt;
+    if (typeof _ev === 'undefined' || !_ev) {
       return;
     }
-    return win.open(win.decodeURIComponent(evt.getAttribute('data-mbdlm-url')));
+    _evt = (_ev.currentTarget || _ev.srcElement || null);
+    if (!('getAttribute' in _evt)) { return; }
+    return win.open(win.decodeURIComponent(_evt.getAttribute('data-mbdlm-url')));
   }
 
 })(window, window.document);
