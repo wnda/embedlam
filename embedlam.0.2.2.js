@@ -2,6 +2,8 @@
 ;(function (win, doc) {
 
   'use strict';
+  
+  var _anchors, _config, _checker;
 
   if (!('performance' in win)) {
     win.performance = {
@@ -13,8 +15,6 @@
     win.encodeURIComponent = win.escape;
     win.decodeURIComponent = win.unescape;
   }
-
-  var _anchors, _config, _checker;
 
   win.embedlam = {
     'init': init
