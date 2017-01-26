@@ -337,8 +337,7 @@
         }
       };
       _xhr.onerror = _xhr.ontimeout = _xhr.onabort = function () {
-        _link.href = _vk_url;
-        _link.insertAdjacentHTML('beforeEnd', '<span> [Attempt to embed failed]</span>');
+        _link.insertAdjacentHTML('beforeEnd', '<span> [Attempt to embed failed: ' + _vk_url + ']</span>');
       };
       win.setTimeout(function () {
         _xhr.send(null);
@@ -353,8 +352,7 @@
         return makeInlineFrame(_vk_embed, _link, false);
       };
       _xdr.onerror = _xdr.ontimeout = function () {
-        _link.href = _vk_url;
-        _link.insertAdjacentHTML('beforeEnd', '<span> [Attempt to embed failed]</span>');
+        _link.insertAdjacentHTML('beforeEnd', '<span> [Attempt to embed failed ' + _vk_url + ']</span>');
       };
       win.setTimeout(function () {
         _xdr.send();
