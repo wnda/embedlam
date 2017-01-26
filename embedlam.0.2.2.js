@@ -1,3 +1,4 @@
+/* embedlam.js @ 0.2.2 :: BSD-3-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
