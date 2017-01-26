@@ -20,10 +20,11 @@
   };
 
   function init (config) {
+    (doc.head || doc.getElementsByTagName('head')[0]).insertAdjacentHTML('beforeend',win.decodeURIComponent('%3Cstyle%3E%5Bdata-mbdlm-4by1%5D%7Bposition%3Arelative%3Bpadding-bottom%3A22%25%3Boverflow%3Ahidden%3Bbackground-color%3A%23444%3B%7D%5Bdata-mbdlm-16by9%5D%7Bdisplay%3Ablock%3B-webkit-box-sizing%3Aborder-box%3Bbox-sizing%3Aborder-box%3Bposition%3Arelative%3Bpadding-bottom%3A56.2%25%3Boverflow%3Ahidden%3Bbackground-color%3A%23444%3B%7D%5Bdata-mbdlm-16by9%5D%3Abefore%2C%5Bdata-mbdlm-4by1%5D%3Abefore%7Bcontent%3A%22%22%3B-webkit-box-sizing%3Aborder-box%3Bbox-sizing%3Aborder-box%3Bdisplay%3Ablock%3Bposition%3Aabsolute%3Btop%3A0%3Bleft%3A0%3Bright%3A0%3Bbottom%3A0%3Bwidth%3A100%25%3Bheight%3A100%25%3Bbackground%3Argba(0%2C0%2C0%2C.8)%7D%5Bdata-mbdlm-16by9%5D%3Aafter%2C%5Bdata-mbdlm-4by1%5D%3Aafter%7Bcontent%3A%22%22%3Bdisplay%3Anone%3B-webkit-box-sizing%3Aborder-box%3Bbox-sizing%3Aborder-box%3Bbackground-clip%3Apadding-box%3Bposition%3Aabsolute%3Btop%3A50%25%3Bleft%3A50%25%3Bmargin%3A-48px%200%200%20-48px%3Bopacity%3A1%3Bborder%3A48px%20solid%20transparent%3Bborder-top-color%3A%23fefefe%3Bwidth%3A48px%3Bheight%3A48px%3Bborder-radius%3A48px%3B-webkit-transform%3Arotate(0)%3Btransform%3Arotate(0)%3B%7D%5Bdata-mbdlm-16by9%5D%3Abefore%2C%5Bdata-mbdlm-4by1%5D%3Abefore%2C%5Bdata-mbdlm-16by9%5D%3Aafter%2C%5Bdata-mbdlm-4by1%5D%3Aafter%7Bz-index%3A9999%3B-webkit-pointer-events%3Anone%3Bpointer-events%3Anone%3Bcontain%3Astrict%3Bisolation%3Aisolate%3B%7D%5Bdata-mbdlm-16by9%5D%3Abefore%2C%5Bdata-mbdlm-4by1%5D%3Abefore%7Bopacity%3A0%3Bvisibility%3Bhidden%3Btransition-property%3Aopacity%2Cvisibility%3Btransition-timing-function%3Acubic-bezier(.4%2C0%2C.2%2C1)%3Btransition-duration%3A200ms%3B%7D%5Bdata-mbdlm-16by9%5D%5Bdata-mbdlm-fetching%5D%3Aafter%2C%5Bdata-mbdlm-4by1%5D%5Bdata-mbdlm-fetching%5D%3Aafter%7Bdisplay%3Ablock%3B-webkit-animation%3Aspinner%201.5s%20linear%20infinite%3Banimation%3Aspinner%201.5s%20linear%20infinite%3B%7D%5Bdata-mbdlm-16by9%5D%5Bdata-mbdlm-fetching%5D%3Abefore%2C%5Bdata-mbdlm-4by1%5D%5Bdata-mbdlm-fetching%5D%3Abefore%7Bopacity%3A1%3Bvisibility%3Avisible%3B%7D%5Bdata-mbdlm-fill%5D%7Bposition%3Aabsolute%3Btop%3A0%3Bleft%3A0%3Bright%3A0%3Bbottom%3A0%3Bwidth%3A100%25%3Bheight%3A100%25%3Boverflow%3Ahidden%3B%7D%5Bdata-mbdlm-img%5D%7Bposition%3Aabsolute%3Btop%3A50%25%3Bleft%3A50%25%3B-webkit-transform%3Atranslate(-50%25%2C-50%25)%3Btransform%3Atranslate(-50%25%2C-50%25)%3Bmin-width%3A100%25%3Bmin-height%3A100%25%3Bwidth%3Aauto%3Bheight%3Aauto%3Bcursor%3Apointer%3B%7D%40-webkit-keyframes%20spinner%7B100%25%7B-webkit-transform%3Arotate(360deg)%7D%7D%40keyframes%20spinner%7B100%25%7Btransform%3Arotate(360deg)%7D%7D%3C%2Fstyle%3E'));
     _anchors = doc.getElementsByTagName('a');
     _config = typeof config !== 'undefined' ? config : null;
     _checker = checkDOM();
-    addEvent(win, 'load', _checker);
+    addEvent(doc, 'readystatechange', _checker);
     addEvent(win, 'scroll', _checker);
   }
 
@@ -32,22 +33,28 @@
       var iframe_src = '';
       var f = 0;
       var g = 0;
+      var etp;
 
       if (!!_config && 'querySelectorAll' in doc) {
-        _anchors = 
+        _anchors =
           ('container' in _config && !!_config.container ? doc.querySelector(_config.container) : doc)
               .querySelectorAll('selector' in _config && !!_config.selector ? _config.selector : 'a');
+      }
+
+      if (doc.readyState === 'loading') {
+        return;
       }
 
       f = _anchors.length;
       g = 0;
 
       if (typeof e === 'object' && !!e && 'type' in e && !!e.type) {
-        if (e.type === 'load') {
-          removeEvent(win, 'load', _checker);
-        }
-        if (e.type === 'scroll' && f < 1) {
+        etp = e.type.toLowerCase();
+        if ((etp === 'readystatechange' || etp === 'onreadystatechange')) {
+          removeEvent(doc, 'readystatechange', _checker);
+        } else if ((etp === 'scroll' || etp === 'onscroll') && f < 1) {
           removeEvent(win, 'scroll', _checker);
+          return;
         }
       }
 
@@ -361,11 +368,14 @@
       return;
     }
 
-    _16x9_div = doc.createElement('div');
+    _16x9_div = createPlaceholder('16by9');
+    to_replace.parentNode.replaceChild(_16x9_div, to_replace);
+
     _iframe = doc.createElement('iframe');
-    _16x9_div.setAttribute('style', 'position:relative;padding-bottom:56.2%;overflow:hidden;background-color:#444;');
     _16x9_div.appendChild(_iframe);
-    _iframe.setAttribute('style', 'position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;overflow:hidden;');
+    addEvent(_iframe, 'load', fetchFinished);
+
+    _iframe.setAttribute('data-mbdlm-fill', '');
     _iframe.setAttribute('allowtransparency', 'true');
     _iframe.setAttribute('frameborder', 'no');
     _iframe.setAttribute('scrolling', 'no');
@@ -378,8 +388,6 @@
     if ('allowFullscreen' in _iframe) {
       _iframe.setAttribute('allowFullscreen', 'allowFullscreen');
     }
-
-    to_replace.parentNode.replaceChild(_16x9_div, to_replace);
   }
 
   function makeDownload(url, to_replace) {
@@ -390,13 +398,15 @@
       return;
     }
 
-    _4x1_div = doc.createElement('div');
-    _dl = doc.createElement('div');
-    _4x1_div.setAttribute('style', 'position:relative;padding-bottom:22%;overflow:hidden;background-color:#444;cursor:pointer;');
-    _4x1_div.appendChild(_dl);
-    _4x1_div.setAttribute('style', 'position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;overflow:hidden;');
-    _dl.setAttribute('data-url', win.encodeURIComponent(url));
+    _4x1_div = createPlaceholder('4by1');
     to_replace.parentNode.replaceChild(_4x1_div, to_replace);
+
+    _dl = doc.createElement('div');
+    _4x1_div.appendChild(_dl);
+    addEvent(_dl, 'load', fetchFinished);
+
+    _4x1_div.setAttribute('data-mbdlm-fill', '');
+    _dl.setAttribute('data-mbdlm-url', win.encodeURIComponent(url));
     addEvent(_dl, 'click', fakeLink);
   }
 
@@ -408,26 +418,18 @@
       return;
     }
 
-    _16x9_div = doc.createElement('div');
+    _16x9_div = createPlaceholder('16by9');
+    to_replace.parentNode.replaceChild(_16x9_div, to_replace);
+
     _img = doc.createElement('img');
-    _16x9_div.setAttribute('style', 'position:relative;padding-bottom:56.2%;overflow:hidden;background-color:#444;cursor:pointer;');
     _16x9_div.appendChild(_img);
+    addEvent(_img, 'load', fetchFinished);
 
-    if ('transform' in _img.style) {
-      _img.setAttribute('style', 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;cursor:pointer;');
-
-    } else if ('webkitTransform' in _img.style) {
-      _img.setAttribute('style', 'position:absolute;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;cursor:pointer;');
-
-    } else {
-      _img.setAttribute('style', 'width:auto;height:100%;margin:0 auto;cursor:pointer;');
-    }
-
+    _img.setAttribute('data-mbdlm-img', '');
     _img.src = url;
     _img.alt = to_replace.textContent ? to_replace.textContent : url;
     _img.title = to_replace.textContent ? to_replace.textContent : url;
     _img.setAttribute('data-url', win.encodeURIComponent(url));
-    to_replace.parentNode.replaceChild(_16x9_div, to_replace);
     addEvent(_img, 'click', fakeLink);
   }
 
@@ -439,17 +441,20 @@
       return;
     }
 
-    _16x9_div = doc.createElement('div');
-    _video = doc.createElement('video');
-    _16x9_div.setAttribute('style', 'position:relative;padding-bottom:56.2%;overflow:hidden;background-color:#444;');
-    _16x9_div.appendChild(_video);
-    _video.setAttribute('style', 'position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;overflow:hidden;');
-    _video.setAttribute('controls', 'controls');
-    _video.setAttribute('muted', 'muted');
-    _video.setAttribute('webkitplaysinline', 'webkitplaysinline');
-    _video.setAttribute('playsinline', 'playsinline');
-    _video.insertAdjacentHTML('afterBegin', '<source src="' + url + '" type="video/' + type + '"></source>');
+    _16x9_div = createPlaceholder('16by9');
     to_replace.parentNode.replaceChild(_16x9_div, to_replace);
+
+    _video = doc.createElement('video');
+    _16x9_div.appendChild(_video);
+    addEvent(_video, 'load', fetchFinished);
+
+    _video.setAttribute('data-mbdlm-fill', '');
+    _video.setAttribute('controls', '');
+    _video.setAttribute('muted', '');
+    _video.setAttribute('webkitplaysinline', '');
+    _video.setAttribute('playsinline', '');
+    _video.insertAdjacentHTML('afterBegin', '<source src="' + url + '" type="video/' + type + '"></source>');
+
   }
 
   function makeAudio (url, to_replace, type) {
@@ -460,15 +465,17 @@
       return;
     }
 
-    _4x1_div = doc.createElement('div');
+    _4x1_div = createPlaceholder('4by1');
+    to_replace.parentNode.replaceChild(_4x1_div, to_replace);
+
     _audio = doc.createElement('audio');
-    _4x1_div.setAttribute('style', 'position:relative;padding-bottom:22%;overflow:hidden;background-color:#444;');
     _4x1_div.appendChild(_audio);
-    _audio.setAttribute('style', 'position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;overflow:hidden;');
+    addEvent(_audio, 'load', fetchFinished);
+
+    _audio.setAttribute('data-mbdlm-fill', '');
     _audio.setAttribute('controls', 'controls');
     _audio.setAttribute('muted', 'muted');
     _audio.insertAdjacentHTML('afterBegin', '<source src="' + url + '" type="audio/' + type + '"></source>');
-    to_replace.parentNode.replaceChild(_4x1_div, to_replace);
   }
 
   function makeStaticMap (url, to_replace) {
@@ -481,23 +488,16 @@
       return;
     }
 
-    _16x9_div = doc.createElement('div');
-    _img = doc.createElement('img');
-    _latlang = url.match(/@([^A-Za-z]+,)/)[0].slice(0,-1).replace('@', '');
-    _16x9_div.setAttribute('style', 'position:relative;padding-bottom:56.2%;overflow:hidden;background-color:#444;cursor:pointer;');
-
-    if ('transform' in _img.style) {
-      _img.setAttribute('style', 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;cursor:pointer;');
-
-    } else if ('webkitTransform' in _img.style) {
-      _img.setAttribute('style', 'position:absolute;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;cursor:pointer;');
-
-    } else {
-      _img.setAttribute('style', 'width:auto;height:100%;margin:0 auto;cursor:pointer;');
-    }
-
-    _16x9_div.appendChild(_img);
+    _16x9_div = createPlaceholder('16by9');
     to_replace.parentNode.replaceChild(_16x9_div, to_replace);
+
+    _img = doc.createElement('img');
+    _16x9_div.appendChild(_img);
+    addEvent(_img, 'load', fetchFinished);
+
+    _latlang = url.match(/@([^A-Za-z]+,)/)[0].slice(0,-1).replace('@', '');
+    _img.setAttribute('data-mbdlm-img', '');
+
     _cW = _16x9_div.clientWidth > 1 ? _16x9_div.clientWidth : '1';
     _cH = _16x9_div.clientHeight > 1 ? _16x9_div.clientHeight : '1';
 
@@ -509,9 +509,21 @@
 
     _img.alt = 'Google Map';
     _img.title = 'Google Map: ' + _latlang;
-    _img.setAttribute('data-url', win.encodeURIComponent(url));
-
+    _img.setAttribute('data-mbdlm-url', win.encodeURIComponent(url));
     addEvent(_img, 'click', fakeLink);
+  }
+
+  function createPlaceholder (aspect_ratio) {
+    var _el = doc.createElement('div');
+    _el.setAttribute('data-mbdlm-' + aspect_ratio, '');
+    _el.setAttribute('data-mbdlm-fetching', '');
+    return _el;
+  }
+
+  function fetchFinished (e) {
+    var evt = (e.target||this);
+    removeEvent(evt, 'load', fetchFinished);
+    evt.parentNode.removeAttribute('data-mbdlm-fetching');
   }
 
   function isInViewport (el) {
@@ -570,7 +582,7 @@
     if (!('getAttribute' in evt)) {
       return;
     }
-    return win.open(win.decodeURIComponent(evt.getAttribute('data-url')));
+    return win.open(win.decodeURIComponent(evt.getAttribute('data-mbdlm-url')));
   }
 
 })(window, window.document);
