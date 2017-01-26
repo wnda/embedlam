@@ -561,7 +561,10 @@
     var j = 0; 
     var arr = [];
     for (; j < i; ++j) {
-      if (elements[j].getAttribute('href') || elements[j].getAttribute('href').length > 5) {
+      if (elements[j].tagName.toLowerCase() !== 'a') {
+        continue;
+      }
+      if (!!elements[j].getAttribute('href') && elements[j].getAttribute('href').length > 5) {
         arr[j] = elements[j];
       }
     }
