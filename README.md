@@ -39,7 +39,7 @@ As of v0.2.0, the script no longer executes itself, and accepts an optional conf
     <script async defer src="/path/to/embedlam.js"></script>
     <script>
       window.embedlam.init({
-        "selector": "a[data-embedlam-target]" // -> document.querySelectorAll('a[data-embed]')
+        "selector": "a[data-embedlam-target]" // -> document.querySelectorAll('a[data-embedlam-target]')
         "container": "#a_cool_id"             // -> document.querySelector('#a_cool_id')
       });
     </script>
