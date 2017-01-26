@@ -21,23 +21,28 @@ embedly sticks its ugly logo on content, charges money at some point down the li
 No catch! Unless you're a developer and you want to extend this lib. You're not going to like my code. I like `switch` statements and I write pretty terse code that could not be classified as team-friendly. Open source software is two things for me: an outlet for my non-team coding, and my opportunity to experiment with ideas. *Caveat emptor*.
 
 ## Using embedlam
-Usage is pretty straightforward: include the script. That's it. 
+Usage is pretty straightforward: include the script. That's it.
 
     <script async defer src="/path/to/embedlam.js"></script>
 
-It fires automatically, i.e. as soon as it's parsed, as soon as the `load` event fires, and for every scroll event per 500ms.
+It fires automatically, i.e. as soon as it's parsed in v0.1.0; in v0.2.1, it fires as soon as the `readystatechange` event fires on the `document` with a value that isn't `loading`. In both versions, the embedding process fires for every scroll event per 500ms.
 
-In the future, I might expose a public method to control the debouncing speed (not really necessary to change it though) and perhaps the ability to specify a selector. You might not want to embed EVERYTHING that matches a certain URL-string pattern, so that's definitely on the to-do list.
+As of v0.2.0, the script no longer executes itself, and accepts an optional configuration object like so:
 
-When that public method is exposed, the script will no longer execute itself, but will require a configuration object specified in a call to said method:
-
+    <div id="a_cool_id">
+      <a href="https://bla.com/v?b0645439/ data-embedlam-target></a>
+      <a href="https://amaze.com/v?5128234/ data-embedlam-target></a>
+      <a href="https://wow.com/v?8831093/ data-embedlam-target></a>
+      <a href="https://shit.com/v?iw3og94/ data-embedlam-target></a>
+    </div>
+    
     <script async defer src="/path/to/embedlam.js"></script>
     <script>
-      embedlam.init({
-        "selector": "a[data-embed]" // -> document.querySelectorAll('a[data-embed]')
+      window.embedlam.init({
+        "selector": "a[data-embedlam-target]" // -> document.querySelectorAll('a[data-embed]')
+        "container": "#a_cool)id"             // -> document.querySelector('#a_cool_id')
       });
     </script>
-    
-Still pretty straightforward.
 
-But for now, just the script include.
+Both keys should contain a CSS selector string that can be processed by `querySelector`. Calling `init()` with no config object will result in every link on the page being scrutinised, which could result in some unexpected things being embedded if you're not careful.
+
