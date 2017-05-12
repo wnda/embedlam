@@ -310,7 +310,7 @@
         new win.XMLHttpRequest() : {};
 
     if ('fetch' in win) {
-      win.fetch(_vk_url, {'method': 'GET', 'mode': 'cors'}).then(function (resp) {
+      win.fetch(_vk_url, {'method': 'GET', 'mode': 'cors', 'X-Requested-With': 'XMLHttpRequest'}).then(function (resp) {
         if (!!resp.ok) {
           return resp.text().then(function (resptxt) {
             return makeInlineFrame(getVKHash(resptxt, _params), _link, false);
@@ -324,6 +324,7 @@
 
     } else {
       _xhr.open('GET', _vk_url, true);
+      _xhr.setRequestHeader('X-Requested-With': 'XMLHttpRequest');
       _xhr.responseType = 'text';
       addEvent(_xhr, 'readystatechange', function (e) {
         var _evt = (e.target || this);
