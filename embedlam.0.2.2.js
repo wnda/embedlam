@@ -308,9 +308,13 @@
     var _xhr = 'XDomainRequest' in win ?
       new win.XDomainRequest() : 'XMLHttpRequest' in win ?
         new win.XMLHttpRequest() : {};
+    var _hdrs;
 
     if ('fetch' in win) {
-      win.fetch(_vk_url, {'method': 'GET', 'mode': 'cors', 'X-Requested-With': 'XMLHttpRequest'}).then(function (resp) {
+      _hdrs = new win.Headers({
+         'X-Requested-With': 'XMLHttpRequest'
+      });
+      win.fetch(_vk_url, {'method': 'GET', 'mode': 'cors', 'headers': _hdrs).then(function (resp) {
         if (!!resp.ok) {
           return resp.text().then(function (resptxt) {
             return makeInlineFrame(getVKHash(resptxt, _params), _link, false);
