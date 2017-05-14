@@ -371,7 +371,7 @@
     } else if ('XMLHttpRequest' in win && 'withCredentials' in _xhr) {
       // obviously most browsers will support this method
       _xhr.open('GET', _vk_url, true);
-      _xhr.setRequestHeader('X-Requested-With': 'XMLHttpRequest');
+      _xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       _xhr.responseType = 'text';
       _xhr.onreadystatechange = function () {
         if (_xhr.readyState === 4 && _xhr.status >= 200 && _xhr.status < 300) {
@@ -395,7 +395,7 @@
       // or whether string.match works in IE8-9
       _xdr = new win.XDomainRequest();
       _xdr.open('GET', _vk_url, true);
-      _xhr.setRequestHeader('X-Requested-With': 'XMLHttpRequest');
+      _xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       _xdr.onload = function () {
         var _hash = _xdr.responseText.match(/hash2[^0-9a-f]*([0-9a-f]*)/)[1];
         var _vk_embed = 'https://vk.com/video_ext.php?oid=' + _params[0] + '&id=' + _params[1] + '&hash=' + _hash  + '&hd=1';
