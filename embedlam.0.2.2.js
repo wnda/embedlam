@@ -314,7 +314,7 @@
       _hdrs = new win.Headers({
          'X-Requested-With': 'XMLHttpRequest'
       });
-      win.fetch(_vk_url, {'method': 'GET', 'mode': 'cors', 'headers': _hdrs).then(function (resp) {
+      win.fetch(_vk_url, {'method': 'GET', 'mode': 'cors', 'headers': _hdrs}).then(function (resp) {
         if (!!resp.ok) {
           return resp.text().then(function (resptxt) {
             return makeInlineFrame(getVKHash(resptxt, _params), _link, false);
@@ -328,7 +328,7 @@
 
     } else {
       _xhr.open('GET', _vk_url, true);
-      _xhr.setRequestHeader('X-Requested-With': 'XMLHttpRequest');
+      _xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       _xhr.responseType = 'text';
       addEvent(_xhr, 'readystatechange', function (e) {
         var _evt = (e.target || this);
