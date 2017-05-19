@@ -429,10 +429,11 @@
     _iframe.setAttribute('allowtransparency', 'true');
     _iframe.setAttribute('frameborder', 'no');
     _iframe.setAttribute('scrolling', 'no');
+    _iframe.setAttribute('referrerpolicy', 'no-referrer');
     _iframe.src = url;
 
     if (!!sandbox) {
-      _iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
+      _iframe.setAttribute('sandbox', 'allow-scripts allow-presentation allow-same-origin allow-orientation-lock');
     }
 
     if ('allowFullscreen' in _iframe) {
