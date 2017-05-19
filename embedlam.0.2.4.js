@@ -317,6 +317,7 @@
       win.fetch(_vk_url, {'method': 'GET', 'mode': 'cors', 'headers': _hdrs}).then(function (resp) {
         if (!!resp.ok) {
           return resp.text().then(function (resptxt) {
+            console.log(getVKHash(resptxt, _params));
             return makeInlineFrame(getVKHash(resptxt, _params), _link, false);
           }).catch(function (e) {
             _link.insertAdjacentHTML('beforeend', '<span> [Attempt to embed failed: ' + _vk_url + ']</span>');
