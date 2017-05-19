@@ -371,7 +371,7 @@
     _iframe.src = url;
 
     if (!!sandbox) {
-      _iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
+      _iframe.setAttribute('sandbox', 'allow-scripts allow-presentation allow-same-origin');
     }
 
     if ('allowFullscreen' in _iframe) {
