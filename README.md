@@ -8,7 +8,7 @@ Then one day, someone thought it would be clever to automatically embed Youtube 
 
 Some clever people came up with the idea of showing only so many threads at a time, but this is only really a good idea for threads with thousands of posts. otherwise you're firing ajax requests every time you scroll, which is just plain crap. Seriously, try using Discourse on 2G/3G. You'll get frustrated very quickly compared to browsing a forum running punbb/fluxbb.
 
-Sure, Discourse scales better, it's designed to do that, but it's still about as nice to use as Twitter. Okay, maybe it's not quite as shitty as Twitter. But let's face it, the top 10 most hated websites in terms of UX are 'web apps' which a ton of JavaScript to download and rub in your face.
+Sure, Discourse scales better, it's designed to do that, but it's still about as nice to use as Twitter. Okay, maybe it's not quite as shitty as Twitter. But let's face it, the top 10 most hated websites in terms of UX are 'web apps' which oblige you to download a relative ton of JavaScript to rub in your face.
 
 I do not have a solution for the direction the web has taken. But I do have something which can take the pain out of embedding. embedlam is designed to automatically embed links which are known to be compatible with iframes, and will optimistically attempt to embed video/audio files. It even blocks potentially harmful files, because it would be irresponsible not to.
 
@@ -30,10 +30,10 @@ It fires automatically, i.e. as soon as it's parsed in v0.1.0; in v0.2.1, it fir
 As of v0.2.0, the script no longer executes itself, and accepts an optional configuration object like so:
 
     <div id="a_cool_id">
-      <a href="https://bla.com/v?b0645439/ data-embedlam-target></a>
-      <a href="https://amaze.com/v?5128234/ data-embedlam-target></a>
-      <a href="https://wow.com/v?8831093/ data-embedlam-target></a>
-      <a href="https://shit.com/v?iw3og94/ data-embedlam-target></a>
+      <a href="https://bla.com/v?b0645439/" data-embedlam-target></a>
+      <a href="https://amaze.com/v?5128234/" data-embedlam-target></a>
+      <a href="https://wow.com/v?8831093/" data-embedlam-target></a>
+      <a href="https://sht.com/v?iw3og94/" data-embedlam-target></a>
     </div>
     
     <script async defer src="/path/to/embedlam.js"></script>
