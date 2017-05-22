@@ -234,6 +234,11 @@
       case !!(_url.match(/spotify\.com\/track\/\w+/)):
         _iframe_src = 'https://embed.spotify.com/?uri=spotify:track:' + _url.match(/[^\/]+$/)[0];
         break;
+        
+      // generic spotify embed
+      case !!(_url.match(/spotify\.com\/\w+/)):
+        _iframe_src = 'https://embed.spotify.com/?uri=' + win.encodeURIComponent(_url.replace('https://',''));
+        break;
 
       // vine standard url, return embed url (NB: vine is shutting down, may not need this)
       case !!(_url.match(/vine\.co\/v\/\w+/)):
