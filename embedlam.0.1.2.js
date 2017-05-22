@@ -356,7 +356,7 @@
       });
       win.fetch(_vk_url, {'mode': 'cors', 'headers': _hdrs}).then(function (resp) {
         return resp.text().then(function (resptxt) {
-          var _hash = resptxt.match(/hash2[^0-9a-f]*([0-9a-f]*)/)[1];
+          var _hash = resptxt.match(/hash[^0-9a-f]*([0-9a-f]*)/)[1];
           var _vk_embed = 'https://vk.com/video_ext.php?oid=' + _params[0] + '&id=' + _params[1] + '&hash=' + _hash  + '&hd=1';
           return makeInlineFrame(_vk_embed, _link, false);
         }).catch(function (e) {
@@ -375,7 +375,7 @@
       _xhr.responseType = 'text';
       _xhr.onreadystatechange = function () {
         if (_xhr.readyState === 4 && _xhr.status >= 200 && _xhr.status < 300) {
-          var _hash = _xhr.responseText.match(/hash2[^0-9a-f]*([0-9a-f]*)/)[1];
+          var _hash = _xhr.responseText.match(/hash[^0-9a-f]*([0-9a-f]*)/)[1];
           var _vk_embed = 'https://vk.com/video_ext.php?oid=' + _params[0] + '&id=' + _params[1] + '&hash=' + _hash  + '&hd=1';
           return makeInlineFrame(_vk_embed, _link, false);
         }
@@ -397,7 +397,7 @@
       _xdr.open('GET', _vk_url, true);
       _xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       _xdr.onload = function () {
-        var _hash = _xdr.responseText.match(/hash2[^0-9a-f]*([0-9a-f]*)/)[1];
+        var _hash = _xdr.responseText.match(/hash[^0-9a-f]*([0-9a-f]*)/)[1];
         var _vk_embed = 'https://vk.com/video_ext.php?oid=' + _params[0] + '&id=' + _params[1] + '&hash=' + _hash  + '&hd=1';
         return makeInlineFrame(_vk_embed, _link, false);
       };
