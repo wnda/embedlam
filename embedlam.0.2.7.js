@@ -348,7 +348,7 @@
   }
 
   function getVKHash(markup, params) {
-    return 'https://vk.com/video_ext.php?oid=' + params[0] + '&id=' + params[1] + '&hash=' + (markup.match(/hash2[^0-9a-f]*([0-9a-f]*)/)[1])  + '&hd=1';
+    return 'https://vk.com/video_ext.php?oid=' + params[0] + '&id=' + params[1] + '&hash=' + (markup.match(/hash[^0-9a-f]*([0-9a-f]*)/)[1])  + '&hd=1';
   }
 
   function makeInlineFrame (url, to_replace, sandbox) {
