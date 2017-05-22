@@ -213,6 +213,10 @@
       case !!(_url.match(/spotify\.com\/track\/\w+/)):
         _iframe_src = 'https://embed.spotify.com/?uri=spotify:track:' + _url.match(/[^\/]+$/)[0];
         break;
+        
+      case !!(_url.match(/spotify\.com\/\w+/)):
+        _iframe_src = 'https://embed.spotify.com/?uri=' + win.encodeURIComponent(_url.replace('https://',''));
+        break;
 
       case !!(_url.match(/vine\.co\/v\/\w+/)):
         _iframe_src = _url + '/embed/postcard';
