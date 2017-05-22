@@ -222,6 +222,10 @@
         _iframe_src = 'https://w.soundcloud.com/player/?url=' + win.encodeURIComponent(_url) + '&auto_play=false&show_artwork=true&color=0066cc';
         break;
 
+      case !!(_url.match(/instagram.com\/p\/\w+/)):
+        _iframe_src = _url + '/embed';
+        break;
+
       case !!(_url.match(/imgur\.com\/\/a\/\w+\/embed\?/)):
         _iframe_src = _url;
         break;
