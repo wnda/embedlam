@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.2.8 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.2.9 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -255,6 +255,10 @@
         break;
 
       case !!(_url.match(/hulu\.com\/embed\.html\?\w+=\w+/)):
+        _iframe_src = _url;
+        break;
+      
+      case !!(_url.match(/appear\.in\/\w+/)):
         _iframe_src = _url;
         break;
 
