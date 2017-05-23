@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.3.0 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.3.1 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -487,6 +487,7 @@
     var _img;
     var _latlang;
     var _cW, _cH;
+    var _z;
 
     if (typeof to_replace !== 'object' || !to_replace || to_replace.nodeType !== 1) {
       return;
@@ -504,11 +505,12 @@
 
     _cW = _16x9_div.clientWidth > 1 ? _16x9_div.clientWidth : '1';
     _cH = _16x9_div.clientHeight > 1 ? _16x9_div.clientHeight : '1';
+    _z  = +(url.match(/,\d+\.\d+z/)[0].replace(',', '').replace('z', ''));
 
     _img.src = 'https://maps.googleapis.com/maps/api/staticmap?center=' +
                _latlang + '&size=' + _cW + 'x' +
                _cH + '&sensor=false&maptype=roadmap&zoom=' +
-               url.match(/,\d+\.\d+z/)[0].replace(',', '').replace('z', '') +
+               ((_z >= 12 ? _z - 3 : _z) | 0) +
                '&markers=' + _latlang + '&key=AIzaSyAf7V-aqUb-Guull54mvfrH61hFUbNPqvM';
 
     _img.alt = 'Google Map';
