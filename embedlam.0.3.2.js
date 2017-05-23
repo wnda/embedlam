@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.3.1 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.3.2 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -505,7 +505,7 @@
 
     _cW = _16x9_div.clientWidth > 1 ? _16x9_div.clientWidth : '1';
     _cH = _16x9_div.clientHeight > 1 ? _16x9_div.clientHeight : '1';
-    _z  = +(url.match(/,\d+\.\d+z/)[0].replace(',', '').replace('z', ''));
+    _z  = +(url.match(/(,\d+\.\d+z)|(,\d+z)/)[0].replace(',', '').replace('z', ''));
 
     _img.src = 'https://maps.googleapis.com/maps/api/staticmap?center=' +
                _latlang + '&size=' + _cW + 'x' +
