@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.3.6 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.3.7 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -276,7 +276,7 @@
         break;
 
       case !!(_url.match(/jsbin\.com\/\w+/)):
-        _iframe_src = _url.replace('edit', 'embed').replace('https', 'http');
+        _iframe_src = _url.replace('edit', 'embedded').replace('https', 'http');
         break;
         
       case !!(_url.match(/appear\.in\/\w+/)):
