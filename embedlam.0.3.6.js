@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.3.5 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.3.6 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -245,7 +245,7 @@
         _iframe_src = 'https://imgur.com/a/' + _url.match(/[^\/]+$/)[0] + '/embed?pub=true&analytics=false';
         break;
 
-      case !!(_url.match(/imgur\.com\/a\/\w+/)):
+      case !!(_url.match(/imgur\.com\/\w+/)):
         _iframe_src = _url + '/embed?pub=true&analytics=false';
         break;
 
