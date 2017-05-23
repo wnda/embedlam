@@ -1,4 +1,4 @@
-/* embedlam.js @ v0.3.4 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.3.5 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -25,7 +25,7 @@
     _anchors = doc.getElementsByTagName('a');
     _config = typeof config !== 'undefined' ? config : null;
     _checker = checkDOM();
-    checkDOM();
+    _checker();
     addEvent(doc, 'readystatechange', _checker);
     addEvent(win, 'scroll', _checker);
   }
