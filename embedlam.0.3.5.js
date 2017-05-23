@@ -81,11 +81,13 @@
     var _len;
     var _params;
     var _iframe_src;
-
+    var _temp;
+    
     _url = _url.match(/http:/) ? _url.replace('http:', 'https:') : _url;
     _url = _url.slice(-1) === '/' ? _url.slice(0, -1) : _url;
     _by_dot = _url.split('.');
     _len = _by_dot.length;
+    _temp = '';
 
     switch (true) {
       case !!(_url.match(/\.386|\.bat|\.cmd|\.dll|\.exe|\.msi|\.sh/i)):
@@ -259,6 +261,24 @@
         _iframe_src = _url;
         break;
       
+      case !!(_url.match(/jsfiddle\.com\/\w+/)):
+        _iframe_src = _url + '/embedded';
+        break;
+        
+      case !!(_url.match(/codepen\.io\/\w+\/embed/)):
+        _iframe_src = _url;
+        break;
+      
+      case !!(_url.match(/codepen\.io\/\w+\/\w+/)):
+        _temp = _url.replace(/(https|http)(:\/\/)(codepen\.io)/, '');
+        _iframe_src = 'https://codepen.io/' + _temp.match(/\w+\//gi)[0] + 'embed/' + _temp.match(/\w+\//gi)[1] + '?theme-id=23496&slug-hash=' + _temp.match(/\w+\//gi)[1] + '&default-tab=html,result&user=' + _temp.match(/\w+\//gi)[0] + '&embed-version=2&editable=true';
+        _temp = null;
+        break;
+
+      case !!(_url.match(/jsbin\.com\/\w+/)):
+        _iframe_src = _url.replace('edit', 'embed').replace('https', 'http');
+        break;
+        
       case !!(_url.match(/appear\.in\/\w+/)):
         _iframe_src = _url;
         break;
