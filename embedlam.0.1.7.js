@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.1.6 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.1.7 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -574,7 +574,7 @@
     to_replace.parentNode.replaceChild(_16x9_div, to_replace);
     _cW = _16x9_div.clientWidth > 1 ? _16x9_div.clientWidth : '1';
     _cH = _16x9_div.clientHeight > 1 ? _16x9_div.clientHeight : '1';
-    _z  = +(url.match(/,\d+\.\d+z/)[0].replace(',', '').replace('z', ''));
+    _z  = +(url.match(/(,\d+\.\d+z)|(,\d+z)/)[0].replace(',', '').replace('z', ''));
 
     // build the static maps URL. sticking to an aspect ratio
     // enables us to use clientWidth/Height to get an appropriate size
