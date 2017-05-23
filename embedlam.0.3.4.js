@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.3.3 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.3.4 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -228,7 +228,7 @@
         break;
 
       case !!(_url.match(/instagram\.com\/p\/\w+/)):
-        _iframe_src = _url.match(/instagram\.com\/p\/\w+/)[0] + '/embed';
+        _iframe_src = 'https://' + _url.match(/instagram\.com\/p\/\w+/)[0] + '/embed';
         break;
 
       case !!(_url.match(/imgur\.com\/\/a\/\w+\/embed\?/)):
