@@ -25,6 +25,7 @@
     _anchors = doc.getElementsByTagName('a');
     _config = typeof config !== 'undefined' ? config : null;
     _checker = checkDOM();
+    checkDOM();
     addEvent(doc, 'readystatechange', _checker);
     addEvent(win, 'scroll', _checker);
   }
