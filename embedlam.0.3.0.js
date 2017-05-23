@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.2.9 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.3.0 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -508,7 +508,7 @@
     _img.src = 'https://maps.googleapis.com/maps/api/staticmap?center=' +
                _latlang + '&size=' + _cW + 'x' +
                _cH + '&sensor=false&maptype=roadmap&zoom=' +
-               url.match(/,\d\dz/)[0].replace(',', '').replace('z', '') +
+               url.match(/,\d+\.\d+z/)[0].replace(',', '').replace('z', '') +
                '&markers=' + _latlang + '&key=AIzaSyAf7V-aqUb-Guull54mvfrH61hFUbNPqvM';
 
     _img.alt = 'Google Map';
