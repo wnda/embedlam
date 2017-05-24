@@ -4,6 +4,8 @@
   'use strict';
 
   var _anchors, _config, _checker;
+  
+  if ('doNotTrack' in win.navigator && (win.navigator.doNotTrack !== '0' || win.navigator.doNotTrack !== 0) ) { return; }
 
   if (!('performance' in win)) {
     win.performance = {
