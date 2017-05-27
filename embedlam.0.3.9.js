@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.3.8 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.3.9 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -377,9 +377,8 @@
     var _vid, _src_vid, _hdrs;
 
     if ('fetch' in win) {
-      _hdrs = new win.Headers({
-        'X-Requested-With': 'XMLHttpRequest'
-      });
+      _hdrs = new win.Headers({'X-Requested-With': 'XMLHttpRequest'});
+      
       win.fetch(_ft_url, {'method': 'GET', 'mode': 'cors', 'headers': _hdrs}).then(function (resp) {
         if (!!resp.ok) {
           return resp.text().then(function (resptxt) {
@@ -427,9 +426,8 @@
     var _hdrs;
 
     if ('fetch' in win) {
-      _hdrs = new win.Headers({
-         'X-Requested-With': 'XMLHttpRequest'
-      });
+      _hdrs = new win.Headers({'X-Requested-With': 'XMLHttpRequest'});
+      
       win.fetch(_vk_url, {'method': 'GET', 'mode': 'cors', 'headers': _hdrs}).then(function (resp) {
         if (!!resp.ok) {
           return resp.text().then(function (resptxt) {
