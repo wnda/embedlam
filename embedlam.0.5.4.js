@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.5.3 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.5.4 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -260,8 +260,8 @@
         _iframe_src = 'https://www.reuters.com/assets/iframe/yovideo?' + _url.match(/videoId=\d+/)[0];
         break;
 
-      case !!(_url.match(/nytimes\.com\/video\/\w+\/\w+\/\d+/)):
-        _iframe_src = 'https://static01.nyt.com/video/players/offsite/index.html?videoID=' + _url.match(/nytimes\.com\/video\/\w+\/\w+\/\d+/)[0].replace(/[^\d]/g, '');
+      case !!(_url.match(/nytimes\.com\/video\/\w+\/\d+/)):
+        _iframe_src = 'https://static01.nyt.com/video/players/offsite/index.html?videoID=' + _url.match(/nytimes\.com\/video\/\w+\/\d+/)[0].replace(/[^\d]/g, '');
         break;
 
       case !!(_url.match(/ft\.com\/video\/\w+/) && !!_supports_cors):
