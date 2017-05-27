@@ -471,15 +471,14 @@
   }
 
   function makeImage (url, to_replace) {
-    var _16x9_div;
+    var _div;
     var _img;
 
     if (typeof to_replace !== 'object' || !to_replace || to_replace.nodeType !== 1) {
       return;
     }
 
-    _16x9_div = createPlaceholder('16by9');
-    to_replace.parentNode.replaceChild(_16x9_div, to_replace);
+    to_replace.parentNode.replaceChild(_div, to_replace);
     _img = doc.createElement('img');
     
     setAttributes(_img, {
@@ -490,7 +489,7 @@
       'data-mbdlm-url': win.encodeURIComponent(url)
     });
     
-    _16x9_div.appendChild(_img);
+    _div.appendChild(_img);
     addEvent(_img, 'load', fetchFinished);
     addEvent(_img, 'click', fakeLink);
   }
