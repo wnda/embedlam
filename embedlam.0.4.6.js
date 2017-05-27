@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.4.5 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.4.6 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -315,12 +315,8 @@
         _iframe_src = _url;
         break;
 
-      case !!(_url.match(/ft\.com\/video\/\w+/)):
+      case !!(_url.match(/ft\.com\/video\/\w+/) && !!_supports_cors):
         embedFT(_url, _link);
-        break;
-
-      case !!(_url.match(/google\..*@[^A-Za-z]+,/)):
-        makeStaticMap(_url, _link);
         break;
 
       case !!(_url.match(/vk\.com\/video\?\w+/) && !!_supports_cors):
@@ -335,6 +331,10 @@
         _link.setAttribute('href', '#');
         _link.className = 'fetching';
         embedVK(_params, _link);
+        break;
+        
+      case !!(_url.match(/google\..*@[^A-Za-z]+,/)):
+        makeStaticMap(_url, _link);
         break;
 
       default:
