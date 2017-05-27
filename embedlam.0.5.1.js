@@ -148,6 +148,22 @@
         break;
 
       case !!(_url.match(/youtube\.com\/embed\/\w+/)):
+      case !!(_url.match(/player\.vimeo\.com\/video\/\w+/)):
+      case !!(_url.match(/player\.twitch\.tv\/\?\w+/)):
+      case !!(_url.match(/clips\.twitch\.tv\/embed\?clip/)):
+      case !!(_url.match(/bandcamp\.com\/EmbeddedPlayer\/\w+/)):
+      case !!(_url.match(/open\.spotify\.com\/embed\?\w+/)):
+      case !!(_url.match(/embed\.spotify\.com\/\?\w+/)):
+      case !!(_url.match(/dailymotion\.com\/embed\/video\/\w+/)):
+      case !!(_url.match(/imgur\.com\/\/a\/\w+\/embed\?/)):
+      case !!(_url.match(/imgur\.com\/\w+\/embed\?/)):
+      case !!(_url.match(/gfycat\.com\/ifr\/\w+/)):
+      case !!(_url.match(/hulu\.com\/embed\.html\?\w+=\w+/)):
+      case !!(_url.match(/codepen\.io\/\w+\/embed/)):
+      case !!(_url.match(/appear\.in\/\w+/)):
+      case !!(_url.match(/embed\.theguardian\.com\/embed\/video\//)):
+      case !!(_url.match(/reuters\.com\/assets\/iframe\/yovideo\?/)):
+      case !!(_url.match(/static01\.nyt.com\/video\/players\/offsite\//)):
         _iframe_src = _url;
         break;
 
@@ -167,10 +183,6 @@
         _iframe_src = 'https://www.youtube.com/embed/videoseries?list=' + getParams(_url).list;
         break;
 
-      case !!(_url.match(/player\.vimeo\.com\/video\/\w+/)):
-        _iframe_src = _url;
-        break;
-
       case !!(_url.match(/vimeo\.com\/\w+/)):
         _iframe_src = 'https://player.vimeo.com/video/' + _url.match(/[^\/]+$/)[0] + '?portrait=0';
         break;
@@ -179,36 +191,12 @@
         _iframe_src = 'https://www.facebook.com/v2.8/plugins/video.php?href=' + win.encodeURIComponent(_url);
         break;
 
-      case !!(_url.match(/player\.twitch\.tv\/\?\w+/)):
-        _iframe_src = _url;
-        break;
-
-      case !!(_url.match(/clips\.twitch\.tv\/embed\?clip/)):
-        _iframe_src = _url;
-        break;
-
       case !!(_url.match(/twitch\.tv\/\w+\/v\/\w+/)):
         _iframe_src = 'https://player.twitch.tv/?video=v' + _url.match(/[^\/]+$/)[0];
         break;
 
-      case !!(_url.match(/dailymotion\.com\/embed\/video\/\w+/)):
-        _iframe_src = _url;
-        break;
-
       case !!(_url.match(/dailymotion\.com\/video\/\w+/)):
         _iframe_src = 'https://www.dailymotion.com/embed/video/' + _url.match(/[^\/]+$/)[0].split('_')[0];
-        break;
-
-      case !!(_url.match(/bandcamp\.com\/EmbeddedPlayer\/\w+/)):
-        _iframe_src = _url;
-        break;
-
-      case !!(_url.match(/open\.spotify\.com\/embed\?\w+/)):
-        _iframe_src = _url;
-        break;
-
-      case !!(_url.match(/embed\.spotify\.com\/\?\w+/)):
-        _iframe_src = _url;
         break;
 
       case !!(_url.match(/spotify\.com\/user\/\w+\/playlist\/\w+/)):
@@ -235,14 +223,6 @@
         _iframe_src = 'https://' + _url.match(/instagram\.com\/p\/\w+/)[0] + '/embed';
         break;
 
-      case !!(_url.match(/imgur\.com\/\/a\/\w+\/embed\?/)):
-        _iframe_src = _url;
-        break;
-
-      case !!(_url.match(/imgur\.com\/\w+\/embed\?/)):
-        _iframe_src = _url;
-        break;
-
       case !!(_url.match(/imgur\.com\/gallery\/\w+/)):
         _iframe_src = 'https://imgur.com/a/' + _url.match(/[^\/]+$/)[0] + '/embed?pub=true&analytics=false';
         break;
@@ -251,24 +231,12 @@
         _iframe_src = _url + '/embed?pub=true&analytics=false';
         break;
 
-      case !!(_url.match(/gfycat\.com\/ifr\/\w+/)):
-        _iframe_src = _url;
-        break;
-
       case !!(_url.match(/gfycat\.com\/([A-Z][a-z]*)([A-Z][a-z]*)([A-Z][a-z]*)/)):
         _iframe_src = 'https://gfycat.com/ifr/' + _url.match(/[^\/]+$/)[0];
         break;
-
-      case !!(_url.match(/hulu\.com\/embed\.html\?\w+=\w+/)):
-        _iframe_src = _url;
-        break;
-      
+       
       case !!(_url.match(/jsfiddle\.com\/\w+/)):
         _iframe_src = _url + '/embedded';
-        break;
-        
-      case !!(_url.match(/codepen\.io\/\w+\/embed/)):
-        _iframe_src = _url;
         break;
       
       case !!(_url.match(/codepen\.io\/\w+\/\w+/)):
@@ -281,30 +249,14 @@
         _iframe_src = _url.replace('edit', 'embed').replace('https', 'http');
         break;
         
-      case !!(_url.match(/appear\.in\/\w+/)):
-        _iframe_src = _url;
-        break;
-        
       // Experimental: news outlets
-      case !!(_url.match(/embed\.theguardian\.com\/embed\/video\//)):
-        _iframe_src = _url;
-        break;
-
       // note: the Guardian sometimes just recycles YouTube links -- fair play, but it makes embedding tricky
       case !!(_url.match(/theguardian\.com\/[\w\d-_]+\/video\//)):
         _iframe_src = 'https://embed.theguardian.com/embed/video' + _url.replace(/(https:\/\/|http:\/\/)(www\.theguardian|theguardian)(\.com)/,'');
         break;
 
-      case !!(_url.match(/reuters\.com\/assets\/iframe\/yovideo\?/)):
-        _iframe_src = _url;
-        break;
-
       case !!(_url.match(/reuters\.com/) && _url.match(/videoId=\d+/)):
         _iframe_src = 'http://www.reuters.com/assets/iframe/yovideo?' + _url.match(/videoId=\d+/)[0];
-        break;
-
-      case !!(_url.match(/static01\.nyt.com\/video\/players\/offsite\//)):
-        _iframe_src = _url;
         break;
 
       case !!(_url.match(/nytimes\.com\/video\/\w+\/\w+\/\d+/)):
