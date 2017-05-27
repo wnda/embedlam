@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.4.1 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.4.2 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -542,7 +542,8 @@
   function makeVideo (url, to_replace, type) {
     var _16x9_div;
     var _video;
-
+    var _o;
+    
     if (typeof to_replace !== 'object' || !to_replace || to_replace.nodeType !== 1) {
       return;
     }
@@ -552,8 +553,6 @@
 
     _video = doc.createElement('video');
     _16x9_div.appendChild(_video);
-    addEvent(_video, 'loadeddata', fetchFinished);
-
     _video.setAttribute('data-mbdlm-fill', '');
     _video.setAttribute('preload', 'auto');
     _video.setAttribute('controls', '');
@@ -561,12 +560,23 @@
     _video.setAttribute('webkitplaysinline', '');
     _video.setAttribute('playsinline', '');
     _video.insertAdjacentHTML('afterBegin', '<source src="' + url + '" type="video/' + type + '"></source>');
-
+    
+    _o = new win.MutationObserver(function (mutations) {
+      var i = 0;
+      for (; mutations.length > i; ++i) {
+        if (mutations[i].type === 'childList') {
+          _o.disconnect();
+          fetchFinished({'currentTarget': _video, 'type': null});
+        }
+      }  
+    });
+    _o.observe(_16x9_div, { childList: true });
   }
 
   function makeAudio (url, to_replace, type) {
     var _4x1_div;
     var _audio;
+    var _o;
 
     if (typeof to_replace !== 'object' || !to_replace || to_replace.nodeType !== 1) {
       return;
@@ -577,13 +587,22 @@
 
     _audio = doc.createElement('audio');
     _4x1_div.appendChild(_audio);
-    addEvent(_audio, 'loadeddata', fetchFinished);
-
     _audio.setAttribute('data-mbdlm-fill', '');
     _audio.setAttribute('preload', 'auto');
     _audio.setAttribute('controls', 'controls');
     _audio.setAttribute('muted', 'muted');
     _audio.insertAdjacentHTML('afterBegin', '<source src="' + url + '" type="audio/' + type + '"></source>');
+    
+    _o = new win.MutationObserver(function (mutations) {
+      var i = 0;
+      for (; mutations.length > i; ++i) {
+        if (mutations[i].type === 'childList') {
+          _o.disconnect();
+          fetchFinished({'currentTarget': _audio, 'type': null});
+        }
+      }  
+    });
+    _o.observe(_4x1_div, { childList: true });
   }
 
   function makeStaticMap (url, to_replace) {
@@ -639,7 +658,7 @@
     _evt = (_ev.currentTarget || _ev.srcElement || null);
     if (!!_evt) {
       _evt.parentNode.removeAttribute('data-mbdlm-fetching');
-      removeEvent(_evt, _ev.type, fetchFinished);
+      if (!!_evt.type) { removeEvent(_evt, _ev.type, fetchFinished); }
     }
   }
 
