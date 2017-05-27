@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.4.6 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.4.7 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -510,20 +510,7 @@
     _4x1_div = createPlaceholder('4by1');
     to_replace.parentNode.replaceChild(_4x1_div, to_replace);
     
-    if ('MutationObserver' in win) {
-      _o = new win.MutationObserver(function (mutations) {
-        var i = 0;
-        for (; mutations.length > i; ++i) {
-          if (mutations[i].type === 'childList') {
-            _o.disconnect();
-            fetchFinished({'currentTarget': _dl, 'type': null});
-          }
-        }
-      });
-      _o.observe(_4x1_div, { childList: true });
-    } else {
-      addEvent(_dl, 'load', fetchFinished);
-    }
+    finishOnMutation(_4x1_div, _dl, 'load');
     
     _dl = doc.createElement('div');
     _4x1_div.appendChild(_dl);
@@ -567,20 +554,7 @@
     _16x9_div = createPlaceholder('16by9');
     to_replace.parentNode.replaceChild(_16x9_div, to_replace);
     
-    if ('MutationObserver' in win) {
-      _o = new win.MutationObserver(function (mutations) {
-        var i = 0;
-        for (; mutations.length > i; ++i) {
-          if (mutations[i].type === 'childList') {
-            _o.disconnect();
-            fetchFinished({'currentTarget': _video, 'type': null});
-          }
-        }  
-      });
-      _o.observe(_16x9_div, { childList: true });
-    } else {
-      addEvent(_video, 'canplay', fetchFinished);
-    }
+    finishOnMutation(_16x9_div, _video, 'canplay');
     
     _video = doc.createElement('video');
     _16x9_div.appendChild(_video);
@@ -605,20 +579,8 @@
     _4x1_div = createPlaceholder('4by1');
     to_replace.parentNode.replaceChild(_4x1_div, to_replace);
     
-    if ('MutationObserver' in win) {
-      _o = new win.MutationObserver(function (mutations) {
-        var i = 0;
-        for (; mutations.length > i; ++i) {
-          if (mutations[i].type === 'childList') {
-            _o.disconnect();
-            fetchFinished({'currentTarget': _audio, 'type': null});
-          }
-        }  
-      });
-      _o.observe(_4x1_div, { childList: true });
-    } else {
-      addEvent(_video, 'canplay', fetchFinished);
-    }
+    finishOnMutation(_4x1_div, _audio, 'canplay');
+    
     _audio = doc.createElement('audio');
     _4x1_div.appendChild(_audio);
     _audio.setAttribute('data-mbdlm-fill', '');
@@ -670,6 +632,24 @@
     _el.setAttribute('data-mbdlm-' + aspect_ratio, '');
     _el.setAttribute('data-mbdlm-fetching', '');
     return _el;
+  }
+  
+  function finishOnMutation (to_observe, to_reveal, e_type) {
+    var _o;
+    if ('MutationObserver' in win) {
+      _o = new win.MutationObserver(function (mutations) {
+        var i = 0;
+        for (; mutations.length > i; ++i) {
+          if (mutations[i].type === 'childList') {
+            _o.disconnect();
+            fetchFinished({'currentTarget': to_reveal, 'type': null});
+          }
+        }
+      });
+      _o.observe(to_observe, { childList: true });
+    } else {
+      addEvent(to_reveal, e_type, fetchFinished);
+    }
   }
 
   function fetchFinished (e) {
