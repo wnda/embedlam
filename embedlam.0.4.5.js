@@ -131,6 +131,7 @@
         switch (_by_dot[_len - 1].toLowerCase()) {
           case 'mp4':
           case 'webm':
+          case 'ogv':
             makeVideo(_url, _link, _by_dot[_len - 1]);
             break;
         }
@@ -285,36 +286,36 @@
         break;
         
       // Experimental: news outlets
-      case (_url.match(/embed\.theguardian\.com\/embed\/video\//)):
+      case !!(_url.match(/embed\.theguardian\.com\/embed\/video\//)):
         _iframe_src = _url;
         break;
 
       // note: the Guardian sometimes just recycles YouTube links -- fair play, but it makes embedding tricky
-      case (_url.match(/theguardian\.com\/[\w\d-_]+\/video\//)):
+      case !!(_url.match(/theguardian\.com\/[\w\d-_]+\/video\//)):
         _iframe_src = 'https://embed.theguardian.com/embed/video' + _url.replace(/(https:\/\/|http:\/\/)(www\.theguardian|theguardian)(\.com)/,'');
         break;
 
-      case (_url.match(/reuters\.com\/assets\/iframe\/yovideo\?/)):
+      case !!(_url.match(/reuters\.com\/assets\/iframe\/yovideo\?/)):
         _iframe_src = _url;
         break;
 
-      case (_url.match(/reuters\.com/) && _url.match(/videoId=\d+/)):
+      case !!(_url.match(/reuters\.com/) && _url.match(/videoId=\d+/)):
         _iframe_src = 'http://www.reuters.com/assets/iframe/yovideo?' + _url.match(/videoId=\d+/)[0];
         break;
 
-      case (_url.match(/static01\.nyt.com\/video\/players\/offsite\//)):
+      case !!(_url.match(/static01\.nyt.com\/video\/players\/offsite\//)):
         _iframe_src = _url;
         break;
 
-      case (_url.match(/nytimes\.com\/video\/\w+\/\w+\/\d+/)):
+      case !!(_url.match(/nytimes\.com\/video\/\w+\/\w+\/\d+/)):
         _iframe_src = 'https://static01.nyt.com/video/players/offsite/index.html?videoID=' + _url.match(/nytimes\.com\/video\/\w+\/\w+\/\d+/)[0].replace(/[^\d]/g, '');
         break;
 
-      case (_url.match(/bloomberg\.com\/api\/embed\/iframe\?id=\d+/)):
+      case !!(_url.match(/bloomberg\.com\/api\/embed\/iframe\?id=\d+/)):
         _iframe_src = _url;
         break;
 
-      case (_url.match(/ft\.com\/video\/\w+/)):
+      case !!(_url.match(/ft\.com\/video\/\w+/)):
         embedFT(_url, _link);
         break;
 
@@ -462,7 +463,7 @@
     }
   }
 
-  function getVKHash(markup, params) {
+  function getVKHash (markup, params) {
     return 'https://vk.com/video_ext.php?oid=' + params[0] + '&id=' + params[1] + '&hash=' + (markup.match(/hash[^0-9a-f]*([0-9a-f]*)/)[1])  + '&hd=1';
   }
 
