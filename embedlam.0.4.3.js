@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.4.2 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.4.3 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -550,16 +550,6 @@
 
     _16x9_div = createPlaceholder('16by9');
     to_replace.parentNode.replaceChild(_16x9_div, to_replace);
-
-    _video = doc.createElement('video');
-    _16x9_div.appendChild(_video);
-    _video.setAttribute('data-mbdlm-fill', '');
-    _video.setAttribute('preload', 'auto');
-    _video.setAttribute('controls', '');
-    _video.setAttribute('muted', '');
-    _video.setAttribute('webkitplaysinline', '');
-    _video.setAttribute('playsinline', '');
-    _video.insertAdjacentHTML('afterBegin', '<source src="' + url + '" type="video/' + type + '"></source>');
     
     _o = new win.MutationObserver(function (mutations) {
       var i = 0;
@@ -571,6 +561,16 @@
       }  
     });
     _o.observe(_16x9_div, { childList: true });
+    
+    _video = doc.createElement('video');
+    _16x9_div.appendChild(_video);
+    _video.setAttribute('data-mbdlm-fill', '');
+    _video.setAttribute('preload', 'auto');
+    _video.setAttribute('controls', '');
+    _video.setAttribute('muted', '');
+    _video.setAttribute('webkitplaysinline', '');
+    _video.setAttribute('playsinline', '');
+    _video.insertAdjacentHTML('afterBegin', '<source src="' + url + '" type="video/' + type + '"></source>');
   }
 
   function makeAudio (url, to_replace, type) {
@@ -584,14 +584,6 @@
 
     _4x1_div = createPlaceholder('4by1');
     to_replace.parentNode.replaceChild(_4x1_div, to_replace);
-
-    _audio = doc.createElement('audio');
-    _4x1_div.appendChild(_audio);
-    _audio.setAttribute('data-mbdlm-fill', '');
-    _audio.setAttribute('preload', 'auto');
-    _audio.setAttribute('controls', 'controls');
-    _audio.setAttribute('muted', 'muted');
-    _audio.insertAdjacentHTML('afterBegin', '<source src="' + url + '" type="audio/' + type + '"></source>');
     
     _o = new win.MutationObserver(function (mutations) {
       var i = 0;
@@ -603,6 +595,14 @@
       }  
     });
     _o.observe(_4x1_div, { childList: true });
+
+    _audio = doc.createElement('audio');
+    _4x1_div.appendChild(_audio);
+    _audio.setAttribute('data-mbdlm-fill', '');
+    _audio.setAttribute('preload', 'auto');
+    _audio.setAttribute('controls', 'controls');
+    _audio.setAttribute('muted', 'muted');
+    _audio.insertAdjacentHTML('afterBegin', '<source src="' + url + '" type="audio/' + type + '"></source>');
   }
 
   function makeStaticMap (url, to_replace) {
