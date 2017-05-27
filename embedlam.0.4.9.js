@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.4.8 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.4.9 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -479,23 +479,20 @@
     to_replace.parentNode.replaceChild(_16x9_div, to_replace);
 
     _iframe = doc.createElement('iframe');
-    _16x9_div.appendChild(_iframe);
+    
+    setAttributes(_dl, {
+      'data-mbdlm-fill': '',
+      'allowtransparency': 'true',
+      'frameborder': 'no',
+      'scrolling': 'no',
+      'referrerpolicy': 'no-referrer',
+      'src': url,
+      'allowFullscreen': 'allowFullscreen',
+      'sandbox': 'allow-scripts allow-presentation allow-same-origin allow-orientation-lock'
+    });
+    
     addEvent(_iframe, 'load', fetchFinished);
-
-    _iframe.setAttribute('data-mbdlm-fill', '');
-    _iframe.setAttribute('allowtransparency', 'true');
-    _iframe.setAttribute('frameborder', 'no');
-    _iframe.setAttribute('scrolling', 'no');
-    _iframe.setAttribute('referrerpolicy', 'no-referrer');
-    _iframe.src = url;
-
-    if (!!sandbox) {
-      _iframe.setAttribute('sandbox', 'allow-scripts allow-presentation allow-same-origin allow-orientation-lock');
-    }
-
-    if ('allowFullscreen' in _iframe) {
-      _iframe.setAttribute('allowFullscreen', 'allowFullscreen');
-    }
+    _16x9_div.appendChild(_iframe);
   }
 
   function makeDownload(url, to_replace) {
@@ -512,9 +509,12 @@
     
     finishOnMutation(_4x1_div, _dl, 'load');
     
+    setAttributes(_dl, {
+      'data-mbdlm-fill': '',
+      'data-mbdlm-url': win.encodeURIComponent(url)
+    });
+    
     _4x1_div.appendChild(_dl);
-    _4x1_div.setAttribute('data-mbdlm-fill', '');
-    _dl.setAttribute('data-mbdlm-url', win.encodeURIComponent(url));
     addEvent(_dl, 'click', fakeLink);
   }
 
@@ -528,16 +528,18 @@
 
     _16x9_div = createPlaceholder('16by9');
     to_replace.parentNode.replaceChild(_16x9_div, to_replace);
-
     _img = doc.createElement('img');
+    
+    setAttributes(_img, {
+      'data-mbdlm-img': '',
+      'src': url,
+      'alt': to_replace.textContent ? to_replace.textContent : url,
+      'title': to_replace.textContent ? to_replace.textContent : url,
+      'data-mbdlm-url': win.encodeURIComponent(url)
+    });
+    
     _16x9_div.appendChild(_img);
     addEvent(_img, 'load', fetchFinished);
-
-    _img.setAttribute('data-mbdlm-img', '');
-    _img.src = url;
-    _img.alt = to_replace.textContent ? to_replace.textContent : url;
-    _img.title = to_replace.textContent ? to_replace.textContent : url;
-    _img.setAttribute('data-mbdlm-url', win.encodeURIComponent(url));
     addEvent(_img, 'click', fakeLink);
   }
 
@@ -555,13 +557,16 @@
     
     finishOnMutation(_16x9_div, _video, 'canplay');
     
+    setAttributes(_video, {
+      'data-mbdlm-fill': '',
+      'preload': 'auto',
+      'controls': 'controls',
+      'muted': 'muted',
+      'webkitplaysinline': '',
+      'playsinline': ''
+    });
+    
     _16x9_div.appendChild(_video);
-    _video.setAttribute('data-mbdlm-fill', '');
-    _video.setAttribute('preload', 'auto');
-    _video.setAttribute('controls', '');
-    _video.setAttribute('muted', '');
-    _video.setAttribute('webkitplaysinline', '');
-    _video.setAttribute('playsinline', '');
     _video.insertAdjacentHTML('afterBegin', '<source src="' + url + '" type="video/' + type + '"></source>');
   }
 
@@ -579,11 +584,14 @@
     
     finishOnMutation(_4x1_div, _audio, 'canplay');
     
+    setAttributes(_audio, {
+      'data-mbdlm-fill': '',
+      'preload': 'auto',
+      'controls': 'controls',
+      'muted': 'muted',
+    });
+    
     _4x1_div.appendChild(_audio);
-    _audio.setAttribute('data-mbdlm-fill', '');
-    _audio.setAttribute('preload', 'auto');
-    _audio.setAttribute('controls', 'controls');
-    _audio.setAttribute('muted', 'muted');
     _audio.insertAdjacentHTML('afterBegin', '<source src="' + url + '" type="audio/' + type + '"></source>');
   }
 
@@ -600,27 +608,22 @@
 
     _16x9_div = createPlaceholder('16by9');
     to_replace.parentNode.replaceChild(_16x9_div, to_replace);
-
     _img = doc.createElement('img');
     _16x9_div.appendChild(_img);
-    addEvent(_img, 'load', fetchFinished);
-
     _latlang = url.match(/@([^A-Za-z]+,)/)[0].slice(0,-1).replace('@', '');
-    _img.setAttribute('data-mbdlm-img', '');
-
     _cW = _16x9_div.clientWidth > 1 ? _16x9_div.clientWidth : '1';
     _cH = _16x9_div.clientHeight > 1 ? _16x9_div.clientHeight : '1';
     _z  = +(url.match(/(,\d+\.\d+z)|(,\d+z)/)[0].replace(',', '').replace('z', ''));
 
-    _img.src = 'https://maps.googleapis.com/maps/api/staticmap?center=' +
-               _latlang + '&size=' + _cW + 'x' +
-               _cH + '&sensor=false&maptype=roadmap&zoom=' +
-               ((_z >= 12 ? _z - 3 : _z) | 0) +
-               '&markers=' + _latlang + '&key=AIzaSyAf7V-aqUb-Guull54mvfrH61hFUbNPqvM';
-
-    _img.alt = 'Google Map';
-    _img.title = 'Google Map: ' + _latlang;
-    _img.setAttribute('data-mbdlm-url', win.encodeURIComponent(url));
+    setAttributes(_img, {
+      'src': 'https://maps.googleapis.com/maps/api/staticmap?center=' + _latlang + '&size=' + _cW + 'x' + _cH + '&sensor=false&maptype=roadmap&zoom=' + ((_z >= 12 ? _z - 3 : _z) | 0) + '&markers=' + _latlang + '&key=AIzaSyAf7V-aqUb-Guull54mvfrH61hFUbNPqvM',
+      'alt': 'Google Map',
+      'title': 'Google Map: ' + _latlang,
+      'data-mbdlm-img': '',
+      'data-mbdlm-url': win.encodeURIComponent(url)
+    });
+    
+    addEvent(_img, 'load', fetchFinished);
     addEvent(_img, 'click', fakeLink);
   }
 
@@ -689,6 +692,13 @@
         }
       }
     };
+  }
+  
+  function setAttributes (el, attrs) {
+    var _key;
+    for (_key in attrs) {
+      el.setAttribute(_key, attrs[_key]);
+    }
   }
 
   function addEvent (target, type, handler) {
