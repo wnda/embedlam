@@ -552,7 +552,7 @@
 
     _video = doc.createElement('video');
     _16x9_div.appendChild(_video);
-    addEvent(_video, 'readystatechange', fetchFinished);
+    addEvent(_video, 'loadeddata', fetchFinished);
 
     _video.setAttribute('data-mbdlm-fill', '');
     _video.setAttribute('preload', 'auto');
@@ -577,7 +577,7 @@
 
     _audio = doc.createElement('audio');
     _4x1_div.appendChild(_audio);
-    addEvent(_audio, 'readystatechange', fetchFinished);
+    addEvent(_audio, 'loadeddata', fetchFinished);
 
     _audio.setAttribute('data-mbdlm-fill', '');
     _audio.setAttribute('preload', 'auto');
@@ -638,7 +638,6 @@
     }
     _evt = (_ev.currentTarget || _ev.srcElement || null);
     if (!!_evt) {
-      if (!!_evt.readyState && _evt.readyState < 4) { return; }
       _evt.parentNode.removeAttribute('data-mbdlm-fetching');
       removeEvent(_evt, _ev.type, fetchFinished);
     }
