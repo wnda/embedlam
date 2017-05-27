@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.5.4 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.5.5 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -261,7 +261,7 @@
         break;
 
       case !!(_url.match(/nytimes\.com\/video\/\w+\/\d+/)):
-        _iframe_src = 'https://static01.nyt.com/video/players/offsite/index.html?videoID=' + _url.match(/nytimes\.com\/video\/\w+\/\d+/)[0].replace(/[^\d]/g, '');
+        _iframe_src = 'https://static01.nyt.com/video/players/offsite/index.html?videoId=' + _url.match(/nytimes\.com\/video\/\w+\/\d+/)[0].replace(/[^\d]/g, '');
         break;
 
       case !!(_url.match(/ft\.com\/video\/\w+/) && !!_supports_cors):
