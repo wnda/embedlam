@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.4.3 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.4.5 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -499,6 +499,7 @@
   function makeDownload(url, to_replace) {
     var _4x1_div;
     var _dl;
+    var _o;
 
     if (typeof to_replace !== 'object' || !to_replace || to_replace.nodeType !== 1) {
       return;
@@ -506,11 +507,24 @@
 
     _4x1_div = createPlaceholder('4by1');
     to_replace.parentNode.replaceChild(_4x1_div, to_replace);
-
+    
+    if ('MutationObserver' in win) {
+      _o = new win.MutationObserver(function (mutations) {
+        var i = 0;
+        for (; mutations.length > i; ++i) {
+          if (mutations[i].type === 'childList') {
+            _o.disconnect();
+            fetchFinished({'currentTarget': _dl, 'type': null});
+          }
+        }
+      });
+      _o.observe(_4x1_div, { childList: true });
+    } else {
+      addEvent(_dl, 'load', fetchFinished);
+    }
+    
     _dl = doc.createElement('div');
     _4x1_div.appendChild(_dl);
-    addEvent(_dl, 'load', fetchFinished);
-
     _4x1_div.setAttribute('data-mbdlm-fill', '');
     _dl.setAttribute('data-mbdlm-url', win.encodeURIComponent(url));
     addEvent(_dl, 'click', fakeLink);
@@ -551,16 +565,20 @@
     _16x9_div = createPlaceholder('16by9');
     to_replace.parentNode.replaceChild(_16x9_div, to_replace);
     
-    _o = new win.MutationObserver(function (mutations) {
-      var i = 0;
-      for (; mutations.length > i; ++i) {
-        if (mutations[i].type === 'childList') {
-          _o.disconnect();
-          fetchFinished({'currentTarget': _video, 'type': null});
-        }
-      }  
-    });
-    _o.observe(_16x9_div, { childList: true });
+    if ('MutationObserver' in win) {
+      _o = new win.MutationObserver(function (mutations) {
+        var i = 0;
+        for (; mutations.length > i; ++i) {
+          if (mutations[i].type === 'childList') {
+            _o.disconnect();
+            fetchFinished({'currentTarget': _video, 'type': null});
+          }
+        }  
+      });
+      _o.observe(_16x9_div, { childList: true });
+    } else {
+      addEvent(_video, 'canplay', fetchFinished);
+    }
     
     _video = doc.createElement('video');
     _16x9_div.appendChild(_video);
@@ -585,17 +603,20 @@
     _4x1_div = createPlaceholder('4by1');
     to_replace.parentNode.replaceChild(_4x1_div, to_replace);
     
-    _o = new win.MutationObserver(function (mutations) {
-      var i = 0;
-      for (; mutations.length > i; ++i) {
-        if (mutations[i].type === 'childList') {
-          _o.disconnect();
-          fetchFinished({'currentTarget': _audio, 'type': null});
-        }
-      }  
-    });
-    _o.observe(_4x1_div, { childList: true });
-
+    if ('MutationObserver' in win) {
+      _o = new win.MutationObserver(function (mutations) {
+        var i = 0;
+        for (; mutations.length > i; ++i) {
+          if (mutations[i].type === 'childList') {
+            _o.disconnect();
+            fetchFinished({'currentTarget': _audio, 'type': null});
+          }
+        }  
+      });
+      _o.observe(_4x1_div, { childList: true });
+    } else {
+      addEvent(_video, 'canplay', fetchFinished);
+    }
     _audio = doc.createElement('audio');
     _4x1_div.appendChild(_audio);
     _audio.setAttribute('data-mbdlm-fill', '');
