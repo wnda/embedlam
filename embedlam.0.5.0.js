@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.4.9 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.5.0 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -480,7 +480,7 @@
 
     _iframe = doc.createElement('iframe');
     
-    setAttributes(_dl, {
+    setAttributes(_iframe, {
       'data-mbdlm-fill': '',
       'allowtransparency': 'true',
       'frameborder': 'no',
