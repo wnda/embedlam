@@ -99,6 +99,7 @@
           case 'exe':
           case 'msi':
           case 'sh':
+            _link.parentNode.insertAdjacentHTML('afterbegin','<em>(Link to potentially hazardous resource removed)</em>');
             _link.parentNode.removeChild(_link);
             win.console.warn('Link to potentially harmful file removed: ' + _url);
             break;
