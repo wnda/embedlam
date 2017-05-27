@@ -257,7 +257,7 @@
         break;
 
       case !!(_url.match(/reuters\.com/) && _url.match(/videoId=\d+/)):
-        _iframe_src = 'http://www.reuters.com/assets/iframe/yovideo?' + _url.match(/videoId=\d+/)[0];
+        _iframe_src = 'https://www.reuters.com/assets/iframe/yovideo?' + _url.match(/videoId=\d+/)[0];
         break;
 
       case !!(_url.match(/nytimes\.com\/video\/\w+\/\w+\/\d+/)):
