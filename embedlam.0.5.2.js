@@ -471,7 +471,7 @@
   }
 
   function makeImage (url, to_replace) {
-    var _div;
+    var _div = doc.createElement('div');
     var _img;
 
     if (typeof to_replace !== 'object' || !to_replace || to_replace.nodeType !== 1) {
