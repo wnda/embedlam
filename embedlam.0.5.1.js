@@ -164,6 +164,7 @@
       case !!(_url.match(/embed\.theguardian\.com\/embed\/video\//)):
       case !!(_url.match(/reuters\.com\/assets\/iframe\/yovideo\?/)):
       case !!(_url.match(/static01\.nyt.com\/video\/players\/offsite\//)):
+      case !!(_url.match(/bloomberg\.com\/api\/embed\/iframe\?id=\d+/)):
         _iframe_src = _url;
         break;
 
@@ -261,10 +262,6 @@
 
       case !!(_url.match(/nytimes\.com\/video\/\w+\/\w+\/\d+/)):
         _iframe_src = 'https://static01.nyt.com/video/players/offsite/index.html?videoID=' + _url.match(/nytimes\.com\/video\/\w+\/\w+\/\d+/)[0].replace(/[^\d]/g, '');
-        break;
-
-      case !!(_url.match(/bloomberg\.com\/api\/embed\/iframe\?id=\d+/)):
-        _iframe_src = _url;
         break;
 
       case !!(_url.match(/ft\.com\/video\/\w+/) && !!_supports_cors):
