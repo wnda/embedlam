@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.4.7 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.4.8 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -501,7 +501,6 @@
   function makeDownload(url, to_replace) {
     var _4x1_div;
     var _dl;
-    var _o;
 
     if (typeof to_replace !== 'object' || !to_replace || to_replace.nodeType !== 1) {
       return;
@@ -509,10 +508,10 @@
 
     _4x1_div = createPlaceholder('4by1');
     to_replace.parentNode.replaceChild(_4x1_div, to_replace);
+    _dl = doc.createElement('div');
     
     finishOnMutation(_4x1_div, _dl, 'load');
     
-    _dl = doc.createElement('div');
     _4x1_div.appendChild(_dl);
     _4x1_div.setAttribute('data-mbdlm-fill', '');
     _dl.setAttribute('data-mbdlm-url', win.encodeURIComponent(url));
@@ -545,7 +544,6 @@
   function makeVideo (url, to_replace, type) {
     var _16x9_div;
     var _video;
-    var _o;
     
     if (typeof to_replace !== 'object' || !to_replace || to_replace.nodeType !== 1) {
       return;
@@ -553,10 +551,10 @@
 
     _16x9_div = createPlaceholder('16by9');
     to_replace.parentNode.replaceChild(_16x9_div, to_replace);
+    _video = doc.createElement('video');
     
     finishOnMutation(_16x9_div, _video, 'canplay');
     
-    _video = doc.createElement('video');
     _16x9_div.appendChild(_video);
     _video.setAttribute('data-mbdlm-fill', '');
     _video.setAttribute('preload', 'auto');
@@ -570,7 +568,6 @@
   function makeAudio (url, to_replace, type) {
     var _4x1_div;
     var _audio;
-    var _o;
 
     if (typeof to_replace !== 'object' || !to_replace || to_replace.nodeType !== 1) {
       return;
@@ -578,10 +575,10 @@
 
     _4x1_div = createPlaceholder('4by1');
     to_replace.parentNode.replaceChild(_4x1_div, to_replace);
+    _audio = doc.createElement('audio');
     
     finishOnMutation(_4x1_div, _audio, 'canplay');
     
-    _audio = doc.createElement('audio');
     _4x1_div.appendChild(_audio);
     _audio.setAttribute('data-mbdlm-fill', '');
     _audio.setAttribute('preload', 'auto');
