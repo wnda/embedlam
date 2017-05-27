@@ -693,9 +693,9 @@
 
   function addEvent (target, type, handler) {
     switch (true) {
-      case ('addEventListener' in win):
+      case !!('addEventListener' in win):
         return target.addEventListener(type, handler, false);
-      case ('attachEvent' in win):
+      case !!('attachEvent' in win):
         return target.attachEvent(type, handler);
       default:
         target['on' + type] = handler;
@@ -704,9 +704,9 @@
 
   function removeEvent (target, type, handler) {
     switch (true) {
-      case ('removeEventListener' in win):
+      case !!('removeEventListener' in win):
         return target.removeEventListener(type, handler, false);
-      case ('detachEvent' in win):
+      case !!('detachEvent' in win):
         return target.detachEvent(type, handler);
       default:
         target['on' + type] = null;
