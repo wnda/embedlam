@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.3.9 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.4.0 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -552,7 +552,7 @@
 
     _video = doc.createElement('video');
     _16x9_div.appendChild(_video);
-    addEvent(_video, 'canplay', fetchFinished);
+    addEvent(_video, 'readystatechange', fetchFinished);
 
     _video.setAttribute('data-mbdlm-fill', '');
     _video.setAttribute('preload', 'auto');
@@ -577,7 +577,7 @@
 
     _audio = doc.createElement('audio');
     _4x1_div.appendChild(_audio);
-    addEvent(_audio, 'canplay', fetchFinished);
+    addEvent(_audio, 'readystatechange', fetchFinished);
 
     _audio.setAttribute('data-mbdlm-fill', '');
     _audio.setAttribute('preload', 'auto');
@@ -638,6 +638,7 @@
     }
     _evt = (_ev.currentTarget || _ev.srcElement || null);
     if (!!_evt) {
+      if (!!_evt.readyState && _evt.readyState < 4) { return; }
       _evt.parentNode.removeAttribute('data-mbdlm-fetching');
       removeEvent(_evt, _ev.type, fetchFinished);
     }
