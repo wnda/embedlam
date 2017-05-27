@@ -127,7 +127,7 @@
         }
         break;
 
-      case !!(_url.match(/\.mp4|\.webm/i) && 'HTMLVideoElement' in win):
+      case !!(_url.match(/\.mp4|\.webm|\.ogv/i) && 'HTMLVideoElement' in win):
         switch (_by_dot[_len - 1].toLowerCase()) {
           case 'mp4':
           case 'webm':
