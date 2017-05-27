@@ -555,6 +555,7 @@
     addEvent(_video, 'canplay', fetchFinished);
 
     _video.setAttribute('data-mbdlm-fill', '');
+    _video.setAttribute('preload', 'auto');
     _video.setAttribute('controls', '');
     _video.setAttribute('muted', '');
     _video.setAttribute('webkitplaysinline', '');
@@ -579,6 +580,7 @@
     addEvent(_audio, 'canplay', fetchFinished);
 
     _audio.setAttribute('data-mbdlm-fill', '');
+    _audio.setAttribute('preload', 'auto');
     _audio.setAttribute('controls', 'controls');
     _audio.setAttribute('muted', 'muted');
     _audio.insertAdjacentHTML('afterBegin', '<source src="' + url + '" type="audio/' + type + '"></source>');
