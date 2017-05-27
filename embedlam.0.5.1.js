@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.5.0 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.5.1 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -487,9 +487,12 @@
       'scrolling': 'no',
       'referrerpolicy': 'no-referrer',
       'src': url,
-      'allowFullscreen': 'allowFullscreen',
-      'sandbox': 'allow-scripts allow-presentation allow-same-origin allow-orientation-lock'
+      'allowFullscreen': 'allowFullscreen'
     });
+    
+    if (!!sandbox) {
+      _iframe.setAttribute('sandbox', 'allow-scripts allow-presentation allow-same-origin allow-orientation-lock');
+    }
     
     addEvent(_iframe, 'load', fetchFinished);
     _16x9_div.appendChild(_iframe);
