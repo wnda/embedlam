@@ -429,7 +429,7 @@
       var _guid_el;
       var _ifr_url;
       if (_evt.readyState === 4 && _evt.status > 199 && _evt.status < 300) {
-        _guid_el = (new DOMParser().parseFromString(_evt.responseText, 'text/html')).querySelector('[data-guid]');
+        _guid_el = (new win.DOMParser().parseFromString(_evt.responseText, 'text/html')).querySelector('[data-guid]');
         if (!!_guid_el.getAttribute('data-guid')) {
           _ifr_url = 'https://assets.nationalgeographic.com/modules-video/assets/ngsEmbeddedVideo.html?' + _guid_el.getAttribute('data-guid');
           makeInlineFrame(_ifr_url, link, true);
@@ -457,7 +457,7 @@
       var _ifr_url;
       if (_evt.readyState === 4 && _evt.status > 199 && _evt.status < 300) {
         _txt = _evt.responseText;
-        _vid = (new DOMParser().parseFromString(_txt, 'text/html')).querySelector('[data-video-id]');
+        _vid = (new win.DOMParser().parseFromString(_txt, 'text/html')).querySelector('[data-video-id]');
         if (!!_vid && !!_vid.getAttribute('data-video-id') && !!_vid.getAttribute('data-player') && !!_vid.getAttribute('data-account')) {
           _ifr_url = 'https://players.brightcove.net/' + _vid.getAttribute('data-account') + '/' + _vid.getAttribute('data-player') + '_default/index.html?videoId=' + _vid.getAttribute('data-video-id') + (!!autoplay ? '&autoplay' : '');
           makeInlineFrame(_ifr_url, link, false);
@@ -487,7 +487,7 @@
       var _vid;
       var _ll;
       if (_evt.readyState === 4 && _evt.status > 199 && _evt.status < 300) {
-        _vid = (new DOMParser().parseFromString(_evt.responseText, 'text/html')).querySelector('video');
+        _vid = (new win.DOMParser().parseFromString(_evt.responseText, 'text/html')).querySelector('video');
         if (!!_vid && !!_vid.getAttribute('id')) {
           _ll = 'https://www.liveleak.com/ll_embed?f=' + _vid.getAttribute('id').replace('player_file_','').substring(0,12);
           return makeInlineFrame(_ll, link, true);
@@ -513,7 +513,7 @@
       var _evt = (e.target || this);
       var _err;
       if (_evt.readyState === 4 && _evt.status > 199 && _evt.status < 300) {
-        _err = (new DOMParser().parseFromString(_evt.responseText, 'text/html')).querySelector('.embed-error');
+        _err = (new win.DOMParser().parseFromString(_evt.responseText, 'text/html')).querySelector('.embed-error');
         if (!_err) {
           return makeInlineFrame((url + '?format=embed'), link, true);
         }
