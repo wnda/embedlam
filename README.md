@@ -40,8 +40,8 @@ Full support | Partial/experimental support | No support |
 | Vimeo | Spotify | Evening Standard Video (misconfigured brightcove) |
 | DailyMotion | Google Maps <sup>1</sup> | Al Jazeera Video (times out 503) |
 | Facebook Video | Twitch TV | Channel4 News Video (broken/not at all configured to work in an iframe) |
-| Twitter Video | | National Geographic Video (404s with https...) |
-| Vine | | |
+| Twitter Video | | National Geographic Video (404s with HTTPS...) |
+| Vine | | Daily Mail Video (does not support HTTPS at all...|
 | Imgur | | |
 | Gfycat | | |
 | Appear.in | | |
@@ -55,7 +55,6 @@ Full support | Partial/experimental support | No support |
 | FT Video | | |
 | ABC News Video | | |
 | The Atlantic Video | | |
-| Daily Mail Video | | |
 | CNN Video | | |
 | USA Today Video | | |
 | Washington Post Video | | |
