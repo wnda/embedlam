@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.5.8 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.5.9 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -427,7 +427,7 @@
       if (_evt.readyState === 4 && _evt.status > 199 && _evt.status < 300) {
         var _err = (new DOMParser().parseFromString(_evt.responseText, 'text/html')).querySelector('.embed-error');
         if (!_err) {
-          return makeInlineFrame(_ifr_url, link, true);
+          return makeInlineFrame((url + '?format=embed'), link, true);
         }
       }
     });
