@@ -57,7 +57,6 @@ Full support | Partial/experimental support | No support |
 | The Atlantic Video | | |
 | Daily Mail Video | | |
 | CNN Video | | |
-| National Geographic Video | | |
 | USA Today Video | | |
 | Washington Post Video | | |
 | LiveLeak Video | | |
