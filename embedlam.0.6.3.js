@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.6.2 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.6.3 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -279,7 +279,7 @@
         _temp = null;
         break;
 
-      case !!(_url.match(/abcnews\.go\/[\w\d-_]+\/video\/[\w\d-_]+/)):
+      case !!(_url.match(/abcnews\.go\.com\/[\w\d-_]+\/video\/[\w\d-_]+/)):
         _iframe_src = 'http://abcnews.go.com/video/embed?id=' + _url.match(/video\/[\w\d-_]+/)[0].replace(/[^\d]/g, '');
         break;
 
