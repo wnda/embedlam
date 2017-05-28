@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.7.9 patch 2 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.7.9 patch 3 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -299,7 +299,7 @@
         break;
       */
         
-      case !!(_url.match(/usetoday\.com\/media\/[\w\d-_]+\/video\/\d+/)):
+      case !!(_url.match(/usatoday\.com\/media\/[\w\d-_]+\/video\/\d+/)):
         _iframe_src = 'https://www.usatoday.com/videos/embed/' + (_url.match(/video\/\d+/)[0].replace('video/','')) + '/?fullsite=true';
         break;
         
