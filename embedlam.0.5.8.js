@@ -282,7 +282,7 @@
         break;
 
       case !!(_url.match(/theatlantic\.com\/video\/\w+\/\d+\/[\w\d-_]+/)):
-        _iframe_src = 'https://www.theatlantic.com/video/iframe' + _url.match(/video\/\w+\/\d+/)[0].replace(/[^\d]/g, '');
+        _iframe_src = 'https://www.theatlantic.com/video/iframe/' + _url.match(/video\/\w+\/\d+/)[0].replace(/[^\d]/g, '');
         break;
 
       case !!(_url.match(/twitter\.com\/\w+/)):
