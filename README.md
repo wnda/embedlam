@@ -56,8 +56,7 @@ Full support | Partial/experimental support | No support |
 | Youtube | Soundcloud | |
 | Vimeo | Spotify | |
 | DailyMotion | Google Maps <sup>1</sup> | |
-| Twitch TV | | |
-| Facebook Video | | |
+| Facebook Video | Twitch TV | |
 | Twitter Video | | |
 | Vine | | |
 | Imgur | | |
@@ -82,9 +81,9 @@ Full support | Partial/experimental support | No support |
 | Channel4 News Video | | |
 | Al Jazeera Video | | |
 | Evening Standard Video | | |
-| National Geographic | | |
-| CNBC | | |
+| National Geographic Video | | |
+| CNBC Video | | |
 
 -------
 
-<sup>1</sup> Support for Google Maps is limited to automatically displaying a static maps snapshot of the latitude/longitude specified in the URL
+<sup>1</sup> Support for Google Maps is limited to automatically displaying a Static Maps API snapshot of the latitude/longitude specified in the URL
