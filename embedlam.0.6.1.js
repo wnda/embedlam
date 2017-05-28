@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.6.0 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.6.1 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -400,7 +400,7 @@
       if (_evt.readyState === 4 && _evt.status > 199 && _evt.status < 300) {
         _vid = (new DOMParser().parseFromString(_evt.responseText, 'text/html')).querySelector('video');
         if (!!_vid && !!_vid.getAttribute('id')) {
-          _ll = 'https://www.liveleak.com/ll_embed?f=' + _vid.getAttribute('id').replace('player_file_','');
+          _ll = 'https://www.liveleak.com/ll_embed?f=' + _vid.getAttribute('id').replace('player_file_','').substring(0,12);
           return makeInlineFrame(_ll, link, true);
         }
       }
