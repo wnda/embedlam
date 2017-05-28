@@ -172,12 +172,12 @@
       case !!(_url.match(/abcnews\.go\.com\/video\/embed\?id=[\w\d-_]+/)):
       case !!(_url.match(/theatlantic\.com\/video\/iframe\//)):
       case !!(_url.match(/twitter\.com\/i\/videos\/\d+/)):
-      case !!(_url.match(/dailymail\.co\.uk\/embed\/video\/[\w\d-_]+\.html/)):
+      //case !!(_url.match(/dailymail\.co\.uk\/embed\/video\/[\w\d-_]+\.html/)):
       case !!(_url.match(/cnn\.io\/v1\/fav\/\?video=\w+\/\d+\/\d+\/\d+\/[\w\d-_]+/)):
       case !!(_url.match(/nationalgeographic\.com\/modules-video\/assets\/ngsEmbeddedVideo\.html\?guid=[\w\d-_]+/)):
       case !!(_url.match(/players\.brightcove\.net\/\d+\/[\w\d-_]+\/index\.html\?videoId=\d+/)):
       case !!(_url.match(/usatoday\.com\/videos\/embed\/\d+/)):
-      case !!(_url.match(/player\.cnbc\.com\/p\/gZWlPC\/cnbc_global\?playertype=synd&byGuid=\d+/)):
+      //case !!(_url.match(/player\.cnbc\.com\/p\/gZWlPC\/cnbc_global\?playertype=synd&byGuid=\d+/)):
         _iframe_src = _url;
         break;
 
@@ -306,11 +306,13 @@
       case !!(_url.match(/cnn\.com\/videos\/\w+\/\d+\/\d+\/\d+\/[\w\d-_]+/)):
         _iframe_src = 'https://fave.api.cnn.io/v1/fav/?video=' + _url.match(/videos\/\w+\/\d+\/\d+\/\d+\/[\w\d-_]+/)[0].replace('videos/','') + '.cnn&customer=cnn&edition=international&env=prod';
         break;
-
+      
+      /* NO HTTPS
       case !!(_url.match(/cnbc\.com\/gallery\/\?video=\d+/)):
         _iframe_src = 'https://player.cnbc.com/p/gZWlPC/cnbc_global?playertype=synd&byGuid=' + getParams(_url).video + '&size=530_298';
         break;
-
+      */
+        
       case !!(_url.match(/nationalgeographic\.com\/video\/[\w\d-_]+/)):
         embedNG(_url, _link);
         break;
@@ -319,12 +321,14 @@
         embedBC(_url, _link, false);
         break;
       
-      // case !!(_url.match(/standard\.co\.uk\/news\/\w+/)): misconfigured brightcove?
-      // case !!(_url.match(/aljazeera\.com\/\w+\//)): XHR forbidden?
+      // case !!(_url.match(/standard\.co\.uk\/news\/\w+/)): malformed brightcove player reference
+      // case !!(_url.match(/aljazeera\.com\/\w+\//)): times out...
+      /* DOESN'T SIZE PROPERLY
       case !!(_url.match(/channel4\.com\/news\/\w+/)):
         embedBC(_url, _link, true);
         break;
-
+      */
+        
       case !!(_url.match(/twitter\.com\/\w+/)):
         embedTW(_url, _link)
         break;
