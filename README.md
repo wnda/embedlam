@@ -36,10 +36,10 @@ Full support | Partial/experimental support | No support |
 | Direct link video | Hulu | BBC (they do all sorts of `Blob` nonsense presumably to discourage scraping or to buffer efficiently) |
 | Direct link audio | The Guardian | The Telegraph (cba to navigate their bizarre video system yet) |
 | Direct link image | Bloomberg Video | Fox News (nothing personal, their video site is broken |
-| Youtube | Soundcloud | |
-| Vimeo | Spotify | |
-| DailyMotion | Google Maps <sup>1</sup> | |
-| Facebook Video | Twitch TV | |
+| Youtube | Soundcloud | CNBC Video (not made to work with HTTPS) |
+| Vimeo | Spotify | Evening Standard Video (misconfigured brightcove) |
+| DailyMotion | Google Maps <sup>1</sup> | Al Jazeera Video (times out 503) |
+| Facebook Video | Twitch TV | Channel4 News Video (broken/not at all configured to work in an iframe) |
 | Twitter Video | | |
 | Vine | | |
 | Imgur | | |
@@ -61,11 +61,7 @@ Full support | Partial/experimental support | No support |
 | USA Today Video | | |
 | Washington Post Video | | |
 | LiveLeak Video | | |
-| Channel4 News Video | | |
-| Al Jazeera Video | | |
-| Evening Standard Video | | |
 | National Geographic Video | | |
-| CNBC Video | | |
 
 -------
 
