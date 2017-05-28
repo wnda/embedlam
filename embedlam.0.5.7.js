@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.5.5 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.5.7 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -82,7 +82,7 @@
     var _params;
     var _iframe_src;
     var _temp;
-    
+
     _url = _url.match(/http:/) ? _url.replace('http:', 'https:') : _url;
     _url = _url.slice(-1) === '/' ? _url.slice(0, -1) : _url;
     _by_dot = _url.split('.');
@@ -165,6 +165,13 @@
       case !!(_url.match(/reuters\.com\/assets\/iframe\/yovideo\?/)):
       case !!(_url.match(/static01\.nyt.com\/video\/players\/offsite\//)):
       case !!(_url.match(/bloomberg\.com\/api\/embed\/iframe\?id=\d+/)):
+      case !!(_url.match(/yahoo\.com\/[\w\d-_]+\.html\?format=embed/)):
+      case !!(_url.match(/liveleak\.com\/ll_embed\?f=[\w\d-_]+/)):
+      case !!(_url.match(/video-api\.wsj\.com\/api-video\//)):
+      case !!(_url.match(/washingtonpost\.com\/video\/c\/embed\//)):
+      case !!(_url.match(/abcnews\.go\.com\/video\/embed\?id=[\w\d-_]+/)):
+      case !!(_url.match(/theatlantic\.com\/video\/iframe\//)):
+      case !!(_url.match(/twitter\.com\/i\/videos\/\d+/)):
         _iframe_src = _url;
         break;
 
@@ -207,7 +214,7 @@
       case !!(_url.match(/spotify\.com\/track\/\w+/)):
         _iframe_src = 'https://embed.spotify.com/?uri=spotify:track:' + _url.match(/[^\/]+$/)[0];
         break;
-        
+
       case !!(_url.match(/spotify\.com\/\w+/)):
         _iframe_src = 'https://embed.spotify.com/?uri=' + win.encodeURIComponent(_url.replace('https://',''));
         break;
@@ -235,11 +242,11 @@
       case !!(_url.match(/gfycat\.com\/([A-Z][a-z]*)([A-Z][a-z]*)([A-Z][a-z]*)/)):
         _iframe_src = 'https://gfycat.com/ifr/' + _url.match(/[^\/]+$/)[0];
         break;
-       
+
       case !!(_url.match(/jsfiddle\.com\/\w+/)):
         _iframe_src = _url + '/embedded';
         break;
-      
+
       case !!(_url.match(/codepen\.io\/\w+\/\w+/)):
         _temp = _url.replace(/(https|http)(:\/\/)(codepen\.io)/, '');
         _iframe_src = 'https://codepen.io/' + _temp.match(/\w+\//gi)[0] + 'embed/' + _temp.match(/\w+\//gi)[1] + '?theme-id=23496&slug-hash=' + _temp.match(/\w+\//gi)[1] + '&default-tab=html,result&user=' + _temp.match(/\w+\//gi)[0] + '&embed-version=2&editable=true';
@@ -249,9 +256,7 @@
       case !!(_url.match(/jsbin\.com\/\w+/)):
         _iframe_src = _url.replace('edit', 'embed').replace('https', 'http');
         break;
-        
-      // Experimental: news outlets
-      // note: the Guardian sometimes just recycles YouTube links -- fair play, but it makes embedding tricky
+
       case !!(_url.match(/theguardian\.com\/[\w\d-_]+\/video\//)):
         _iframe_src = 'https://embed.theguardian.com/embed/video' + _url.replace(/(https:\/\/|http:\/\/)(www\.theguardian|theguardian)(\.com)/,'');
         break;
@@ -262,6 +267,34 @@
 
       case !!(_url.match(/nytimes\.com\/video\/\w+\/\d+/)):
         _iframe_src = 'https://static01.nyt.com/video/players/offsite/index.html?videoId=' + _url.match(/nytimes\.com\/video\/\w+\/\d+/)[0].replace(/[^\d]/g, '');
+        break;
+
+      case !!(_url.match(/wsj\.com\/video\/[\w\d-_]+\/[\w\d-_]+\.html/)):
+        _iframe_src = 'https://video-api.wsj.com/api-video/player/v3/iframe.html?guid=' + (_url.match(/\/[\w\d-_]+.html/)[0].replace(/\/|.html/g,'')) + '&shareDomain=null';
+        break;
+
+      case !!(_url.match(/washingtonpost\.com\/video\/\w+/)):
+        _iframe_src = 'https://www.washingtonpost.com/video/c/embed/' + (_url.match(/\/[\w\d-_]+_video.html/)[0].replace(/\/|.html/g,''));
+        break;
+
+      case !!(_url.match(/abcnews\.go\/[\w\d-_]+\/video\/[\w\d-_]+/)):
+        _iframe_src = 'http://abcnews.go.com/video/embed?id=' + _url.match(/video\/[\w\d-_]+/)[0].replace(/[^\d]/g, '');
+        break;
+
+      case !!(_url.match(/theatlantic\.com\/video\/\w+\/\d+\/[\w\d-_]+/)):
+        _iframe_src = 'https://www.theatlantic.com/video/iframe' + _url.match(/video\/\w+\/\d+/)[0].replace(/[^\d]/g, '');
+        break;
+
+      case !!(_url.match(/twitter\.com\/\w+/)):
+        embedTW(_url, _link)
+        break;
+
+      case !!(_url.match(/yahoo\.com\/[\w\d-_]+\.html/)):
+        embedYH(_url, _link);
+        break;
+
+      case !!(_url.match(/liveleak\.com\/view\?i=[\w\d-_]+/)):
+        embedLL(_url, _link);
         break;
 
       case !!(_url.match(/ft\.com\/video\/\w+/) && !!_supports_cors):
@@ -281,7 +314,7 @@
         _link.className = 'fetching';
         embedVK(_params, _link);
         break;
-        
+
       case !!(_url.match(/google\..*@[^A-Za-z]+,/)):
         makeStaticMap(_url, _link);
         break;
@@ -319,53 +352,119 @@
     }
     return params;
   }
-  
+
+  function embedTW (url, link) {
+    var _ifr_url = 'https://f0c10a425.herokuapp.com/' + url;
+    var _xhr = 'XDomainRequest' in win ?
+      new win.XDomainRequest() : 'XMLHttpRequest' in win ?
+        new win.XMLHttpRequest() : {};
+
+    _xhr.open('GET', _ifr_url, true);
+    _xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    _xhr.responseType = 'text';
+    addEvent(_xhr, 'readystatechange', function (e) {
+      var _evt = (e.target || this);
+      var _indctr;
+      if (_evt.readyState === 4 && _evt.status > 199 && _evt.status < 300) {
+        _indctr = (new DOMParser().parseFromString(_evt.responseText, 'text/html')).querySelector('meta[property="og:video:url"]');
+        if (!!_indctr && !!_indctr.getAttribute('content')) {
+          _tw = _indctr.getAttribute('content').replace(/\?embed_source=\w+/gi, '');
+          return makeInlineFrame(_tw, link, true);
+        }
+      }
+    });
+    addEvent(_xhr, 'error', function () {
+      console.warn('Error making request');
+    });
+    win.setTimeout(function () {
+      _xhr.send(null);
+    }, 0);
+  }
+
+
+  function embedLL (url, link) {
+    var _ifr_url = 'https://f0c10a425.herokuapp.com/' + url;
+    var _xhr = 'XDomainRequest' in win ?
+      new win.XDomainRequest() : 'XMLHttpRequest' in win ?
+        new win.XMLHttpRequest() : {};
+
+    _xhr.open('GET', _ifr_url, true);
+    _xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    _xhr.responseType = 'text';
+    addEvent(_xhr, 'readystatechange', function (e) {
+      var _evt = (e.target || this);
+      var _vid;
+      var _ll;
+      if (_evt.readyState === 4 && _evt.status > 199 && _evt.status < 300) {
+        _vid = (new DOMParser().parseFromString(_evt.responseText, 'text/html')).querySelector('video');
+        if (!!_vid && !!_vid.getAttribute('id')) {
+          _ll = 'https://www.liveleak.com/ll_embed?f=' + !!_vid.getAttribute('id').replace('player_file_','');
+          return makeInlineFrame(_ll, link, true);
+        }
+      }
+    });
+    addEvent(_xhr, 'error', function () {
+      console.warn('Error making request');
+    });
+    win.setTimeout(function () {
+      _xhr.send(null);
+    }, 0);
+  }
+
+  function embedYH (url, link) {
+    var _ifr_url = 'https://f0c10a425.herokuapp.com/' + url + '?format=embed';
+    var _xhr = 'XDomainRequest' in win ?
+      new win.XDomainRequest() : 'XMLHttpRequest' in win ?
+        new win.XMLHttpRequest() : {};
+
+    _xhr.open('GET', _ifr_url, true);
+    _xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    _xhr.responseType = 'text';
+    addEvent(_xhr, 'readystatechange', function (e) {
+      var _evt = (e.target || this);
+      if (_evt.readyState === 4 && _evt.status > 199 && _evt.status < 300) {
+        var _err = (new DOMParser().parseFromString(_evt.responseText, 'text/html')).querySelector('.embed-error');
+        if (!_err) {
+          return makeInlineFrame(_ifr_url, link, true);
+        }
+      }
+    });
+    addEvent(_xhr, 'error', function () {
+      console.warn('Error making request');
+    });
+    win.setTimeout(function () {
+      _xhr.send(null);
+    }, 0);
+  }
+
   function embedFT (url, link) {
     var _ft_url = 'https://f0c10a425.herokuapp.com/' + url;
     var _xhr = 'XDomainRequest' in win ?
       new win.XDomainRequest() : 'XMLHttpRequest' in win ?
         new win.XMLHttpRequest() : {};
-    var _vid, _src_vid, _hdrs;
-
-    if ('fetch' in win) {
-      _hdrs = new win.Headers({'X-Requested-With': 'XMLHttpRequest'});
-      
-      win.fetch(_ft_url, {'method': 'GET', 'mode': 'cors', 'headers': _hdrs}).then(function (resp) {
-        if (!!resp.ok) {
-          return resp.text().then(function (resptxt) {
-            _vid = (new DOMParser().parseFromString(resptxt, 'text/html')).querySelector('video');
-            if (!!_vid) {
-              _src_vid = _vid.getAttribute('src');
-              if (!!_src_vid && _src_vid.match(/\.mp4|\.webm|\.ogg|\.ogv/i)) {
-                return makeVideo(_src_vid, link, _src_vid.match(/\.mp4|\.webm|\.ogg|\.ogv/i)[0]);
-              }
-            }
-          });
-        }
-      });
-    } else {
-      _xhr.open('GET', _src_url, true);
-      _xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-      _xhr.responseType = 'text';
-      addEvent(_xhr, 'readystatechange', function (e) {
-        var _evt = (e.target || this);
-        if (_evt.readyState === 4 && _evt.status > 199 && _evt.status < 300) {
-          var _vid = (new DOMParser().parseFromString(_evt.responseText, 'text/html')).querySelector('video');
-          if (!!_vid) {
-            _src_vid = _vid.getAttribute('src');
-            if (!!_src_vid && _src_vid.match(/\.mp4|\.webm|\.ogg|\.ogv/i)) {
-              return makeVideo(_src_vid, link, _src_vid.match(/\.mp4|\.webm|\.ogg|\.ogv/i)[0]);
-            }
+    var _vid;
+    var _src_vid;
+    _xhr.open('GET', _src_url, true);
+    _xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    _xhr.responseType = 'text';
+    addEvent(_xhr, 'readystatechange', function (e) {
+      var _evt = (e.target || this);
+      if (_evt.readyState === 4 && _evt.status > 199 && _evt.status < 300) {
+        var _vid = (new DOMParser().parseFromString(_evt.responseText, 'text/html')).querySelector('video');
+        if (!!_vid) {
+          _src_vid = _vid.getAttribute('src');
+          if (!!_src_vid && _src_vid.match(/\.mp4|\.webm|\.ogg|\.ogv/i)) {
+            return makeVideo(_src_vid, link, _src_vid.match(/\.mp4|\.webm|\.ogg|\.ogv/i)[0]);
           }
         }
-      });
-      addEvent(_xhr, 'error', function(){
-        console.warn('Error making request');
-      });
-      win.setTimeout(function () {
-        _xhr.send(null);
-      }, 0);
-    }
+      }
+    });
+    addEvent(_xhr, 'error', function(){
+      console.warn('Error making request');
+    });
+    win.setTimeout(function () {
+      _xhr.send(null);
+    }, 0);
   }
 
   function embedVK (_params, _link) {
@@ -374,42 +473,21 @@
     var _xhr = 'XDomainRequest' in win ?
       new win.XDomainRequest() : 'XMLHttpRequest' in win ?
         new win.XMLHttpRequest() : {};
-    var _hdrs;
-
-    if ('fetch' in win) {
-      _hdrs = new win.Headers({'X-Requested-With': 'XMLHttpRequest'});
-      
-      win.fetch(_vk_url, {'method': 'GET', 'mode': 'cors', 'headers': _hdrs}).then(function (resp) {
-        if (!!resp.ok) {
-          return resp.text().then(function (resptxt) {
-            return makeInlineFrame(getVKHash(resptxt, _params), _link, false);
-          }).catch(function (e) {
-            win.console.warn(e);
-            _link.insertAdjacentHTML('beforeend', '<span> [Attempt to embed failed: ' + _vk_url + ']</span>');
-          });
-        }
-      }).catch(function (e) {
-        win.console.warn(e);
-        _link.insertAdjacentHTML('beforeend', '<span> [Attempt to embed failed: ' + _vk_url + ']</span>');
-      });
-
-    } else {
-      _xhr.open('GET', _vk_url, true);
-      _xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-      _xhr.responseType = 'text';
-      addEvent(_xhr, 'readystatechange', function (e) {
-        var _evt = (e.target || this);
-        if (_evt.readyState === 4 && _evt.status > 199 && _evt.status < 300) {
-          return makeInlineFrame(getVKHash(_evt.responseText, _params), _link, false);
-        }
-      });
-      addEvent(_xhr, 'error', function () {
-        _link.insertAdjacentHTML('beforeend', '<span> [Attempt to embed failed: ' + _vk_url + ']</span>');
-      });
-      win.setTimeout(function () {
-        _xhr.send(null);
-      }, 0);
-    }
+    _xhr.open('GET', _vk_url, true);
+    _xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    _xhr.responseType = 'text';
+    addEvent(_xhr, 'readystatechange', function (e) {
+      var _evt = (e.target || this);
+      if (_evt.readyState === 4 && _evt.status > 199 && _evt.status < 300) {
+        return makeInlineFrame(getVKHash(_evt.responseText, _params), _link, false);
+      }
+    });
+    addEvent(_xhr, 'error', function () {
+      _link.insertAdjacentHTML('beforeend', '<span> [Attempt to embed failed: ' + _vk_url + ']</span>');
+    });
+    win.setTimeout(function () {
+      _xhr.send(null);
+    }, 0);
   }
 
   function getVKHash (markup, params) {
@@ -428,7 +506,7 @@
     to_replace.parentNode.replaceChild(_16x9_div, to_replace);
 
     _iframe = doc.createElement('iframe');
-    
+
     setAttributes(_iframe, {
       'data-mbdlm-fill': '',
       'allowtransparency': 'true',
@@ -438,11 +516,11 @@
       'src': url,
       'allowFullscreen': 'allowFullscreen'
     });
-    
+
     if (!!sandbox) {
       _iframe.setAttribute('sandbox', 'allow-scripts allow-presentation allow-same-origin allow-orientation-lock');
     }
-    
+
     addEvent(_iframe, 'load', fetchFinished);
     _16x9_div.appendChild(_iframe);
   }
@@ -458,14 +536,14 @@
     _4x1_div = createPlaceholder('4by1');
     to_replace.parentNode.replaceChild(_4x1_div, to_replace);
     _dl = doc.createElement('div');
-    
+
     finishOnMutation(_4x1_div, _dl, 'load');
-    
+
     setAttributes(_dl, {
       'data-mbdlm-fill': '',
       'data-mbdlm-url': win.encodeURIComponent(url)
     });
-    
+
     _4x1_div.appendChild(_dl);
     addEvent(_dl, 'click', fakeLink);
   }
@@ -480,7 +558,7 @@
 
     to_replace.parentNode.replaceChild(_div, to_replace);
     _img = doc.createElement('img');
-    
+
     setAttributes(_img, {
       'data-mbdlm-img': '',
       'src': url,
@@ -488,7 +566,7 @@
       'title': to_replace.textContent ? to_replace.textContent : url,
       'data-mbdlm-url': win.encodeURIComponent(url)
     });
-    
+
     _div.appendChild(_img);
     addEvent(_img, 'load', fetchFinished);
     addEvent(_img, 'click', fakeLink);
@@ -497,7 +575,7 @@
   function makeVideo (url, to_replace, type) {
     var _16x9_div;
     var _video;
-    
+
     if (typeof to_replace !== 'object' || !to_replace || to_replace.nodeType !== 1) {
       return;
     }
@@ -505,9 +583,9 @@
     _16x9_div = createPlaceholder('16by9');
     to_replace.parentNode.replaceChild(_16x9_div, to_replace);
     _video = doc.createElement('video');
-    
+
     finishOnMutation(_16x9_div, _video, 'canplay');
-    
+
     setAttributes(_video, {
       'data-mbdlm-fill': '',
       'preload': 'auto',
@@ -516,7 +594,7 @@
       'webkitplaysinline': '',
       'playsinline': ''
     });
-    
+
     _16x9_div.appendChild(_video);
     _video.insertAdjacentHTML('afterBegin', '<source src="' + url + '" type="video/' + type + '"></source>');
   }
@@ -532,16 +610,16 @@
     _4x1_div = createPlaceholder('4by1');
     to_replace.parentNode.replaceChild(_4x1_div, to_replace);
     _audio = doc.createElement('audio');
-    
+
     finishOnMutation(_4x1_div, _audio, 'canplay');
-    
+
     setAttributes(_audio, {
       'data-mbdlm-fill': '',
       'preload': 'auto',
       'controls': 'controls',
       'muted': 'muted',
     });
-    
+
     _4x1_div.appendChild(_audio);
     _audio.insertAdjacentHTML('afterBegin', '<source src="' + url + '" type="audio/' + type + '"></source>');
   }
@@ -573,7 +651,7 @@
       'data-mbdlm-map': '',
       'data-mbdlm-url': win.encodeURIComponent(url)
     });
-    
+
     addEvent(_img, 'load', fetchFinished);
     addEvent(_img, 'click', fakeLink);
   }
@@ -584,7 +662,7 @@
     _el.setAttribute('data-mbdlm-fetching', '');
     return _el;
   }
-  
+
   function finishOnMutation (to_observe, to_reveal, e_type) {
     var _o;
     if ('MutationObserver' in win) {
@@ -644,7 +722,7 @@
       }
     };
   }
-  
+
   function setAttributes (el, attrs) {
     var _key;
     for (_key in attrs) {
