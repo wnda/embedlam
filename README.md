@@ -86,4 +86,4 @@ Full support | Partial/experimental support | No support |
 
 -------
 
-<sup>1</sup> Support for Google Maps is limited to automatically displaying a Static Maps API snapshot of the latitude/longitude specified in the URL
+<sup>1</sup> Support for Google Maps is limited to automatically displaying a Static Maps API snapshot of the latitude/longitude specified in the URL. It's also not going to work for everyone yet as I am mulling making my API key available for all domains...
