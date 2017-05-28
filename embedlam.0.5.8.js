@@ -274,7 +274,9 @@
         break;
 
       case !!(_url.match(/washingtonpost\.com\/video\/\w+/)):
-        _iframe_src = 'https://www.washingtonpost.com/video/c/embed/' + (_url.match(/\/[\w\d-_]+_video.html/)[0].replace(/\/|.html/g,''));
+        _temp = 'https://www.washingtonpost.com/video/c/embed/' + (_url.match(/\/[\w\d-_]+_video.html/)[0].replace(/\/|.html/g,''));
+        makeInlineFrame(_temp, _link, false);
+        _temp = null;
         break;
 
       case !!(_url.match(/abcnews\.go\/[\w\d-_]+\/video\/[\w\d-_]+/)):
