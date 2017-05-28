@@ -817,12 +817,8 @@
       context = this;
       args = [];
       timestamp = win.performance.now;
-      for (var i = 0; i < arguments.length; ++i) {
-        args[i] = arguments[i];
-      }
-      if (!scheduled) {
-       scheduled = win.setTimeout(later, wait);
-      }
+      for (var i = 0; i < arguments.length; ++i) { args[i] = arguments[i]; }
+      if (!scheduled) { scheduled = win.setTimeout(later, wait); }
       function later () {
         var last = win.performance.now - timestamp;
         if (last < wait) {
