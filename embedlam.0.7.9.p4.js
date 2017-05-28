@@ -373,18 +373,17 @@
     var query_string = '';
     var pairs = [];
     var params = {};
+    var key;
     var i;
 
-    if (typeof str !== 'string' || !str) {
-      return;
-    }
+    if (typeof str !== 'string' || !str) { return; }
 
     query_string = str.replace(/.*?\?/, '') || '';
 
     if (query_string.length) {
       pairs = query_string.split('&');
       for (i in pairs) {
-        var key = pairs[i].split('=')[0];
+        key = pairs[i].split('=')[0];
         if (!key.length) {
           continue;
         }
