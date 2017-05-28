@@ -370,30 +370,30 @@
   }
 
   function getParams (str) {
-    var query_string = '';
-    var pairs = [];
-    var params = {};
-    var key;
-    var i;
+    var _query_string = '';
+    var _pairs = [];
+    var _params = {};
+    var _key;
+    var _i;
 
     if (typeof str !== 'string' || !str) { return; }
 
-    query_string = str.replace(/.*?\?/, '') || '';
+    _query_string = str.replace(/.*?\?/, '') || '';
 
-    if (query_string.length) {
-      pairs = query_string.split('&');
-      for (i in pairs) {
-        key = pairs[i].split('=')[0];
-        if (!key.length) {
+    if (_query_string.length) {
+      _pairs = _query_string.split('&');
+      for (_i in _pairs) {
+        _key = _pairs[_i].split('=')[0];
+        if (!_key.length) {
           continue;
         }
-        if (typeof params[key] === 'undefined') {
-          params[key] = [];
+        if (typeof _params[_key] === 'undefined') {
+          _params[_key] = [];
         }
-        params[key].push(pairs[i].split('=')[1]);
+        _params[_key].push(_pairs[_i].split('=')[1]);
       }
     }
-    return params;
+    return _params;
   }
 
   function embedTW (url, link) {
