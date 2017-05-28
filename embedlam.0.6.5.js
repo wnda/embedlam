@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.6.4 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.6.5 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -503,6 +503,10 @@
     if (typeof to_replace !== 'object' || !to_replace || to_replace.nodeType !== 1) {
       return;
     }
+    
+    if (typeof to_replace.parentNode !== 'object' || !to_replace.parentNode || to_replace.parentNode.nodeType !== 1) {
+      return;
+    }
 
     _16x9_div = createPlaceholder('16by9');
     to_replace.parentNode.replaceChild(_16x9_div, to_replace);
@@ -534,6 +538,10 @@
     if (typeof to_replace !== 'object' || !to_replace || to_replace.nodeType !== 1) {
       return;
     }
+    
+    if (typeof to_replace.parentNode !== 'object' || !to_replace.parentNode || to_replace.parentNode.nodeType !== 1) {
+      return;
+    }
 
     _4x1_div = createPlaceholder('4by1');
     to_replace.parentNode.replaceChild(_4x1_div, to_replace);
@@ -555,6 +563,10 @@
     var _img;
 
     if (typeof to_replace !== 'object' || !to_replace || to_replace.nodeType !== 1) {
+      return;
+    }
+    
+    if (typeof to_replace.parentNode !== 'object' || !to_replace.parentNode || to_replace.parentNode.nodeType !== 1) {
       return;
     }
 
@@ -579,6 +591,10 @@
     var _video;
 
     if (typeof to_replace !== 'object' || !to_replace || to_replace.nodeType !== 1) {
+      return;
+    }
+    
+    if (typeof to_replace.parentNode !== 'object' || !to_replace.parentNode || to_replace.parentNode.nodeType !== 1) {
       return;
     }
 
@@ -608,6 +624,10 @@
     if (typeof to_replace !== 'object' || !to_replace || to_replace.nodeType !== 1) {
       return;
     }
+    
+    if (typeof to_replace.parentNode !== 'object' || !to_replace.parentNode || to_replace.parentNode.nodeType !== 1) {
+      return;
+    }
 
     _4x1_div = createPlaceholder('4by1');
     to_replace.parentNode.replaceChild(_4x1_div, to_replace);
@@ -634,6 +654,10 @@
     var _z;
 
     if (typeof to_replace !== 'object' || !to_replace || to_replace.nodeType !== 1) {
+      return;
+    }
+    
+    if (typeof to_replace.parentNode !== 'object' || !to_replace.parentNode || to_replace.parentNode.nodeType !== 1) {
       return;
     }
 
