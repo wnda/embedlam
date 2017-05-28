@@ -46,3 +46,39 @@ As of v0.2.0, the script no longer executes itself, and accepts an optional conf
 
 Both keys should contain a CSS selector string that can be processed by `querySelector`. Calling `init()` with no config object will result in every link on the page being scrutinised, which could result in some unexpected things being embedded if you're not careful.
 
+Full support | Partial/experimental support |
+|------------|------------------------------|
+| Direct link video | Hulu |
+| Direct link audio | The Guardian |
+| Direct link image | Bloomberg Video |
+| Youtube | Soundcloud |
+| Vimeo | Spotify |
+| DailyMotion | Google Maps <sup>1</sup> |
+| Twitch TV | |
+| Facebook Video | |
+| Twitter Video | |
+| Vine | |
+| Imgur | |
+| Gfycat | |
+| Appear.in | |
+| Codepen | |
+| JSBin | |
+| JSFiddle | |
+| Reuters Video | |
+| NYTimes Video | |
+| Yahoo News Video | |
+| Wall Street Journal Video | |
+| FT Video | |
+| ABC News Video | |
+| The Atlantic Video | |
+| Daily Mail Video | |
+| CNN Video | |
+| National Geographic Video | |
+| USA Today Video | |
+| Washington Post Video | |
+| LiveLeak Video | |
+| VK Video | |
+
+-------
+
+<sup>1</sup> Support for Google Maps is limited to automatically displaying a static maps snapshot of the latitude/longitude specified in the URL
