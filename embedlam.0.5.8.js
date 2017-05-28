@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.5.7 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.5.8 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -364,9 +364,9 @@
     _xhr.responseType = 'text';
     addEvent(_xhr, 'readystatechange', function (e) {
       var _evt = (e.target || this);
-      var _indctr;
+      var _tw, _indctr;
       if (_evt.readyState === 4 && _evt.status > 199 && _evt.status < 300) {
-        _indctr = (new DOMParser().parseFromString(_evt.responseText, 'text/html')).querySelector('meta[property="og:video:url"]');
+        _indctr = (new win.DOMParser().parseFromString(_evt.responseText, 'text/html')).querySelector('meta[property="og:video:url"]');
         if (!!_indctr && !!_indctr.getAttribute('content')) {
           _tw = _indctr.getAttribute('content').replace(/\?embed_source=\w+/gi, '');
           return makeInlineFrame(_tw, link, true);
