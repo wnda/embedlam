@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.7.7 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.7.8 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -418,7 +418,7 @@
   }
 
   function embedNG (url, link) {
-    var _cors_url = 'https://f0c10a425.herokuapp.com/' + url + '?format=embed';
+    var _cors_url = 'https://f0c10a425.herokuapp.com/' + url;
     var _xhr = new win.XMLHttpRequest();
 
     _xhr.open('GET', _cors_url, true);
@@ -445,7 +445,7 @@
   }
 
   function embedBC (url, link) {
-    var _cors_url = 'https://f0c10a425.herokuapp.com/' + url + '?format=embed';
+    var _cors_url = 'https://f0c10a425.herokuapp.com/' + url;
     var _xhr = new win.XMLHttpRequest();
 
     _xhr.open('GET', _cors_url, true);
