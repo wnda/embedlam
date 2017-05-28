@@ -48,38 +48,38 @@ Both keys should contain a CSS selector string that can be processed by `querySe
 
 ## What links are parsed/scraped by embedlam?
 
-Full support | Partial/experimental support |
-|------------|------------------------------|
-| Direct link video | Hulu |
-| Direct link audio | The Guardian |
-| Direct link image | Bloomberg Video |
-| Youtube | Soundcloud |
-| Vimeo | Spotify |
-| DailyMotion | Google Maps <sup>1</sup> |
-| Twitch TV | |
-| Facebook Video | |
-| Twitter Video | |
-| Vine | |
-| Imgur | |
-| Gfycat | |
-| Appear.in | |
-| Codepen | |
-| JSBin | |
-| JSFiddle | |
-| Reuters Video | |
-| NYTimes Video | |
-| Yahoo News Video | |
-| Wall Street Journal Video | |
-| FT Video | |
-| ABC News Video | |
-| The Atlantic Video | |
-| Daily Mail Video | |
-| CNN Video | |
-| National Geographic Video | |
-| USA Today Video | |
-| Washington Post Video | |
-| LiveLeak Video | |
-| VK Video | |
+Full support | Partial/experimental support | No support |
+|------------|------------------------------|------------|
+| Direct link video | Hulu | BBC (they do all sorts of `Blob` nonsense presumably to discourage scraping or to buffer efficiently) |
+| Direct link audio | The Guardian | The Telegraph (cba to navigate their bizarre video system yet) |
+| Direct link image | Bloomberg Video | Fox News (nothing personal, their video site is broken |
+| Youtube | Soundcloud | |
+| Vimeo | Spotify | |
+| DailyMotion | Google Maps <sup>1</sup> | |
+| Twitch TV | | |
+| Facebook Video | | |
+| Twitter Video | | |
+| Vine | | |
+| Imgur | | |
+| Gfycat | | |
+| Appear.in | | |
+| Codepen | | |
+| JSBin | | |
+| JSFiddle | | |
+| Reuters Video | | |
+| NYTimes Video | | |
+| Yahoo News Video | | |
+| Wall Street Journal Video | | |
+| FT Video | | |
+| ABC News Video | | |
+| The Atlantic Video | | |
+| Daily Mail Video | | |
+| CNN Video | | |
+| National Geographic Video | | |
+| USA Today Video | | |
+| Washington Post Video | | |
+| LiveLeak Video | | |
+| VK Video | | |
 
 -------
 
