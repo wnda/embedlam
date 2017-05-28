@@ -75,7 +75,7 @@
   }
 
   function processURL (_link) {
-    var _supports_cors = ('fetch' in win || 'XDomainRequest' in win || 'XMLHttpRequest' in win);
+    var _supports_cors = (!('XDomainRequest' in win) && 'DOMParser' in win); // minimum IE10
     var _url = _link.href || _link.getAttribute('href');
     var _by_dot;
     var _len;
