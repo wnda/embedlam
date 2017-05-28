@@ -46,6 +46,8 @@ As of v0.2.0, the script no longer executes itself, and accepts an optional conf
 
 Both keys should contain a CSS selector string that can be processed by `querySelector`. Calling `init()` with no config object will result in every link on the page being scrutinised, which could result in some unexpected things being embedded if you're not careful.
 
+## What links are parsed/scraped by embedlam?
+
 Full support | Partial/experimental support |
 |------------|------------------------------|
 | Direct link video | Hulu |
