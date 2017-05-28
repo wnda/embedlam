@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.7.9 patch 3 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.7.9 patch 4 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -174,7 +174,7 @@
       case !!(_url.match(/twitter\.com\/i\/videos\/\d+/)):
       //case !!(_url.match(/dailymail\.co\.uk\/embed\/video\/[\w\d-_]+\.html/)):
       case !!(_url.match(/cnn\.io\/v1\/fav\/\?video=\w+\/\d+\/\d+\/\d+\/[\w\d-_]+/)):
-      case !!(_url.match(/nationalgeographic\.com\/modules-video\/assets\/ngsEmbeddedVideo\.html\?guid=[\w\d-_]+/)):
+      // case !!(_url.match(/nationalgeographic\.com\/modules-video\/assets\/ngsEmbeddedVideo\.html\?guid=[\w\d-_]+/)):
       case !!(_url.match(/players\.brightcove\.net\/\d+\/[\w\d-_]+\/index\.html\?videoId=\d+/)):
       case !!(_url.match(/usatoday\.com\/videos\/embed\/\d+/)):
       //case !!(_url.match(/player\.cnbc\.com\/p\/gZWlPC\/cnbc_global\?playertype=synd&byGuid=\d+/)):
@@ -311,12 +311,12 @@
       case !!(_url.match(/cnbc\.com\/gallery\/\?video=\d+/)):
         _iframe_src = 'https://player.cnbc.com/p/gZWlPC/cnbc_global?playertype=synd&byGuid=' + getParams(_url).video + '&size=530_298';
         break;
-      */
-        
+
       case !!(_url.match(/nationalgeographic\.com\/video\/[\w\d-_]+/)):
         embedNG(_url, _link);
         break;
-
+      */
+        
       case !!(_url.match(/time\.com\/\d+\/[\w\d-_]+/)):
         embedBC(_url, _link, false);
         break;
