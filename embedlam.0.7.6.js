@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.7.5 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.7.6 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -294,7 +294,7 @@
         break;
         
       case !!(_url.match(/dailymail\.co\.uk\/video\/\w+\/[\w\d-_]+/)):
-        _iframe_src = 'http://www.dailymail.co.uk/embed/' + (_url.match(/video-\d+/)[0].replace('-', '/')) + '.html';
+        _iframe_src = 'https://www.dailymail.co.uk/embed/' + (_url.match(/video-\d+/)[0].replace('-', '/')) + '.html';
         break;
   
       case !!(_url.match(/usetoday\.com\/media\/[\w\d-_]+\/video\/\d+/)):
@@ -429,7 +429,7 @@
       if (_evt.readyState === 4 && _evt.status > 199 && _evt.status < 300) {
         _guid_el = (new DOMParser().parseFromString(_evt.responseText, 'text/html')).querySelector('[data-guid]');
         if (!!_guid_el.getAttribute('data-guid')) {
-          _ifr_src = 'https://assets.nationalgeographic.com/modules-video/assets/ngsEmbeddedVideo.html?' + _guid_el.getAttribute('data-guid');
+          _ifr_url = 'https://assets.nationalgeographic.com/modules-video/assets/ngsEmbeddedVideo.html?' + _guid_el.getAttribute('data-guid');
           makeInlineFrame(_ifr_url, link, true);
         }
       }
@@ -454,8 +454,8 @@
       var _vid;
       var _ifr_url;
       if (_evt.readyState === 4 && _evt.status > 199 && _evt.status < 300) {
-        _vid = (new DOMParser().parseFromString(_evt.responseText, 'text/html')).querySelector('video[data-video-id]');
-        if (!!_vid.getAttribute('data-video-id') && !!_vid.getAttribute('data-player') && !!_vid.getAttribute('data-account')) {
+        _vid = (new DOMParser().parseFromString(_evt.responseText, 'text/html')).querySelector('[data-video-id]');
+        if (!!_vid && !!_vid.getAttribute('data-video-id') && !!_vid.getAttribute('data-player') && !!_vid.getAttribute('data-account')) {
           _ifr_url = 'https://players.brightcove.net/' + _vid.getAttribute('data-account') + '/' + _vid.getAttribute('data-player') + '_default/index.html?videoId=' + _vid.getAttribute('data-video-id') + '&autoplay';
           makeInlineFrame(_ifr_url, link, false);
         }
