@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.7.8 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.7.9 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -316,8 +316,8 @@
         break;
 
       case !!(_url.match(/time\.com\/\d+\/[\w\d-_]+/)):
-      // case !!(_url.match(/standard\.co\.uk\/news\/\w+/)):
-      case !!(_url.match(/aljazeera\.com\/\w+\//)):
+      // case !!(_url.match(/standard\.co\.uk\/news\/\w+/)): misconfigured brightcove?
+      // case !!(_url.match(/aljazeera\.com\/\w+\//)): XHR forbidden?
       case !!(_url.match(/channel4\.com\/news\/\w+/)):
         embedBC(_url, _link);
         break;
@@ -453,12 +453,16 @@
     _xhr.responseType = 'text';
     addEvent(_xhr, 'readystatechange', function (e) {
       var _evt = (e.target || this);
-      var _vid;
+      var _vid, _txt;
       var _ifr_url;
       if (_evt.readyState === 4 && _evt.status > 199 && _evt.status < 300) {
-        _vid = (new DOMParser().parseFromString(_evt.responseText, 'text/html')).querySelector('[data-video-id]');
+        _txt = _evt.responseText;
+        _vid = (new DOMParser().parseFromString(_txt, 'text/html')).querySelector('[data-video-id]');
         if (!!_vid && !!_vid.getAttribute('data-video-id') && !!_vid.getAttribute('data-player') && !!_vid.getAttribute('data-account')) {
           _ifr_url = 'https://players.brightcove.net/' + _vid.getAttribute('data-account') + '/' + _vid.getAttribute('data-player') + '_default/index.html?videoId=' + _vid.getAttribute('data-video-id');
+          makeInlineFrame(_ifr_url, link, false);
+        } else if (!!_txt.match(/data-video-id=(\\"|")\d+/) && _txt.match(/data-account=(\\"|")\d+/) && _txt.match(/data-player=(\\"|")[\w\d_-]+/)) {
+          _ifr_url = 'https://players.brightcove.net/' + (_txt.match(/data-account=(\\"|")\d+/)[0].replace(/[^\d]/g, '')) + '/' + _txt.match(/data-player=(\\"|")[\w\d_-]+/)[0].replace(/data-player=/,'').replace(/(\\"|")/g, '') + '_default/index.html?videoId=' + _txt.match(/data-video-id=(\\"|")\d+/)[0].replace(/[^\d]/g, '');
           makeInlineFrame(_ifr_url, link, false);
         }
       }
