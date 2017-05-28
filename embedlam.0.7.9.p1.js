@@ -316,10 +316,13 @@
         break;
 
       case !!(_url.match(/time\.com\/\d+\/[\w\d-_]+/)):
+        embedBC(_url, _link, false);
+        break;
+      
       // case !!(_url.match(/standard\.co\.uk\/news\/\w+/)): misconfigured brightcove?
       // case !!(_url.match(/aljazeera\.com\/\w+\//)): XHR forbidden?
       case !!(_url.match(/channel4\.com\/news\/\w+/)):
-        embedBC(_url, _link);
+        embedBC(_url, _link, true);
         break;
 
       case !!(_url.match(/twitter\.com\/\w+/)):
@@ -444,7 +447,7 @@
     }, 0);
   }
 
-  function embedBC (url, link) {
+  function embedBC (url, link, autoplay) {
     var _cors_url = 'https://f0c10a425.herokuapp.com/' + url;
     var _xhr = new win.XMLHttpRequest();
 
@@ -459,10 +462,10 @@
         _txt = _evt.responseText;
         _vid = (new DOMParser().parseFromString(_txt, 'text/html')).querySelector('[data-video-id]');
         if (!!_vid && !!_vid.getAttribute('data-video-id') && !!_vid.getAttribute('data-player') && !!_vid.getAttribute('data-account')) {
-          _ifr_url = 'https://players.brightcove.net/' + _vid.getAttribute('data-account') + '/' + _vid.getAttribute('data-player') + '_default/index.html?videoId=' + _vid.getAttribute('data-video-id');
+          _ifr_url = 'https://players.brightcove.net/' + _vid.getAttribute('data-account') + '/' + _vid.getAttribute('data-player') + '_default/index.html?videoId=' + _vid.getAttribute('data-video-id') + (!!autoplay ? '&autoplay' : '');
           makeInlineFrame(_ifr_url, link, false);
         } else if (!!_txt.match(/data-video-id=(\\"|")\d+/) && _txt.match(/data-account=(\\"|")\d+/) && _txt.match(/data-player=(\\"|")[\w\d_-]+/)) {
-          _ifr_url = 'https://players.brightcove.net/' + (_txt.match(/data-account=(\\"|")\d+/)[0].replace(/[^\d]/g, '')) + '/' + _txt.match(/data-player=(\\"|")[\w\d_-]+/)[0].replace(/data-player=/,'').replace(/(\\"|")/g, '') + '_default/index.html?videoId=' + _txt.match(/data-video-id=(\\"|")\d+/)[0].replace(/[^\d]/g, '');
+          _ifr_url = 'https://players.brightcove.net/' + (_txt.match(/data-account=(\\"|")\d+/)[0].replace(/[^\d]/g, '')) + '/' + _txt.match(/data-player=(\\"|")[\w\d_-]+/)[0].replace(/data-player=/,'').replace(/(\\"|")/g, '') + '_default/index.html?videoId=' + _txt.match(/data-video-id=(\\"|")\d+/)[0].replace(/[^\d]/g, '') + (!!autoplay ? '&autoplay' : '');
           makeInlineFrame(_ifr_url, link, false);
         }
       }
