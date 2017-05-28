@@ -293,10 +293,12 @@
         _iframe_src = 'https://www.theatlantic.com/video/iframe/' + _url.match(/video\/\w+\/\d+/)[0].replace(/[^\d]/g, '');
         break;
         
+      /* NO HTTPS
       case !!(_url.match(/dailymail\.co\.uk\/video\/\w+\/[\w\d-_]+/)):
         _iframe_src = 'https://www.dailymail.co.uk/embed/' + (_url.match(/video-\d+/)[0].replace('-', '/')) + '.html';
         break;
-  
+      */
+        
       case !!(_url.match(/usetoday\.com\/media\/[\w\d-_]+\/video\/\d+/)):
         _iframe_src = 'https://www.usatoday.com/videos/embed/' + (_url.match(/video\/\d+/)[0].replace('video/','')) + '/?fullsite=true';
         break;
@@ -314,7 +316,7 @@
         break;
 
       case !!(_url.match(/time\.com\/\d+\/[\w\d-_]+/)):
-      case !!(_url.match(/standard\.co\.uk\/news\/\w+/)):
+      // case !!(_url.match(/standard\.co\.uk\/news\/\w+/)):
       case !!(_url.match(/aljazeera\.com\/\w+\//)):
       case !!(_url.match(/channel4\.com\/news\/\w+/)):
         embedBC(_url, _link);
@@ -456,7 +458,7 @@
       if (_evt.readyState === 4 && _evt.status > 199 && _evt.status < 300) {
         _vid = (new DOMParser().parseFromString(_evt.responseText, 'text/html')).querySelector('[data-video-id]');
         if (!!_vid && !!_vid.getAttribute('data-video-id') && !!_vid.getAttribute('data-player') && !!_vid.getAttribute('data-account')) {
-          _ifr_url = 'https://players.brightcove.net/' + _vid.getAttribute('data-account') + '/' + _vid.getAttribute('data-player') + '_default/index.html?videoId=' + _vid.getAttribute('data-video-id') + '&autoplay';
+          _ifr_url = 'https://players.brightcove.net/' + _vid.getAttribute('data-account') + '/' + _vid.getAttribute('data-player') + '_default/index.html?videoId=' + _vid.getAttribute('data-video-id');
           makeInlineFrame(_ifr_url, link, false);
         }
       }
