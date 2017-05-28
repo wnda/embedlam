@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.6.5 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.7.5 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -177,6 +177,7 @@
       case !!(_url.match(/nationalgeographic\.com\/modules-video\/assets\/ngsEmbeddedVideo\.html\?guid=[\w\d-_]+/)):
       case !!(_url.match(/players\.brightcove\.net\/\d+\/[\w\d-_]+\/index\.html\?videoId=\d+/)):
       case !!(_url.match(/usatoday\.com\/videos\/embed\/\d+/)):
+      case !!(_url.match(/player\.cnbc\.com\/p\/gZWlPC\/cnbc_global\?playertype=synd&byGuid=\d+/)):
         _iframe_src = _url;
         break;
 
@@ -299,6 +300,25 @@
       case !!(_url.match(/usetoday\.com\/media\/[\w\d-_]+\/video\/\d+/)):
         _iframe_src = 'https://www.usatoday.com/videos/embed/' + (_url.match(/video\/\d+/)[0].replace('video/','')) + '/?fullsite=true';
         break;
+        
+      case !!(_url.match(/cnn\.com\/videos\/\w+\/\d+\/\d+\/\d+\/[\w\d-_]+/)):
+        _iframe_src = 'https://fave.api.cnn.io/v1/fav/?video=' + _url.match(/videos\/\w+\/\d+\/\d+\/\d+\/[\w\d-_]+/)[0].replace('videos/','') + '.cnn&customer=cnn&edition=international&env=prod';
+        break;
+
+      case !!(_url.match(/cnbc\.com\/gallery\/\?video=\d+/)):
+        _iframe_src = 'https://player.cnbc.com/p/gZWlPC/cnbc_global?playertype=synd&byGuid=' + getParams(_url).video + '&size=530_298';
+        break;
+
+      case !!(_url.match(/nationalgeographic\.com\/video\/[\w\d-_]+/)):
+        embedNG(_url, _link);
+        break;
+
+      case !!(_url.match(/time\.com\/\d+\/[\w\d-_]+/)):
+      case !!(_url.match(/standard\.co\.uk\/news\/\w+/)):
+      case !!(_url.match(/aljazeera\.com\/\w+\//)):
+      case !!(_url.match(/channel4\.com\/news\/\w+/)):
+        embedBC(_url, _link);
+        break;
 
       case !!(_url.match(/twitter\.com\/\w+/)):
         embedTW(_url, _link)
@@ -370,16 +390,15 @@
 
   function embedTW (url, link) {
     var _ifr_url = 'https://f0c10a425.herokuapp.com/' + url;
-    var _xhr = 'XDomainRequest' in win ?
-      new win.XDomainRequest() : 'XMLHttpRequest' in win ?
-        new win.XMLHttpRequest() : {};
+    var _xhr = new win.XMLHttpRequest();
 
     _xhr.open('GET', _ifr_url, true);
     _xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     _xhr.responseType = 'text';
     addEvent(_xhr, 'readystatechange', function (e) {
       var _evt = (e.target || this);
-      var _tw, _indctr;
+      var _tw;
+      var _indctr;
       if (_evt.readyState === 4 && _evt.status > 199 && _evt.status < 300) {
         _indctr = (new win.DOMParser().parseFromString(_evt.responseText, 'text/html')).querySelector('meta[property="og:video:url"]');
         if (!!_indctr && !!_indctr.getAttribute('content')) {
@@ -396,14 +415,65 @@
     }, 0);
   }
 
+  function embedNG (url, link) {
+    var _cors_url = 'https://f0c10a425.herokuapp.com/' + url + '?format=embed';
+    var _xhr = new win.XMLHttpRequest();
+
+    _xhr.open('GET', _cors_url, true);
+    _xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    _xhr.responseType = 'text';
+    addEvent(_xhr, 'readystatechange', function (e) {
+      var _evt = (e.target || this);
+      var _guid_el;
+      var _ifr_url;
+      if (_evt.readyState === 4 && _evt.status > 199 && _evt.status < 300) {
+        _guid_el = (new DOMParser().parseFromString(_evt.responseText, 'text/html')).querySelector('[data-guid]');
+        if (!!_guid_el.getAttribute('data-guid')) {
+          _ifr_src = 'https://assets.nationalgeographic.com/modules-video/assets/ngsEmbeddedVideo.html?' + _guid_el.getAttribute('data-guid');
+          makeInlineFrame(_ifr_url, link, true);
+        }
+      }
+    });
+    addEvent(_xhr, 'error', function () {
+      console.warn('Error making request');
+    });
+    win.setTimeout(function () {
+      _xhr.send(null);
+    }, 0);
+  }
+
+  function embedBC (url, link) {
+    var _cors_url = 'https://f0c10a425.herokuapp.com/' + url + '?format=embed';
+    var _xhr = new win.XMLHttpRequest();
+
+    _xhr.open('GET', _cors_url, true);
+    _xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    _xhr.responseType = 'text';
+    addEvent(_xhr, 'readystatechange', function (e) {
+      var _evt = (e.target || this);
+      var _vid;
+      var _ifr_url;
+      if (_evt.readyState === 4 && _evt.status > 199 && _evt.status < 300) {
+        _vid = (new DOMParser().parseFromString(_evt.responseText, 'text/html')).querySelector('video[data-video-id]');
+        if (!!_vid.getAttribute('data-video-id') && !!_vid.getAttribute('data-player') && !!_vid.getAttribute('data-account')) {
+          _ifr_url = 'https://players.brightcove.net/' + _vid.getAttribute('data-account') + '/' + _vid.getAttribute('data-player') + '_default/index.html?videoId=' + _vid.getAttribute('data-video-id') + '&autoplay';
+          makeInlineFrame(_ifr_url, link, false);
+        }
+      }
+    });
+    addEvent(_xhr, 'error', function () {
+      console.warn('Error making request');
+    });
+    win.setTimeout(function () {
+      _xhr.send(null);
+    }, 0);
+  }
 
   function embedLL (url, link) {
-    var _ifr_url = 'https://f0c10a425.herokuapp.com/' + url;
-    var _xhr = 'XDomainRequest' in win ?
-      new win.XDomainRequest() : 'XMLHttpRequest' in win ?
-        new win.XMLHttpRequest() : {};
+    var _cors_url = 'https://f0c10a425.herokuapp.com/' + url;
+    var _xhr = new win.XMLHttpRequest();
 
-    _xhr.open('GET', _ifr_url, true);
+    _xhr.open('GET', _cors_url, true);
     _xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     _xhr.responseType = 'text';
     addEvent(_xhr, 'readystatechange', function (e) {
@@ -427,18 +497,17 @@
   }
 
   function embedYH (url, link) {
-    var _ifr_url = 'https://f0c10a425.herokuapp.com/' + url + '?format=embed';
-    var _xhr = 'XDomainRequest' in win ?
-      new win.XDomainRequest() : 'XMLHttpRequest' in win ?
-        new win.XMLHttpRequest() : {};
-
-    _xhr.open('GET', _ifr_url, true);
+    var _cors_url = 'https://f0c10a425.herokuapp.com/' + url + '?format=embed';
+    var _xhr = new win.XMLHttpRequest();
+    
+    _xhr.open('GET', _cors_url, true);
     _xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     _xhr.responseType = 'text';
     addEvent(_xhr, 'readystatechange', function (e) {
       var _evt = (e.target || this);
+      var _err;
       if (_evt.readyState === 4 && _evt.status > 199 && _evt.status < 300) {
-        var _err = (new DOMParser().parseFromString(_evt.responseText, 'text/html')).querySelector('.embed-error');
+        _err = (new DOMParser().parseFromString(_evt.responseText, 'text/html')).querySelector('.embed-error');
         if (!_err) {
           return makeInlineFrame((url + '?format=embed'), link, true);
         }
@@ -453,17 +522,16 @@
   }
 
   function embedFT (url, link) {
-    var _ft_url = 'https://f0c10a425.herokuapp.com/' + url;
-    var _xhr = 'XDomainRequest' in win ?
-      new win.XDomainRequest() : 'XMLHttpRequest' in win ?
-        new win.XMLHttpRequest() : {};
-    var _vid;
-    var _src_vid;
-    _xhr.open('GET', _src_url, true);
+    var _cors_url = 'https://f0c10a425.herokuapp.com/' + url;
+    var _xhr = new win.XMLHttpRequest();
+    
+    _xhr.open('GET', _cors_url, true);
     _xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     _xhr.responseType = 'text';
     addEvent(_xhr, 'readystatechange', function (e) {
       var _evt = (e.target || this);
+      var _vid;
+      var _src_vid;
       if (_evt.readyState === 4 && _evt.status > 199 && _evt.status < 300) {
         var _vid = (new DOMParser().parseFromString(_evt.responseText, 'text/html')).querySelector('video');
         if (!!_vid) {
@@ -485,9 +553,8 @@
   function embedVK (_params, _link) {
     var _proxy = 'https://f0c10a425.herokuapp.com/';
     var _vk_url = _proxy + 'https://vk.com/video' + _params[0] + '_' + _params[1];
-    var _xhr = 'XDomainRequest' in win ?
-      new win.XDomainRequest() : 'XMLHttpRequest' in win ?
-        new win.XMLHttpRequest() : {};
+    var _xhr = new win.XMLHttpRequest();
+    
     _xhr.open('GET', _vk_url, true);
     _xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     _xhr.responseType = 'text';
