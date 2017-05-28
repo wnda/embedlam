@@ -1,4 +1,4 @@
-/* embedlam.js @ 0.6.1 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
+/* embedlam.js @ 0.6.2 :: BSD-3-Clause-Clear :: https://github.com/wnda/embedlam/ */
 ;(function (win, doc) {
 
   'use strict';
@@ -274,7 +274,7 @@
         break;
 
       case !!(_url.match(/washingtonpost\.com\/video\/\w+/)):
-        _temp = 'https://www.washingtonpost.com/video/c/embed/' + (_url.match(/\/[\w\d-_]+_video.html/)[0].replace(/\/|.html/g,''));
+        _temp = 'https://www.washingtonpost.com/video/c/embed/' + (_url.match(/\/[\w\d-_]+_video.html/)[0].replace(/\/|.html|_video/g,''));
         makeInlineFrame(_temp, _link, false);
         _temp = null;
         break;
