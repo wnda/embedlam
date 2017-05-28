@@ -79,7 +79,11 @@ Full support | Partial/experimental support | No support |
 | USA Today Video | | |
 | Washington Post Video | | |
 | LiveLeak Video | | |
-| VK Video | | |
+| Channel4 News Video | | |
+| Al Jazeera Video | | |
+| Evening Standard Video | | |
+| National Geographic | | |
+| CNBC | | |
 
 -------
 
