@@ -42,9 +42,7 @@
       _g = 0;
       _ev = (e || win.event);
 
-      if (doc.readyState === 'loading') {
-        return;
-      }
+      if (doc.readyState === 'loading') { return; }
 
       if (typeof _ev !== 'undefined' && !!_ev.type) {
         if (_ev.type !== 'scroll' && _ev.type !== 'onscroll' && (doc.readyState === 'interactive' || doc.readyState === 'complete')) {
