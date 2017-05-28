@@ -312,32 +312,32 @@
         _iframe_src = 'https://player.cnbc.com/p/gZWlPC/cnbc_global?playertype=synd&byGuid=' + getParams(_url).video + '&size=530_298';
         break;
 
-      case !!(_url.match(/nationalgeographic\.com\/video\/[\w\d-_]+/)):
+      case !!(_url.match(/nationalgeographic\.com\/video\/[\w\d-_]+/) && !!_supports_cors):
         embedNG(_url, _link);
         break;
       */
         
-      case !!(_url.match(/time\.com\/\d+\/[\w\d-_]+/)):
+      case !!(_url.match(/time\.com\/\d+\/[\w\d-_]+/) && !!_supports_cors):
         embedBC(_url, _link, false);
         break;
       
-      // case !!(_url.match(/standard\.co\.uk\/news\/\w+/)): malformed brightcove player reference
-      // case !!(_url.match(/aljazeera\.com\/\w+\//)): times out...
+      // case !!(_url.match(/standard\.co\.uk\/news\/\w+/) && !!_supports_cors): malformed brightcove player reference
+      // case !!(_url.match(/aljazeera\.com\/\w+\//) && !!_supports_cors): times out...
       /* DOESN'T SIZE PROPERLY
-      case !!(_url.match(/channel4\.com\/news\/\w+/)):
+      case !!(_url.match(/channel4\.com\/news\/\w+/) && !!_supports_cors):
         embedBC(_url, _link, true);
         break;
       */
         
-      case !!(_url.match(/twitter\.com\/\w+/)):
+      case !!(_url.match(/twitter\.com\/\w+/) && !!_supports_cors):
         embedTW(_url, _link)
         break;
 
-      case !!(_url.match(/yahoo\.com\/[\w\d-_]+\.html/)):
+      case !!(_url.match(/yahoo\.com\/[\w\d-_]+\.html/) && !!_supports_cors):
         embedYH(_url, _link);
         break;
 
-      case !!(_url.match(/liveleak\.com\/view\?i=[\w\d-_]+/)):
+      case !!(_url.match(/liveleak\.com\/view\?i=[\w\d-_]+/) && !!_supports_cors):
         embedLL(_url, _link);
         break;
 
