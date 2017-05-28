@@ -33,15 +33,15 @@
   function checkDOM () {
     return debounce(function (e) {
       var _iframe_src = '';
-      var f = 0;
-      var g = 0;
+      var _f = 0;
+      var _g = 0;
       var _ev = null;
 
       if (!!_config && 'querySelectorAll' in doc) {
         _anchors = ('container' in _config && !!_config.container ? doc.querySelector(_config.container) : doc).querySelectorAll('selector' in _config && !!_config.selector ? _config.selector : 'a');
       }
-      f = _anchors.length;
-      g = 0;
+      _f = _anchors.length;
+      _g = 0;
       _ev = (e || win.event);
 
       if (doc.readyState === 'loading') {
@@ -52,23 +52,23 @@
         if (_ev.type !== 'scroll' && _ev.type !== 'onscroll' && (doc.readyState === 'interactive' || doc.readyState === 'complete')) {
           removeEvent(doc, 'readystatechange', _checker);
         }
-        if ((_ev.type === 'scroll' || _ev.type === 'onscroll') && f < 1) {
+        if ((_ev.type === 'scroll' || _ev.type === 'onscroll') && _f < 1) {
           removeEvent(win, 'scroll', _checker);
           return;
         }
       }
 
-      for (; g < f; ++g) {
+      for (; _g < _f; ++_g) {
         _iframe_src = '';
 
-        if (typeof _anchors[g] === 'undefined' || !_anchors[g].getAttribute('href') || _anchors[g].getAttribute('href').length < 5 || !isInViewport(_anchors[g])) {
+        if (typeof _anchors[_g] === 'undefined' || !_anchors[_g].getAttribute('href') || _anchors[_g].getAttribute('href').length < 5 || !isInViewport(_anchors[_g])) {
           continue;
         }
 
-        _iframe_src = processURL(_anchors[g]);
+        _iframe_src = processURL(_anchors[_g]);
 
         if (typeof _iframe_src === 'string' && _iframe_src.length > 0) {
-          makeInlineFrame(_iframe_src, _anchors[g], true);
+          makeInlineFrame(_iframe_src, _anchors[_g], true);
         }
       }
     }, 500);
